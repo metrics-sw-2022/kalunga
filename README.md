@@ -46,3 +46,11 @@ Como estrategía de desarrollo emplearemos TDD (Test Driven Development) que con
  * Desarrollo más rápido y permite la optimización y evolución del código al transcurrir el tiempo.
 
 ***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
+
+<a name="flow"></a> 
+### Flujo de trabajo
+Como flujo de trabajo se empleara GITFLOW, el cual es ideal para proyectos que tienen un ciclo de publicación programado, con este flujo hace que el manejo del repositorio y sus ramas sea much más lógico reduciendo considerablemente los conflictos generados entre el código de los desarrolladores y al ser tanto podrían generar pérdidas de código o que terminen generando desperdicios de tiempo y reprocesos. Además es considerada una buena práctica empleada en metodologías ágiles en desarrollor de software.
+ * Desarrollo más rápido y permite la optimización y evolución del código al transcurrir el tiempo.
+
+***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
+
