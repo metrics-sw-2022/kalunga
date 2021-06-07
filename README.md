@@ -50,7 +50,16 @@ Como estrategía de desarrollo emplearemos TDD (Test Driven Development) que con
 <a name="flow"></a> 
 ### Flujo de trabajo
 Como flujo de trabajo se empleara GITFLOW, el cual es ideal para proyectos que tienen un ciclo de publicación programado, con este flujo hace que el manejo del repositorio y sus ramas sea much más lógico reduciendo considerablemente los conflictos generados entre el código de los desarrolladores y al ser tanto podrían generar pérdidas de código o que terminen generando desperdicios de tiempo y reprocesos. Además es considerada una buena práctica empleada en metodologías ágiles en desarrollor de software.
- * Desarrollo más rápido y permite la optimización y evolución del código al transcurrir el tiempo.
+
+***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
+
+<a name="methodology"></a> 
+### Metodología del proyecto
+Como metodología del proyecto sera utilizada SCRUM, es un conjunto de buenas prácticas que permite el trabajo de los equipos involucrados en proyectos TIC de manera colaborativa, con una fluida relación entre cliente y desarrolladores. A continuación se nombran algunos benificios de trabajar con está metodología ágil:
+ * Optimización de los equipos de trabajo.
+ * Mayor conocimiento por parte del cliente de cada etapa de trabajo del producto.
+ * Fomento de la innovación.
+ * Reducción del margen de error y riesgos.
 
 ***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
 
