@@ -9,7 +9,7 @@ Este repositorio contiene el código relacionado desarrollado para una aplicaci�
 5. [Flujo de trabajo](#flow)
 6. [Metodología de proyecto](#methodology)
 7. [Funcionalidades de la aplicación](#features)
-8. [Versión en producción](#versión)
+8. [Versión en producción](#version)
 9. [Instalación del proyecto](#installation)
 10. [Colaboradores](#collaborators)
 
@@ -62,4 +62,37 @@ Como metodología del proyecto sera utilizada SCRUM, es un conjunto de buenas pr
  * Reducción del margen de error y riesgos.
 
 ***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
+
+<a name="#features"></a> 
+### Funcionalidades de la aplicación
+A continuación se describen cada una de las funcionalidades que ya se encuentra implementada en la aplicación.
+ * NO aplica.
+
+<a name="#version"></a> 
+### Versión en producción
+*Versión 1.0.0*
+
+<a name="#installation"></a> 
+### Instalación del proyecto
+A continuación se describen los pasos necesarios para instalar el proyecto y contribuir en su desarrollo:
+ * Abrir el IDE Android Studio 4.2.1
+ * Dar clic en File - New - Project from version Control
+ * Iniciar sesión con GitHub con el correo autorizado para acceder a este repositorio.
+ * Seleccionar el proyecto denominado "kalunga"
+ * Dar clic en Clone
+ * Esperar que compile correctamente todos los implementos, en caso de requerir actualizaciones el IDE las solicitará automáticamente.
+ * Ya puedes iniciar a contribuir en el desarrollo de este proyecto
+
+<a name="#collaborators"></a> 
+### Colaboradores
+***Jhonnatan E Zamudio P** -  Líder técnico*
+Estudiante de Maestría en Ingeniería de Software (MISO) de la Universidad de los Andes con una formación profesional de Ingeniero en Mecatrónica de la Universidad Militar Nueva Granada, cuenta con una experiencia superior a los 6 años en desarrollo de diferentes plataformas como: Aplicaciones móviles (Android e IOs), aplicaciones web (Angular) y aplicaciones de escritorio (JAVA EE)
+
+
+
+
+
+
+
+
 
