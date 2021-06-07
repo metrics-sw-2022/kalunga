@@ -35,3 +35,14 @@ Como arquitectura de software para está aplicación se empleará MVVM + clean c
  * Se pueden agregar nuevas funciones rápidamente.
 
 ***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
+
+
+<a name="strategy"></a> 
+### Estrategía de desarrollo
+Como estrategía de desarrollo emplearemos TDD (Test Driven Development) que consiste en escribir primero las pruebas (generalmente unitarias), después escribir el código fuente que pase la prueba satisfactoriamente y, por último, refactorizar el código escrito. A continuación se describen algunas ventajas de utilizar TDD:
+ * Genera confianza gracias a tener pruebas que garantizan el correcto funcionamiento del código.
+ * Mejora el diseño y la calidad del código
+ * Evita escribir código que no se va a utilizar
+ * Desarrollo más rápido y permite la optimización y evolución del código al transcurrir el tiempo.
+
+***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
