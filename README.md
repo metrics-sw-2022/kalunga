@@ -85,7 +85,8 @@ A continuación se describen los pasos necesarios para instalar el proyecto y co
 
 <a name="#collaborators"></a> 
 ### Colaboradores
-***Jhonnatan E Zamudio P** -  Líder técnico*
+***Jhonnatan E Zamudio P** -  (Líder técnico)*
+
 Estudiante de Maestría en Ingeniería de Software (MISO) de la Universidad de los Andes con una formación profesional de Ingeniero en Mecatrónica de la Universidad Militar Nueva Granada, cuenta con una experiencia superior a los 6 años en desarrollo de diferentes plataformas como: Aplicaciones móviles (Android e IOs), aplicaciones web (Angular) y aplicaciones de escritorio (JAVA EE)
 
 
