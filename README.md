@@ -13,6 +13,7 @@ Este repositorio contiene el código relacionado desarrollado para una aplicaci�
 9. [Instalación del proyecto](#installation)
 10. [Colaboradores](#collaborators)
 
+<a name="general-info"></a> 
 ### Información general
 Este desarrollo móvil estará compuesto por 4 historias de usuario épicas:
  - HU00 - Core de la aplicación móvil
