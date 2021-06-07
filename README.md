@@ -22,9 +22,11 @@ Este desarrollo móvil estará compuesto por 4 historias de usuario épicas:
  - HU03 - Aplicación móvil para rol de terceros.
  - HU04 - Aplicación móvil para rol de usuarios.
 
+<a name="tecnologies"></a> 
 ### Tecnología
 Para el desarrollo de está aplicación móvil se empleará el lenguaje de programación KOTLIN v1.5.0 y su IDE de desarrollo es nativo (Android Studio 4.2.1)
 
+<a name="architecture"></a> 
 ### Arquitectura
 Como arquitectura de software para está aplicación se empleará MVVM + clean con el fin de soportar escalabilidad y mantenimiento del software de forma sencilla, a continuación se mencionana algunas de las ventajas de utilizar una arquitectura limpia:
  * El código está desacoplado.
