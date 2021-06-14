@@ -11,7 +11,7 @@ jobs:
       - name: Code verification
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GitHub_PAT }}
+          token: ${{ secrets.TOKEN_CI }}
       
       - name: Ejecutando Lint de Android
         uses: ./gradlew lintDebug
