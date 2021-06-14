@@ -9,15 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Code verification
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           token: ${{ secrets.TOKEN_CI }}
-      
-      - name: Ejecutando Lint de Android
-        uses: ./gradlew lintDebug
-
-      - name: Subiendo reporte generado por Lint en html
-        uses: actions/upload-artifact@v2
-        with:
-          name: report_lint.html
-          path: app/build/reports/lint-results-debug.html
