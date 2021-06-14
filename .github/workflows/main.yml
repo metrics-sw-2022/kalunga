@@ -7,20 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-project:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Code verification
-        uses: actions/checkout@v2
-        
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
-        
-      - name: Build Project
-        run: ./gradlew build
         
   lint-analysis:
-    needs: [build-project]
     runs-on: ubuntu-latest
     steps:
       - name: Code verification
