@@ -1,0 +1,21 @@
+name: CI Kalunga
+on:
+  pull_request:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificación del código
+        uses: actions/checkout@v2
+      
+      - name: Ejecutando Lint de Android
+        uses: ./gradlew lintDebug
+
+      - name: Subiendo reporte generado por Lint en html
+        uses: actions/upload-artifact@v2
+        with:
+          name: report_lint.html
+          path: app/build/reports/lint-results-debug.html
