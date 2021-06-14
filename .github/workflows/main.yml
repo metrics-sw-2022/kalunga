@@ -34,6 +34,9 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
+        
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
 
       - name: Run tests
         run: ./gradlew test
