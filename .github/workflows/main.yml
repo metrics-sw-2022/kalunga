@@ -10,5 +10,6 @@ jobs:
     steps:
       - name: Code verification
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.TOKEN_CI }}
+            
+      - name: Run tests
+        run: ./gradlew lintDebug
