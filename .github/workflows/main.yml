@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint-analysis:
+  build-project:
     runs-on: ubuntu-latest
     steps:
       - name: Code verification
@@ -18,10 +18,20 @@ jobs:
         
       - name: Build Project
         run: ./gradlew build
-            
+        
+  lint-analysis:
+    needs: [build-project]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code verification
+        uses: actions/checkout@v2
+
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
       - name: Run Android Lint
         run: ./gradlew lintDebug
-        
+
       - name: Upload html test report
         uses: actions/upload-artifact@v2
         with:
