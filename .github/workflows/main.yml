@@ -81,7 +81,7 @@ jobs:
         run: ./gradlew build sonarqube --info
         
   merge:
-    name: Mezclar todas las funcionalidades con develop
+    name: Mezclar a la rama develop
     needs: [static-code-analysis]
     runs-on: ubuntu-latest
     steps:
