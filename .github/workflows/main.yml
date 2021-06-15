@@ -26,7 +26,7 @@ jobs:
           name: lint.html
           path: app/build/reports/lint-results-debug.html
           
-      - name: Validar resultado falla
+      - name: Validar resultado error
         if: ${{ failure() }}
         env:
          MENSAJE_ERROR: No se puede realizar el merge porque FALLO la verificación mediante la herramienta Lint
@@ -56,6 +56,18 @@ jobs:
         with:
           name: unit_test_report
           path: app/build/reports/tests/testDebugUnitTest/
+          
+      - name: Validar resultado error
+        if: ${{ failure() }}
+        env:
+         MENSAJE_ERROR: No se puede realizar el merge porque FALLO una o más pruebas unitarias
+        run: echo "::set-output name=respuesta::${MENSAJE_ERROR}"
+        
+      - name: Validar resultado exitoso
+        if: ${{ success() }}
+        env:
+          MENSAJE_EXITO: El resultado de las pruebas unitarias fue exitoso
+        run: echo "::set-output name=respuesta::${MENSAJE_EXITO}"
           
   static-code-analysis:
     needs: [unit-test]
