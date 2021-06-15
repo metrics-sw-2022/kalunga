@@ -26,6 +26,18 @@ jobs:
           name: lint.html
           path: app/build/reports/lint-results-debug.html
           
+      - name: Validar resultado falla
+        if: ${{ failure() }}
+        env:
+         MENSAJE_ERROR: No se puede realizar el merge porque FALLO la verificación mediante la herramienta Lint
+        run: echo "::set-output name=respuesta::${MENSAJE_ERROR}"
+        
+      - name: Validar resultado exitoso
+        if: ${{ success() }}
+        env:
+          MENSAJE_EXITO: El resultado del análisis mediante la herramienta Lint fue exitoso
+        run: echo "::set-output name=respuesta::${MENSAJE_EXITO}"
+          
   unit-test:
     needs: [lint-analysis]
     runs-on: ubuntu-latest
