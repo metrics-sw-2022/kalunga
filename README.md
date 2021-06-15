@@ -61,8 +61,6 @@ Como metodología del proyecto sera utilizada SCRUM, es un conjunto de buenas pr
  * Fomento de la innovación.
  * Reducción del margen de error y riesgos.
 
-***Nota:** Para mayor información puede visualizar la WIKI del proyecto*
-
 <a name="#features"></a> 
 ### Funcionalidades de la aplicación
 A continuación se describen cada una de las funcionalidades que ya se encuentra implementada en la aplicación.
