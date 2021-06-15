@@ -120,8 +120,7 @@ jobs:
     needs: [static-code-analysis]
     runs-on: ubuntu-latest
     steps:
-      - name: Merge me!
-        uses: ridedott/merge-me-action@v2
-        with:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_CI }}
-        timeout-minutes: 5
+      - name: automerge
+        uses: "pascalgn/automerge-action@v0.14.2"
+        env:
+          GITHUB_TOKEN: "${{ secrets.TOKEN_CI }}"
