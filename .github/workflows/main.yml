@@ -103,16 +103,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_CI }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonarqube --info
-        
-  merge:
-    name: Mezclar a la rama develop
-    needs: [static-code-analysis]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
-        
-      - name: automerge
-        uses: "pascalgn/automerge-action@v0.14.2"
+
+      - name: Validar resultado error
+        if: ${{ failure() }}
         env:
-          GITHUB_TOKEN: "${{ secrets.TOKEN_CI }}"
+         MENSAJE_ERROR: No se puede realizar el merge porque FALLO la revisión de código estático
+        run: echo "::set-output name=respuesta::${MENSAJE_ERROR}"
+        
+      - name: Validar resultado exitoso
+        if: ${{ success() }}
+        env:
+          MENSAJE_EXITO: El resultado del análisis estático fue exitoso
+        run: echo "::set-output name=respuesta::${MENSAJE_EXITO}"
