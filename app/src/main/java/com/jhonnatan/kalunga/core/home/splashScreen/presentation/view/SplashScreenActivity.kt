@@ -1,8 +1,10 @@
-package com.jhonnatan.kalunga.Core.Home.SplashScreen.Presentation.View
+package com.jhonnatan.kalunga.core.home.splashScreen.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.jhonnatan.kalunga.R
+import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
 
 /****
  * Project: kalunga
@@ -14,9 +16,11 @@ import com.jhonnatan.kalunga.R
 
 class SplashScreenActivity : AppCompatActivity() {
 
+    private var binding: ActivitySplashScreenBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash_screen)
 
 
 

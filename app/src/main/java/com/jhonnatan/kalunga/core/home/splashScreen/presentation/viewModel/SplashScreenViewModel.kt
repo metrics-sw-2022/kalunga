@@ -1,4 +1,4 @@
-package com.jhonnatan.kalunga.Core.Home.SplashScreen.Presentation.ViewModel
+package com.jhonnatan.kalunga.core.home.splashScreen.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 

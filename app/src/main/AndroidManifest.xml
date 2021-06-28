@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kalunga"
         android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".Core.Home.SplashScreen.Presentation.View.SplashScreenActivity">
+        <activity android:name=".core.home.splashScreen.presentation.view.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
