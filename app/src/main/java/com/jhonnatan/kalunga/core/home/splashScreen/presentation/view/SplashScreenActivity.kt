@@ -2,8 +2,11 @@ package com.jhonnatan.kalunga.core.home.splashScreen.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.jhonnatan.kalunga.R
+import com.jhonnatan.kalunga.core.home.splashScreen.presentation.viewModel.SplashScreenViewModel
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
 
 /****
@@ -16,13 +19,14 @@ import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private var binding: ActivitySplashScreenBinding? = null
+    private val viewModel: SplashScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_splash_screen)
-
-
+        val binding: ActivitySplashScreenBinding = DataBindingUtil.setContentView(
+            this,R.layout.activity_splash_screen)
+        binding.lifecycleOwner = this
+        binding.vModel = viewModel
 
     }
 }
