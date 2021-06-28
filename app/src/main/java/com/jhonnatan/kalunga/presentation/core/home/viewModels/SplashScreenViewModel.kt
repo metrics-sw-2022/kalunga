@@ -1,15 +1,9 @@
-package com.jhonnatan.kalunga.core.home.splashScreen.presentation.viewModel
+package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
-import android.annotation.SuppressLint
-import android.app.Application
-import android.content.Context
-import android.content.res.Resources
-import android.content.res.loader.ResourcesProvider
-import android.provider.Settings.Global.getString
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.jhonnatan.kalunga.R
-import kotlin.coroutines.coroutineContext
+import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
 
 /****
  * Project: kalunga
@@ -22,13 +16,18 @@ import kotlin.coroutines.coroutineContext
 class SplashScreenViewModel: ViewModel() {
 
     val version = MutableLiveData<String>()
+    val splashScreenUseCase  = SplashScreenUseCase()
 
     init {
-        setVersion("Versión 1.5.0")
+        getAppVersion()
     }
 
     fun setVersion(v:String){
         version.value = v
+    }
+
+    fun getAppVersion(){
+        setVersion(splashScreenUseCase.getAppVersion())
     }
 
 

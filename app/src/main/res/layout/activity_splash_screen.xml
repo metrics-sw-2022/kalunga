@@ -7,14 +7,14 @@
 
         <variable
             name="vModel"
-            type="com.jhonnatan.kalunga.core.home.splashScreen.presentation.viewModel.SplashScreenViewModel" />
+            type="com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/fondo_inicio"
-        tools:context=".core.home.splashScreen.presentation.view.SplashScreenActivity">
+        tools:context=".presentation.core.home.views.SplashScreenActivity">
 
         <ImageView
             android:id="@+id/imageViewLogo"

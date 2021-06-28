@@ -1,12 +1,11 @@
-package com.jhonnatan.kalunga.core.home.splashScreen.presentation.view
+package com.jhonnatan.kalunga.presentation.core.home.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.core.home.splashScreen.presentation.viewModel.SplashScreenViewModel
+import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
 
 /****
