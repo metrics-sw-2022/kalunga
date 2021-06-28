@@ -3,10 +3,13 @@ package com.jhonnatan.kalunga.presentation.core.home.views
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
+import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 
 /****
  * Project: kalunga
@@ -18,10 +21,12 @@ import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val viewModel: SplashScreenViewModel by viewModels()
+    private lateinit var viewModel: SplashScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val viewModelFactory = SplashScreenViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(this, viewModelFactory)[SplashScreenViewModel::class.java]
         val binding: ActivitySplashScreenBinding = DataBindingUtil.setContentView(
             this,R.layout.activity_splash_screen)
         binding.lifecycleOwner = this
