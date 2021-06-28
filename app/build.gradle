@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'org.sonarqube'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
