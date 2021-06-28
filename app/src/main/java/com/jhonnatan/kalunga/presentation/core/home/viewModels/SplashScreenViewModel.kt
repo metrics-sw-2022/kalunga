@@ -1,8 +1,12 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
 
 /****
@@ -13,22 +17,39 @@ import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
  * All rights reserved 2021.
  ****/
 
-class SplashScreenViewModel: ViewModel() {
+class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
 
     val version = MutableLiveData<String>()
-    val splashScreenUseCase  = SplashScreenUseCase()
+    val splashScreenUseCase = SplashScreenUseCase(repository)
 
     init {
         getAppVersion()
     }
 
-    fun setVersion(v:String){
+    fun setVersion(v: String) {
         version.value = v
     }
 
-    fun getAppVersion(){
+    fun getAppVersion() {
         setVersion(splashScreenUseCase.getAppVersion())
     }
-
-
 }
+
+@Suppress("UNCHECKED_CAST")
+class SplashScreenViewModelFactory(private val mSplashScreenRepository: SplashScreenRepository) :
+    ViewModelProvider.NewInstanceFactory() {
+
+    companion object {
+        @Volatile
+        private var instance: SplashScreenViewModelFactory? = null
+        fun getInstance(context: Context): SplashScreenViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: SplashScreenViewModelFactory(Injection.providerSplashScreenRepository(context))
+            }
+    }
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return SplashScreenViewModel(mSplashScreenRepository) as T
+    }
+}
+

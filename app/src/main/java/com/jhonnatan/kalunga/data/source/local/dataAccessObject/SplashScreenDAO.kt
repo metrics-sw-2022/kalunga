@@ -13,7 +13,7 @@ import com.jhonnatan.kalunga.data.source.local.entities.Version
  ****/
 
 @Dao
-interface VersionDAO {
+interface SplashScreenDAO {
     @Query("SELECT * FROM version ORDER BY versionCode DESC LIMIT 1")
     fun lastVersion(): LiveData<Version>
 

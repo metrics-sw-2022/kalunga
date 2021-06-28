@@ -1,5 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+
 /****
  * Project: kalunga
  * From: com.jhonnatan.kalunga.domain.useCases
@@ -8,10 +10,11 @@ package com.jhonnatan.kalunga.domain.useCases
  * All rights reserved 2021.
  ****/
 
-class SplashScreenUseCase {
+class SplashScreenUseCase (private val repository: SplashScreenRepository){
 
     fun getAppVersion():String {
-        return ""
+        val version = repository.queryLast()
+        return version.toString()
     }
 
 }
