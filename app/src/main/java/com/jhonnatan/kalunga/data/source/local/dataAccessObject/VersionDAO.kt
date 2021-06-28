@@ -1,10 +1,7 @@
 package com.jhonnatan.kalunga.data.source.local.dataAccessObject
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 
 /****
@@ -15,8 +12,9 @@ import com.jhonnatan.kalunga.data.source.local.entities.Version
  * All rights reserved 2021.
  ****/
 
+@Dao
 interface VersionDAO {
-    @Query("SELECT MAX(versionCode) FROM version")
+    @Query("SELECT * FROM version ORDER BY versionCode DESC LIMIT 1")
     fun lastVersion(): LiveData<Version>
 
     @Insert

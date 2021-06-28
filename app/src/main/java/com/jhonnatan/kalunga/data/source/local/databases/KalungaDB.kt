@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.jhonnatan.kalunga.data.source.local.dataAccessObject.VersionDAO
+import com.jhonnatan.kalunga.data.source.local.entities.Converters
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 
 /****
@@ -20,6 +22,7 @@ import com.jhonnatan.kalunga.data.source.local.entities.Version
         Version::class],
     version = 1
 )
+@TypeConverters(Converters::class)
 abstract class KalungaDB: RoomDatabase() {
 
     abstract fun versionDAO(): VersionDAO
