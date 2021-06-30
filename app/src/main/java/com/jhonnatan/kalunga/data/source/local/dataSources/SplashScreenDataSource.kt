@@ -20,7 +20,7 @@ class SplashScreenDataSource private constructor(private val splashScreenDAO: Sp
             INSTANCE ?: SplashScreenDataSource(splashScreenDAO)
     }
 
-    fun queryLast(): LiveData<Version> = splashScreenDAO.lastVersion()
+    suspend fun queryLast(): List<Version> = splashScreenDAO.lastVersion()
 
     suspend fun insert(version: Version) = splashScreenDAO.insertVersion(version)
 

@@ -15,7 +15,7 @@ import com.jhonnatan.kalunga.data.source.local.entities.Version
 @Dao
 interface SplashScreenDAO {
     @Query("SELECT * FROM version ORDER BY versionCode DESC LIMIT 1")
-    fun lastVersion(): LiveData<Version>
+    suspend fun lastVersion(): List<Version>
 
     @Insert
     suspend fun insertVersion(version: Version)

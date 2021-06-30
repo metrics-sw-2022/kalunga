@@ -7,6 +7,7 @@ import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import java.util.*
+import java.util.jar.Pack200.Packer.TRUE
 
 /****
  * Project: kalunga
@@ -19,18 +20,19 @@ import java.util.*
 class SplashScreenUseCase (private val repository: SplashScreenRepository){
 
     suspend fun getAppVersion():String {
-        var versionName = ""
-        val version  = repository.queryLast()
-        version.map { x ->
-            versionName = x.versionName
-        }
-        if (versionName.equals("")){
+        val versionName: String
+        if (repository.queryLast().size == 1){
+            versionName= repository.queryLast()[0].versionName
+        } else {
             versionName = BuildConfig.VERSION_NAME
-            repository.insert(Version(
-                0,
-                BuildConfig.VERSION_CODE,
-                versionName,
-                Calendar.getInstance().time))
+            repository.insert(
+                Version(
+                    0,
+                    BuildConfig.VERSION_CODE,
+                    versionName,
+                    Calendar.getInstance().time
+                )
+            )
         }
         return "Versión " + versionName
     }

@@ -23,7 +23,7 @@ class SplashScreenRepository (private val splashScreenDataSource: SplashScreenDa
             }
     }
 
-    override fun queryLast(): LiveData<Version> {
+    override suspend fun queryLast(): List<Version> {
         return splashScreenDataSource.queryLast()
     }
 

@@ -13,7 +13,7 @@ import com.jhonnatan.kalunga.data.source.local.entities.Version
 
 interface SplashScreenRepositoryInterface {
 
-    fun queryLast(): LiveData<Version>
+    suspend fun queryLast(): List<Version>
 
     suspend fun insert(version: Version)
 
