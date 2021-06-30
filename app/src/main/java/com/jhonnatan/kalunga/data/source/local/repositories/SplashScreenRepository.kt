@@ -1,6 +1,5 @@
 package com.jhonnatan.kalunga.data.source.local.repositories
 
-import androidx.lifecycle.LiveData
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
 

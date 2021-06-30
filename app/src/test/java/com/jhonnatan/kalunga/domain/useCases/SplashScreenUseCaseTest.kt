@@ -1,10 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases
 
 import android.content.Context
-import androidx.lifecycle.map
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.BuildConfig
@@ -12,6 +9,7 @@ import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
 import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -41,7 +39,20 @@ class SplashScreenUseCaseTest() {
     private lateinit var splashScreenDataSource: SplashScreenDataSource
     private lateinit var splashScreenRepository: SplashScreenRepository
     private lateinit var splashScreenUseCase: SplashScreenUseCase
+    val faker = Faker()
 
+    private suspend fun createVersions(i: Int) {
+        for (x in 1..i) {
+            splashScreenRepository.insert(
+                Version(
+                    0,
+                    x,
+                    "1.0.$x",
+                    Calendar.getInstance().time
+                )
+            )
+        }
+    }
 
     @Before
     fun setup() {
@@ -52,7 +63,7 @@ class SplashScreenUseCaseTest() {
         ).allowMainThreadQueries().build()
         splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
         splashScreenRepository = SplashScreenRepository.getInstance(splashScreenDataSource)
-        splashScreenUseCase  = SplashScreenUseCase(splashScreenRepository)
+        splashScreenUseCase = SplashScreenUseCase(splashScreenRepository)
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
@@ -62,33 +73,31 @@ class SplashScreenUseCaseTest() {
         mainThreadSurrogate.close()
         database.close()
     }
-    
+
     @Test
     fun `Caso 1`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = splashScreenUseCase.getAppVersion()
-            assertEquals("Versión " + BuildConfig.VERSION_NAME,result)
+            assertEquals("Versión " + BuildConfig.VERSION_NAME, result)
         }
     }
 
     @Test
     fun `Caso 2`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            splashScreenRepository.insert(Version(0,1,"1.0.0",Calendar.getInstance().time))
-            splashScreenRepository.insert(Version(0,2,"1.0.1",Calendar.getInstance().time))
+            createVersions(4)
             val result = splashScreenUseCase.getAppVersion()
-            splashScreenRepository.clear()
-            assertEquals("Versión 1.0.1" ,result)
+            assertEquals("Versión 1.0.1", result)
         }
     }
+
 
     @Test
     fun `Caso 3`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            splashScreenRepository.insert(Version(0,1,"1.0.0",Calendar.getInstance().time))
+            createVersions(1)
             val result = splashScreenUseCase.getAppVersion()
-            splashScreenRepository.clear()
-            assertEquals("Versión " + BuildConfig.VERSION_NAME ,result)
+            assertEquals("Versión " + BuildConfig.VERSION_NAME, result)
         }
     }
 }

@@ -2,8 +2,6 @@ package com.jhonnatan.kalunga.presentation.core.home.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R

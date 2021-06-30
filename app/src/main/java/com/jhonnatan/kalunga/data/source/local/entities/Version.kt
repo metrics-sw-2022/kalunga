@@ -16,7 +16,7 @@ import java.util.*
 
 @Parcelize
 @Entity
-data class Version(
+data class Version (
     @PrimaryKey(autoGenerate = true) var id: Int,
     var versionCode: Int,
     var versionName: String,

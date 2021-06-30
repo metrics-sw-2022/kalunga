@@ -1,6 +1,5 @@
 package com.jhonnatan.kalunga.data.source.local.dataAccessObject
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 
