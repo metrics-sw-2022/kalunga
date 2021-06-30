@@ -91,7 +91,6 @@ class SplashScreenUseCaseTest() {
         }
     }
 
-
     @Test
     fun `Caso 3`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
