@@ -1,13 +1,9 @@
 package com.jhonnatan.kalunga.domain.useCases
 
-import android.os.Build
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import java.util.*
-import java.util.jar.Pack200.Packer.TRUE
 
 /****
  * Project: kalunga
