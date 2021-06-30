@@ -5,9 +5,11 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
+import kotlinx.coroutines.launch
 
 /****
  * Project: kalunga
@@ -31,7 +33,9 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     }
 
     fun getAppVersion() {
-        setVersion(splashScreenUseCase.getAppVersion())
+        viewModelScope.launch {
+            setVersion(splashScreenUseCase.getAppVersion())
+        }
     }
 }
 

@@ -1,9 +1,12 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import java.util.*
 
 /****
  * Project: kalunga
@@ -15,13 +18,21 @@ import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenReposito
 
 class SplashScreenUseCase (private val repository: SplashScreenRepository){
 
-    fun getAppVersion():String {
-        var versionName = "Versión 1.5.0"
+    suspend fun getAppVersion():String {
+        var versionName = ""
         val version  = repository.queryLast()
         version.map { x ->
             versionName = x.versionName
         }
-        return  versionName
+        if (versionName.equals("")){
+            versionName = BuildConfig.VERSION_NAME
+            repository.insert(Version(
+                0,
+                BuildConfig.VERSION_CODE,
+                versionName,
+                Calendar.getInstance().time))
+        }
+        return "Versión " + versionName
     }
 
 }

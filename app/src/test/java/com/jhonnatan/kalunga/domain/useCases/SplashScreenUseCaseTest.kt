@@ -1,12 +1,17 @@
 package com.jhonnatan.kalunga.domain.useCases
 
 import android.content.Context
+import androidx.test.core.app.ActivityScenario.launch
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
 import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -22,7 +27,11 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @Suppress("NonAsciiCharacters")
+@ExperimentalCoroutinesApi
 class SplashScreenUseCaseTest() {
+
+
+    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     companion object {
         lateinit var context: Context
@@ -30,6 +39,7 @@ class SplashScreenUseCaseTest() {
         lateinit var splashScreenDataSource: SplashScreenDataSource
         lateinit var splashScreenRepository: SplashScreenRepository
         lateinit var splashScreenUseCase: SplashScreenUseCase
+
     }
 
     @Before
@@ -39,11 +49,20 @@ class SplashScreenUseCaseTest() {
         splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
         splashScreenRepository = SplashScreenRepository.getInstance(splashScreenDataSource)
         splashScreenUseCase  = SplashScreenUseCase(splashScreenRepository)
+        Dispatchers.setMain(mainThreadSurrogate)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
+        mainThreadSurrogate.close()
     }
     
     @Test
-    fun `Caso 1 Cuando consulta la tabla versión en base de datos y no existe ningún registro getAppVersión() debe devolver la versión de compilación`() {
-        val result = splashScreenUseCase.getAppVersion()
-        assertEquals("Versión " + BuildConfig.VERSION_NAME,result)
+    fun `Caso 1`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = splashScreenUseCase.getAppVersion()
+            assertEquals("Versión " + BuildConfig.VERSION_NAME,result)
+        }
     }
 }
