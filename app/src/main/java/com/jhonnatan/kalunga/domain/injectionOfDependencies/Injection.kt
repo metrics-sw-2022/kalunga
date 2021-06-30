@@ -17,7 +17,7 @@ object Injection {
 
     fun providerSplashScreenRepository(context: Context): SplashScreenRepository {
         val database = KalungaDB.getInstance(context)
-        val versionDataSource = SplashScreenDataSource.getInstance(database.versionDAO())
-        return SplashScreenRepository.getInstance(versionDataSource)
+        val splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
+        return SplashScreenRepository.getInstance(splashScreenDataSource)
     }
 }

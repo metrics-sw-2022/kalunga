@@ -25,7 +25,7 @@ import com.jhonnatan.kalunga.data.source.local.entities.Version
 @TypeConverters(Converters::class)
 abstract class KalungaDB: RoomDatabase() {
 
-    abstract fun versionDAO(): SplashScreenDAO
+    abstract fun splashScreenDAO(): SplashScreenDAO
 
     companion object {
         @Volatile

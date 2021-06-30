@@ -1,5 +1,8 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 
 /****
@@ -13,8 +16,12 @@ import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenReposito
 class SplashScreenUseCase (private val repository: SplashScreenRepository){
 
     fun getAppVersion():String {
-        val version = repository.queryLast()
-        return version.toString()
+        var versionName = "Versión 1.5.0"
+        val version  = repository.queryLast()
+        version.map { x ->
+            versionName = x.versionName
+        }
+        return  versionName
     }
 
 }

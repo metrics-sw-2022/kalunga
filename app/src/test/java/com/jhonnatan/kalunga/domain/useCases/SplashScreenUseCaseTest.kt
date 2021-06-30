@@ -1,9 +1,16 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.BuildConfig
-import org.junit.Test
-
+import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
+import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
+import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 
 /****
  * Project: kalunga
@@ -12,13 +19,30 @@ import org.junit.Assert.*
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  */
-@Suppress("NonAsciiCharacters")
-class SplashScreenUseCaseTest {
 
-    val splashScreenUseCase  = SplashScreenUseCase()
+@RunWith(AndroidJUnit4::class)
+@Suppress("NonAsciiCharacters")
+class SplashScreenUseCaseTest() {
+
+    companion object {
+        lateinit var context: Context
+        lateinit var database: KalungaDB
+        lateinit var splashScreenDataSource: SplashScreenDataSource
+        lateinit var splashScreenRepository: SplashScreenRepository
+        lateinit var splashScreenUseCase: SplashScreenUseCase
+    }
+
+    @Before
+    fun setup(){
+        context = ApplicationProvider.getApplicationContext<Context>()
+        database = KalungaDB.getInstance(context)
+        splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
+        splashScreenRepository = SplashScreenRepository.getInstance(splashScreenDataSource)
+        splashScreenUseCase  = SplashScreenUseCase(splashScreenRepository)
+    }
     
     @Test
-    fun `Caso 1 uando arranca la aplicación el método getAppVersión() debe devolver la versión de compilación`() {
+    fun `Caso 1 Cuando consulta la tabla versión en base de datos y no existe ningún registro getAppVersión() debe devolver la versión de compilación`() {
         val result = splashScreenUseCase.getAppVersion()
         assertEquals("Versión " + BuildConfig.VERSION_NAME,result)
     }
