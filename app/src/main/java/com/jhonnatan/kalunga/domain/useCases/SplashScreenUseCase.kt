@@ -16,9 +16,20 @@ import java.util.*
 class SplashScreenUseCase (private val repository: SplashScreenRepository){
 
     suspend fun getAppVersion():String {
-        val versionName: String
+        var versionName: String
         if (repository.queryLast().size == 1){
             versionName= repository.queryLast()[0].versionName
+            if (!versionName.equals(BuildConfig.VERSION_NAME)){
+                versionName = BuildConfig.VERSION_NAME
+                repository.insert(
+                    Version(
+                        0,
+                        BuildConfig.VERSION_CODE,
+                        versionName,
+                        Calendar.getInstance().time
+                    )
+                )
+            }
         } else {
             versionName = BuildConfig.VERSION_NAME
             repository.insert(
