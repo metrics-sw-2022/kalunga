@@ -2,14 +2,11 @@ package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /****
  * Project: kalunga
@@ -19,13 +16,22 @@ import kotlinx.coroutines.launch
  * All rights reserved 2021.
  ****/
 
+@DelicateCoroutinesApi
 class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
 
     val version = MutableLiveData<String>()
     val splashScreenUseCase = SplashScreenUseCase(repository)
+    val loading = MutableLiveData<Boolean>()
 
     init {
-        getAppVersion()
+        GlobalScope.launch {
+            loading.postValue(true)
+            withContext(Dispatchers.IO) {
+                getAppVersion()
+                delay(1000)
+            }
+            loading.postValue(false)
+        }
     }
 
     fun setVersion(v: String) {
@@ -39,6 +45,8 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     }
 }
 
+
+@DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 class SplashScreenViewModelFactory(private val mSplashScreenRepository: SplashScreenRepository) :
     ViewModelProvider.NewInstanceFactory() {
