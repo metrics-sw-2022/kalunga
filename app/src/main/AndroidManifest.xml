@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_redondo_kalunga"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Kalunga"
+        android:theme="@style/LaunchTheme"
         android:name="androidx.multidex.MultiDexApplication"
         android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".presentation.core.home.views.SplashScreenActivity"

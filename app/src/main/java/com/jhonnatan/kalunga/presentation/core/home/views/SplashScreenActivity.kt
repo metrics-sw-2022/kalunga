@@ -30,6 +30,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var viewModel: SplashScreenViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Kalunga)
         super.onCreate(savedInstanceState)
         val viewModelFactory = SplashScreenViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[SplashScreenViewModel::class.java]
