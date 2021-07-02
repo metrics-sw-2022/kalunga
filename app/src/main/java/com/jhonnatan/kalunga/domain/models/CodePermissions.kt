@@ -8,7 +8,7 @@ package com.jhonnatan.kalunga.domain.models
  * All rights reserved 2021.
  ****/
 
-enum class RequestCodePermissions(val code: Int) {
+enum class CodePermissions(val code: Int) {
     WRITE_STORAGE(0x1),
     CAMERA(0x2)
 }

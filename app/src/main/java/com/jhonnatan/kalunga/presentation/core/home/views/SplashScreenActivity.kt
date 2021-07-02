@@ -8,12 +8,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
-import com.jhonnatan.kalunga.domain.models.RequestCodePermissions
+import com.jhonnatan.kalunga.domain.models.CodePermissions
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -61,39 +60,10 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
         viewModel.validatePermissions.observe(this, {
             if(it.equals(true)){
-                validateWritePermission()
+                validatePermission(R.string.rationale_write_storage, CodePermissions.WRITE_STORAGE.code,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         })
-    }
-
-    private fun validateWritePermission() {
-        if (hasWritePermission()) {
-            validateCameraPermission()
-        } else {
-            EasyPermissions.requestPermissions(this,
-                getString(R.string.rationale_write_storage),
-                RequestCodePermissions.WRITE_STORAGE.code,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-    }
-
-    private fun validateCameraPermission() {
-        if (hasCameraPermission()) {
-            viewModel.loading.value = false
-        } else {
-            EasyPermissions.requestPermissions(this,
-                getString(R.string.rationale_camera),
-                RequestCodePermissions.CAMERA.code,
-                Manifest.permission.CAMERA)
-        }
-    }
-
-    private fun hasCameraPermission(): Boolean {
-        return EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)
-    }
-
-    private fun hasWritePermission(): Boolean {
-        return EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     private fun stopLoading(imageViewLoading: ImageView) {
@@ -106,6 +76,23 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
         imageViewLoading.startAnimation(animation)
     }
 
+    private fun validatePermission(message: Int, code: Int, permission: String) {
+        when (hasPermission(permission)) {
+            true -> {
+                when (code) {
+                    CodePermissions.CAMERA.code ->  viewModel.loading.value = false
+                    CodePermissions.WRITE_STORAGE.code -> validatePermission(R.string.rationale_camera,
+                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
+                }
+            }
+            false -> EasyPermissions.requestPermissions(this, getString(message), code, permission)
+        }
+    }
+
+    private fun hasPermission(permission: String): Boolean {
+        return EasyPermissions.hasPermissions(this, permission)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
         grantResults: IntArray
     ) {
@@ -116,10 +103,10 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
-        if (requestCode == RequestCodePermissions.WRITE_STORAGE.code){
-            validateCameraPermission()
-        } else if (requestCode == RequestCodePermissions.CAMERA.code) {
-            viewModel.loading.value = false
+        when (requestCode) {
+            CodePermissions.WRITE_STORAGE.code -> validatePermission(R.string.rationale_camera,
+                CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
+            CodePermissions.CAMERA.code -> viewModel.loading.value = false
         }
     }
 
