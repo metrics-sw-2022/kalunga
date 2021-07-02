@@ -1,8 +1,11 @@
 package com.jhonnatan.kalunga.presentation.core.home.views
 
+import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -10,11 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
+import com.jhonnatan.kalunga.domain.models.RequestCodePermissions
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
 /****
  * Project: kalunga
@@ -25,9 +31,10 @@ import kotlinx.coroutines.launch
  ****/
 
 @DelicateCoroutinesApi
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
     private lateinit var viewModel: SplashScreenViewModel
+    private val TAG = "SplashScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Kalunga)
@@ -51,6 +58,42 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
             }
         })
+
+        viewModel.validatePermissions.observe(this, {
+            if(it.equals(true)){
+                validateWritePermission()
+            }
+        })
+    }
+
+    private fun validateWritePermission() {
+        if (hasWritePermission()) {
+            validateCameraPermission()
+        } else {
+            EasyPermissions.requestPermissions(this,
+                getString(R.string.rationale_write_storage),
+                RequestCodePermissions.WRITE_STORAGE.code,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+    }
+
+    private fun validateCameraPermission() {
+        if (hasCameraPermission()) {
+            viewModel.loading.value = false
+        } else {
+            EasyPermissions.requestPermissions(this,
+                getString(R.string.rationale_camera),
+                RequestCodePermissions.CAMERA.code,
+                Manifest.permission.CAMERA)
+        }
+    }
+
+    private fun hasCameraPermission(): Boolean {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)
+    }
+
+    private fun hasWritePermission(): Boolean {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     private fun stopLoading(imageViewLoading: ImageView) {
@@ -61,5 +104,32 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun startLoading(imageViewLoading: ImageView) {
         val animation = AnimationUtils.loadAnimation(this, R.anim.loading)
         imageViewLoading.startAnimation(animation)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults,
+            this)
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
+        if (requestCode == RequestCodePermissions.WRITE_STORAGE.code){
+            validateCameraPermission()
+        } else if (requestCode == RequestCodePermissions.CAMERA.code) {
+            viewModel.loading.value = false
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
+        viewModel.loading.value = false
+        Toast.makeText(this, R.string.mensaje_cuando_no_acepta_los_permisos,
+            Toast.LENGTH_LONG).show()
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
     }
 }

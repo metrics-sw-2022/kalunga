@@ -1,8 +1,10 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import android.Manifest
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
 /****

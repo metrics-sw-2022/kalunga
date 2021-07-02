@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.*
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
@@ -22,15 +23,17 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     val version = MutableLiveData<String>()
     val splashScreenUseCase = SplashScreenUseCase(repository)
     val loading = MutableLiveData<Boolean>()
+    val validatePermissions = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
             loading.postValue(true)
             withContext(Dispatchers.IO) {
                 getAppVersion()
-                delay(1000)
+                validatePermissions.postValue(true)
+                //delay(1000)
             }
-            loading.postValue(false)
+            //loading.postValue(false)
         }
     }
 
