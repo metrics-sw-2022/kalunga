@@ -49,6 +49,9 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
         var message = ""
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             message = context.getString(R.string.rationale_write_storage)
+        else if (permission.equals(Manifest.permission.CAMERA)){
+            message = context.getString(R.string.rationale_camera)
+        }
         return message
     }
 
