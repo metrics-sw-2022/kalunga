@@ -1,19 +1,22 @@
 package com.jhonnatan.kalunga.presentation.core.home.views
 
 import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
-import com.jhonnatan.kalunga.domain.common.snackBars.CustomSnackBar
+import com.jhonnatan.kalunga.presentation.core.snackBars.CustomSnackBar
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.models.CodePermissions
+import com.jhonnatan.kalunga.domain.models.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -62,8 +65,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                 if (it.equals(true))
                     validatePermission(
                         R.string.rationale_write_storage, CodePermissions.WRITE_STORAGE.code,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         })
     }
@@ -85,8 +87,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                     CodePermissions.CAMERA.code -> checkUpdate()
                     CodePermissions.WRITE_STORAGE.code -> validatePermission(
                         R.string.rationale_camera,
-                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA
-                    )
+                        CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
                 }
             }
             false -> EasyPermissions.requestPermissions(this, getString(message), code, permission)
@@ -99,13 +100,11 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+        grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(
             requestCode, permissions, grantResults,
-            this
-        )
+            this)
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
@@ -113,8 +112,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
         when (requestCode) {
             CodePermissions.WRITE_STORAGE.code -> validatePermission(
                 R.string.rationale_camera,
-                CodePermissions.CAMERA.code, Manifest.permission.CAMERA
-            )
+                CodePermissions.CAMERA.code, Manifest.permission.CAMERA)
             CodePermissions.CAMERA.code -> checkUpdate()
         }
     }
@@ -122,10 +120,8 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
         viewModel.loading.postValue(false)
-        CustomSnackBar().showSnackBar(
-            resources.getString(R.string.permisos_denegados),
-            binding.layoutContain
-        )
+        CustomSnackBar().showSnackBar(resources.getString(R.string.permisos_denegados),
+            binding.layoutContain, TypeSnackBar.CLOSE_APP.code, this)
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
             AppSettingsDialog.Builder(this).build().show()
     }
@@ -135,10 +131,8 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
             //CustomSnackBar().showSnackBar("Hola", binding.layoutContain)
         else {
             viewModel.loading.postValue(false)
-            CustomSnackBar().showSnackBar(
-                resources.getString(R.string.sin_conexion),
-                binding.layoutContain
-            )
+            CustomSnackBar().showSnackBar(resources.getString(R.string.sin_conexion),
+                binding.layoutContain, TypeSnackBar.CLOSE_APP.code,this)
         }
     }
 }

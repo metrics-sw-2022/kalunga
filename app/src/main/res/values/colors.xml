@@ -7,4 +7,7 @@
     <color name="ocher">#949041</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="error">#944145</color>
+    <color name="info">#006E9A</color>
+    <color name="warning">#F0AD4E</color>
 </resources>
