@@ -22,7 +22,7 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
                 repository.queryLast()[0].versionName
             else
                 insertAppVersionDatabase()
-        return "Versión " + versionName
+        return "Versión $versionName"
     }
 
     private suspend fun insertAppVersionDatabase(): String {

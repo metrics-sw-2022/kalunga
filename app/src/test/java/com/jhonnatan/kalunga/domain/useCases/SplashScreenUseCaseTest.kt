@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import android.Manifest
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -9,6 +10,7 @@ import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
 import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.domain.models.CodePermissions
 import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
@@ -98,5 +100,12 @@ class SplashScreenUseCaseTest() {
             val result = splashScreenUseCase.getAppVersion()
             assertEquals("Versión " + BuildConfig.VERSION_NAME, result)
         }
+    }
+
+    @Test
+    fun `Caso 4`() {
+        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+        val result = splashScreenUseCase.getCodePermission(permission)
+        assertEquals(CodePermissions.WRITE_STORAGE.code,result)
     }
 }
