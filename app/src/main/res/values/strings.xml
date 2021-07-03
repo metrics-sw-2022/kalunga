@@ -5,8 +5,8 @@
     <string name="venecambios">Venecambios</string>
     <string name="bandera_de_venezuela">Bandera de venezuela</string>
     <string name="cargando">Cargando</string>
-    <string name="rationale_write_storage">Esta aplicación necesita acceso a su archivos para que pueda enviar información.</string>
-    <string name="rationale_camera">Esta aplicación necesita acceso a su cámara para que pueda tomar fotografías.</string>
+    <string name="rationale_write_storage">Esta aplicación necesita acceso a su archivos para que pueda enviar información</string>
+    <string name="rationale_camera">Esta aplicación necesita acceso a su cámara para que pueda tomar fotografías</string>
     <string name="permisos_denegados">Debe autorizar todos los permisos para continuar</string>
     <string name="sin_conexion">Debe tener internet para continuar</string>
     <string name="cerrar">CERRAR</string>

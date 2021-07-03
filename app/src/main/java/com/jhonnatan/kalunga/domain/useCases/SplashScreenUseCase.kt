@@ -48,4 +48,8 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
         }
     }
 
+    fun getMessagePermission(permission: String): String {
+        return ""
+    }
+
 }

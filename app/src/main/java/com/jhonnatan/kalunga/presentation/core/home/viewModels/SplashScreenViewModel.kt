@@ -60,9 +60,9 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
 
     fun hasPermission(context: Context, permission: String){
         hasPermission.postValue(EasyPermissions.hasPermissions(context, permission))
-        typePermission.postValue(permission)
-        codPermission.postValue(splashScreenUseCase.getCodePermission(permission))
-        messagePermission.postValue("splashScreenUseCase.getMessagePermission(permission)")
+        typePermission.value = permission
+        codPermission.value = splashScreenUseCase.getCodePermission(permission)
+        messagePermission.value = splashScreenUseCase.getMessagePermission(permission)
     }
 }
 

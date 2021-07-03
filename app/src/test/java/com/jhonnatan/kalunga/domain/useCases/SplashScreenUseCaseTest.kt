@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.BuildConfig
+import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
 import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
 import com.jhonnatan.kalunga.data.source.local.entities.Version
@@ -41,7 +42,10 @@ class SplashScreenUseCaseTest() {
     private lateinit var splashScreenDataSource: SplashScreenDataSource
     private lateinit var splashScreenRepository: SplashScreenRepository
     private lateinit var splashScreenUseCase: SplashScreenUseCase
+    private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    private val permissionCamera = Manifest.permission.CAMERA
     val faker = Faker()
+
 
 
 
@@ -106,15 +110,19 @@ class SplashScreenUseCaseTest() {
 
     @Test
     fun `Caso 4`() {
-        val permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        val result = splashScreenUseCase.getCodePermission(permission)
+        val result = splashScreenUseCase.getCodePermission(permissionWriteStorge)
         assertEquals(CodePermissions.WRITE_STORAGE.code,result)
     }
 
     @Test
     fun `Caso 5`() {
-        val permission = Manifest.permission.CAMERA
-        val result = splashScreenUseCase.getCodePermission(permission)
+        val result = splashScreenUseCase.getCodePermission(permissionCamera)
         assertEquals(CodePermissions.CAMERA.code,result)
+    }
+
+    @Test
+    fun `Caso 6`() {
+        val result = splashScreenUseCase.getMessagePermission(permissionWriteStorge)
+        assertEquals(context.getString(R.string.rationale_write_storage),result)
     }
 }
