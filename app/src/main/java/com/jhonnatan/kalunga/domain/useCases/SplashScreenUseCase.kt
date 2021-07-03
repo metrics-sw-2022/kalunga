@@ -44,6 +44,8 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
         var codePermission = CodePermissions.DEFAULT.code
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             codePermission = CodePermissions.WRITE_STORAGE.code
+        else if (permission.equals(Manifest.permission.CAMERA))
+            codePermission = CodePermissions.CAMERA.code
         return codePermission
     }
 
