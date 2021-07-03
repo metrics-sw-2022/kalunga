@@ -1,11 +1,14 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.*
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
+import com.jhonnatan.kalunga.domain.models.CodePermissions
 import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.EasyPermissions
@@ -27,11 +30,10 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     val validatePermissions = MutableLiveData<Boolean>()
     val snackBarTextCloseApp = MutableLiveData<String>()
     val isConected = MutableLiveData<Boolean>()
-    val hasPermission = MutableLiveData<Boolean>()
     val typePermission = MutableLiveData<String>()
     val codPermission = MutableLiveData<Int>()
     val messagePermission = MutableLiveData<String>()
-    val stateCode = MutableLiveData<Boolean>()
+    val requestPermission = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
@@ -57,14 +59,22 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
         isConected.postValue(UtilsNetwork().isOnline(context))
     }
 
-    fun hasPermission(context: Context, permission: String){
-        hasPermission.postValue(EasyPermissions.hasPermissions(context, permission))
+    fun hasPermission(context: Context, permission: String) {
         typePermission.value = permission
         codPermission.value = splashScreenUseCase.getCodePermission(permission)
         messagePermission.value = splashScreenUseCase.getMessagePermission(permission, context)
+        when (EasyPermissions.hasPermissions(context, permission)) {
+            true -> when (codPermission.value) {
+                CodePermissions.CAMERA.code -> checkOnline(context)
+                CodePermissions.WRITE_STORAGE.code -> hasPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                )
+            }
+            false -> requestPermission.postValue(true)
+        }
     }
 }
-
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
@@ -76,7 +86,11 @@ class SplashScreenViewModelFactory(private val mSplashScreenRepository: SplashSc
         private var instance: SplashScreenViewModelFactory? = null
         fun getInstance(context: Context): SplashScreenViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: SplashScreenViewModelFactory(Injection.providerSplashScreenRepository(context))
+                instance ?: SplashScreenViewModelFactory(
+                    Injection.providerSplashScreenRepository(
+                        context
+                    )
+                )
             }
     }
 

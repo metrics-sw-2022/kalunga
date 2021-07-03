@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.presentation.core.home.views
 
 import android.Manifest
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
@@ -57,30 +58,13 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                 viewModel.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         })
 
-        viewModel.hasPermission.observe(this, {
-            when (it) {
-                true -> {
-                    viewModel.stateCode.postValue(true)
-                }
-                false -> EasyPermissions.requestPermissions(
-                    this,
-                    viewModel.messagePermission.value!!,
-                    viewModel.codPermission.value!!,
-                    viewModel.typePermission.value
-                )
-            }
-        })
-
-        viewModel.stateCode.observe(this, {
-            if (it.equals(true)) {
-                when (viewModel.codPermission.value) {
-                    CodePermissions.CAMERA.code -> viewModel.checkOnline(this)
-                    CodePermissions.WRITE_STORAGE.code -> viewModel.hasPermission(
-                        this,
-                        Manifest.permission.CAMERA
-                    )
-                }
-            }
+        viewModel.requestPermission.observe(this, {
+            EasyPermissions.requestPermissions(
+                this,
+                viewModel.messagePermission.value!!,
+                viewModel.codPermission.value!!,
+                viewModel.typePermission.value
+            )
         })
 
         viewModel.snackBarTextCloseApp.observe(this, {
