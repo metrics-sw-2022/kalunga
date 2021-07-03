@@ -1,11 +1,8 @@
-package com.jhonnatan.kalunga.presentation.core.snackBars
+package com.jhonnatan.kalunga.presentation.core.utils
 
-import android.app.Application
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
 import com.jhonnatan.kalunga.R

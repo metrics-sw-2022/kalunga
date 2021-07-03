@@ -1,13 +1,15 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.*
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
+import com.jhonnatan.kalunga.presentation.core.home.views.SplashScreenActivity
 import kotlinx.coroutines.*
+import pub.devrel.easypermissions.EasyPermissions
 
 /****
  * Project: kalunga
@@ -24,6 +26,13 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     val splashScreenUseCase = SplashScreenUseCase(repository)
     val loading = MutableLiveData<Boolean>()
     val validatePermissions = MutableLiveData<Boolean>()
+    val snackBarTextCloseApp = MutableLiveData<String>()
+    val isConected = MutableLiveData<Boolean>()
+    val hasPermission = MutableLiveData<Boolean>()
+    val typePermission = MutableLiveData<String>()
+    val codPermission = MutableLiveData<Int>()
+    val messagePermission = MutableLiveData<String>()
+    val stateCode = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
@@ -31,9 +40,7 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
             withContext(Dispatchers.IO) {
                 getAppVersion()
                 validatePermissions.postValue(true)
-                //delay(1000)
             }
-            //loading.postValue(false)
         }
     }
 
@@ -45,6 +52,17 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
         viewModelScope.launch {
             setVersion(splashScreenUseCase.getAppVersion())
         }
+    }
+
+    fun checkOnline(context: Context) {
+        isConected.postValue(UtilsNetwork().isOnline(context))
+    }
+
+    fun hasPermission(context: Context, permission: String){
+        hasPermission.postValue(EasyPermissions.hasPermissions(context, permission))
+        typePermission.postValue(permission)
+        codPermission.postValue(splashScreenUseCase.getCodePermission(permission))
+        messagePermission.postValue("splashScreenUseCase.getMessagePermission(permission)")
     }
 }
 

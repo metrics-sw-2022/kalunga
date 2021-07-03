@@ -8,6 +8,7 @@ buildscript {
     ext.faker_version = '1.7.1'
     ext.multidex_version = '2.0.1'
     ext.easypermissions_version = '3.0.0'
+    ext.playcore_version = '1.10.0'
     repositories {
         google()
         mavenCentral()

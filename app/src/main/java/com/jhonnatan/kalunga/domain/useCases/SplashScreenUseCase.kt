@@ -38,4 +38,8 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
         return versionName
     }
 
+    fun getCodePermission(permission: String): Int? {
+        return null
+    }
+
 }
