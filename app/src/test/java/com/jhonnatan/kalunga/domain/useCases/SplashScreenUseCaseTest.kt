@@ -44,6 +44,7 @@ class SplashScreenUseCaseTest() {
     private lateinit var splashScreenUseCase: SplashScreenUseCase
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val permissionCamera = Manifest.permission.CAMERA
+    private val permissionInternet = Manifest.permission.INTERNET
     val faker = Faker()
 
 
@@ -130,5 +131,11 @@ class SplashScreenUseCaseTest() {
     fun `Caso 7`() {
         val result = splashScreenUseCase.getMessagePermission(permissionCamera, context)
         assertEquals(context.getString(R.string.rationale_camera),result)
+    }
+
+    @Test
+    fun `Caso 8`() {
+        val result = splashScreenUseCase.getMessagePermission(permissionInternet, context)
+        assertEquals(context.getString(R.string.rationale_default),result)
     }
 }
