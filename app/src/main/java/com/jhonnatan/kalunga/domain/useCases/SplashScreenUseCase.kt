@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import android.Manifest
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
@@ -38,8 +39,11 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
         return versionName
     }
 
-    fun getCodePermission(permission: String): Int? {
-        return null
+    fun getCodePermission(permission: String): Int {
+        var codePermission = 0
+        if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            codePermission = 1
+        return codePermission
     }
 
 }
