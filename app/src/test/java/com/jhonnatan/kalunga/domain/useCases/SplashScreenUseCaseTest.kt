@@ -43,6 +43,8 @@ class SplashScreenUseCaseTest() {
     private lateinit var splashScreenUseCase: SplashScreenUseCase
     val faker = Faker()
 
+
+
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {
             splashScreenRepository.insert(
