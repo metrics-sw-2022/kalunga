@@ -4,6 +4,7 @@ import android.Manifest
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.domain.models.CodePermissions
 import java.util.*
 
 /****
@@ -40,9 +41,9 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
     }
 
     fun getCodePermission(permission: String): Int {
-        var codePermission = 0
+        var codePermission = CodePermissions.DEFAULT.code
         if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            codePermission = 1
+            codePermission = CodePermissions.WRITE_STORAGE.code
         return codePermission
     }
 

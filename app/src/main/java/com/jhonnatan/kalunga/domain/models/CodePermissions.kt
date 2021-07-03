@@ -9,6 +9,7 @@ package com.jhonnatan.kalunga.domain.models
  ****/
 
 enum class CodePermissions(val code: Int) {
+    DEFAULT(0x0),
     WRITE_STORAGE(0x1),
     CAMERA(0x2)
 }
