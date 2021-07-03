@@ -7,7 +7,6 @@ import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenReposito
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.SplashScreenUseCase
-import com.jhonnatan.kalunga.presentation.core.home.views.SplashScreenActivity
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -62,7 +61,7 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
         hasPermission.postValue(EasyPermissions.hasPermissions(context, permission))
         typePermission.value = permission
         codPermission.value = splashScreenUseCase.getCodePermission(permission)
-        messagePermission.value = splashScreenUseCase.getMessagePermission(permission)
+        messagePermission.value = splashScreenUseCase.getMessagePermission(permission, context)
     }
 }
 
