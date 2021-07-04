@@ -154,4 +154,5 @@ class SplashScreenUseCaseTest() {
         val result = splashScreenUseCase.shouldBeUpdated(fakeAppUpdateManager)
         assertEquals(true,result)
     }
+
 }

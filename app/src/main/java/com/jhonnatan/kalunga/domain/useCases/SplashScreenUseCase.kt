@@ -58,13 +58,10 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
     }
 
     fun shouldBeUpdated(appUpdateManager: AppUpdateManager): Boolean {
-        var isUpdate = false
         val appUpdateInfoTask = appUpdateManager.appUpdateInfo.result
-        if (appUpdateInfoTask.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) && appUpdateInfoTask.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE)
-            isUpdate = true
-        else if (appUpdateInfoTask.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
-            isUpdate = true
-        return isUpdate
+        return (appUpdateInfoTask.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) &&
+                appUpdateInfoTask.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) ||
+                (appUpdateInfoTask.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
     }
 
 }
