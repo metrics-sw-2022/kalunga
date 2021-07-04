@@ -2,7 +2,10 @@ package com.jhonnatan.kalunga.domain.useCases
 
 import android.Manifest
 import android.content.Context
+import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.source.local.entities.Version
@@ -55,7 +58,11 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
     }
 
     fun shouldBeUpdated(appUpdateManager: AppUpdateManager): Boolean {
-        return false
+        var isUpdate = false
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo.result
+        if (appUpdateInfoTask.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) && appUpdateInfoTask.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE)
+            isUpdate = true
+        return isUpdate
     }
 
 }
