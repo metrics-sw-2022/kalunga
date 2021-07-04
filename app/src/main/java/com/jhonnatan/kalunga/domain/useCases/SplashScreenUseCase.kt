@@ -2,6 +2,7 @@ package com.jhonnatan.kalunga.domain.useCases
 
 import android.Manifest
 import android.content.Context
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.source.local.entities.Version
@@ -51,6 +52,10 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
             Manifest.permission.CAMERA -> context.getString(R.string.rationale_camera)
             else -> context.getString(R.string.rationale_default)
         }
+    }
+
+    fun shouldBeUpdated(appUpdateManager: AppUpdateManager): Boolean {
+        return false
     }
 
 }

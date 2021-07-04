@@ -5,6 +5,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.testing.FakeAppUpdateManager
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.Task
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
@@ -12,7 +17,6 @@ import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSourc
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import com.jhonnatan.kalunga.domain.models.CodePermissions
-import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -21,6 +25,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 import java.util.*
 
 /****
@@ -37,7 +42,7 @@ import java.util.*
 class SplashScreenUseCaseTest() {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
-    private lateinit var context: Context
+    private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
     private lateinit var splashScreenDataSource: SplashScreenDataSource
     private lateinit var splashScreenRepository: SplashScreenRepository
@@ -45,10 +50,7 @@ class SplashScreenUseCaseTest() {
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val permissionCamera = Manifest.permission.CAMERA
     private val permissionInternet = Manifest.permission.INTERNET
-    val faker = Faker()
-
-
-
+    val fakeAppUpdateManager by lazy { Mockito.spy(FakeAppUpdateManager(context)) }
 
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {
@@ -65,7 +67,6 @@ class SplashScreenUseCaseTest() {
 
     @Before
     fun setup() {
-        context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(
             context,
             KalungaDB::class.java
@@ -137,5 +138,12 @@ class SplashScreenUseCaseTest() {
     fun `Caso 8`() {
         val result = splashScreenUseCase.getMessagePermission(permissionInternet, context)
         assertEquals(context.getString(R.string.rationale_default),result)
+    }
+
+    @Test
+    fun `Caso 9`() {
+        fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.UPDATE_AVAILABLE, AppUpdateType.IMMEDIATE)
+        val result = splashScreenUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        assertEquals(true,result)
     }
 }

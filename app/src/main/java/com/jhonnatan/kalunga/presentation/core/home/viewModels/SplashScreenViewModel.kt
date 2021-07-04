@@ -1,10 +1,12 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
-
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.*
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
@@ -34,6 +36,7 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     val codPermission = MutableLiveData<Int>()
     val messagePermission = MutableLiveData<String>()
     val requestPermission = MutableLiveData<Boolean>()
+    val startUpdateFlow = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
@@ -73,6 +76,10 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
             }
             false -> requestPermission.postValue(true)
         }
+    }
+
+    fun checkUpdate(appUpdateManager: AppUpdateManager) {
+        startUpdateFlow.postValue(splashScreenUseCase.shouldBeUpdated(appUpdateManager))
     }
 }
 

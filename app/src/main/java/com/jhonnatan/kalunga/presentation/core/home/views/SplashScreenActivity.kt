@@ -1,7 +1,6 @@
 package com.jhonnatan.kalunga.presentation.core.home.views
 
 import android.Manifest
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
@@ -10,13 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
-import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import com.jhonnatan.kalunga.domain.models.CodePermissions
 import com.jhonnatan.kalunga.domain.models.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
+import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,11 +37,13 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
     private lateinit var viewModel: SplashScreenViewModel
     private lateinit var binding: ActivitySplashScreenBinding
+    private var appUpdateManager: AppUpdateManager? = null
     private val TAG = "SplashScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Kalunga)
         super.onCreate(savedInstanceState)
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         val viewModelFactory = SplashScreenViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[SplashScreenViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash_screen)
@@ -78,7 +81,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
         viewModel.isConected.observe(this, {
             if (it.equals(true))
-            //co
+                viewModel.checkUpdate(appUpdateManager!!)
             else {
                 viewModel.loading.postValue(false)
                 viewModel.snackBarTextCloseApp.postValue(resources.getString(R.string.sin_conexion))
