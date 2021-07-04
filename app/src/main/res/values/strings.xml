@@ -17,4 +17,11 @@
     <string name="on_permissions_granted">onPermissionsGranted:</string>
     <string name="double_point">:</string>
     <string name="permission_denied">onPermissionsDenied:</string>
+    <string name="logo_kalunga_fondo_blanco">Logo Kalunga fondo blanco</string>
+    <string name="env_a_dinero_de_manera_segura_y_responsable">Envía dinero de manera segura y responsable</string>
+    <string name="te_ofrecemos_la_mejor_tasa">¡Te ofrecemos la mejor tasa!</string>
+    <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="iniciar_sesi_n_con_facebook">Iniciar sesión con Facebook</string>
+    <string name="continuar_con_google">Continuar con Google</string>
+    <string name="reg_strate_gratis">Regístrate gratis</string>
 </resources>
