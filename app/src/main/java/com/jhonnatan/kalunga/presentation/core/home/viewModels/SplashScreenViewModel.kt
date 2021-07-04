@@ -4,9 +4,6 @@ import android.Manifest
 import android.content.Context
 import androidx.lifecycle.*
 import com.google.android.play.core.appupdate.AppUpdateInfo
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
@@ -37,6 +34,7 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
     val messagePermission = MutableLiveData<String>()
     val requestPermission = MutableLiveData<Boolean>()
     val startUpdateFlow = MutableLiveData<Boolean>()
+    val appUpdateInfoPlayStore = MutableLiveData<AppUpdateInfo>()
 
     init {
         GlobalScope.launch {
@@ -78,8 +76,9 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
         }
     }
 
-    fun checkUpdate(appUpdateManager: AppUpdateManager) {
-        startUpdateFlow.postValue(splashScreenUseCase.shouldBeUpdated(appUpdateManager))
+    fun checkUpdate(appUpdateInfo: AppUpdateInfo) {
+        appUpdateInfoPlayStore.value = appUpdateInfo
+        startUpdateFlow.postValue(splashScreenUseCase.shouldBeUpdated(appUpdateInfo))
     }
 }
 

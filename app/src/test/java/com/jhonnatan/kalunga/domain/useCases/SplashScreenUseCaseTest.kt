@@ -5,11 +5,9 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.testing.FakeAppUpdateManager
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.tasks.Task
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
@@ -143,7 +141,8 @@ class SplashScreenUseCaseTest() {
     @Test
     fun `Caso 09`() {
         fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.UPDATE_AVAILABLE, AppUpdateType.IMMEDIATE)
-        val result = splashScreenUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        val appUpdateInfoTask = fakeAppUpdateManager!!.appUpdateInfo
+        val result = splashScreenUseCase.shouldBeUpdated(appUpdateInfoTask.result)
         assertEquals(true,result)
     }
 
@@ -151,7 +150,8 @@ class SplashScreenUseCaseTest() {
     fun `Caso 10`() {
         fakeAppUpdateManager.downloadStarts()
         fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
-        val result = splashScreenUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        val appUpdateInfoTask = fakeAppUpdateManager!!.appUpdateInfo
+        val result = splashScreenUseCase.shouldBeUpdated(appUpdateInfoTask.result)
         assertEquals(true,result)
     }
 

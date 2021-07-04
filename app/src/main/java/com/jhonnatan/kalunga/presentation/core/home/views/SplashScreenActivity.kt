@@ -1,28 +1,33 @@
 package com.jhonnatan.kalunga.presentation.core.home.views
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
+import com.jhonnatan.kalunga.domain.models.CodeActivityForResult
 import com.jhonnatan.kalunga.domain.models.CodePermissions
 import com.jhonnatan.kalunga.domain.models.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+
 
 /****
  * Project: kalunga
@@ -80,13 +85,71 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
         })
 
         viewModel.isConected.observe(this, {
-            if (it.equals(true))
-                viewModel.checkUpdate(appUpdateManager!!)
-            else {
+            if (it.equals(true)) {
+                val appUpdateInfoTask = appUpdateManager!!.appUpdateInfo
+                if (appUpdateInfoTask.isSuccessful)
+                    appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                        viewModel.checkUpdate(
+                            appUpdateInfo
+                        )
+                    }
+                else
+                    goToStartingScreen()
+            } else {
                 viewModel.loading.postValue(false)
-                viewModel.snackBarTextCloseApp.postValue(resources.getString(R.string.sin_conexion))
+                viewModel.snackBarTextCloseApp.postValue(getString(R.string.sin_conexion))
             }
         })
+
+        viewModel.startUpdateFlow.observe(this, {
+            if (it.equals(true))
+                starUpdateFlow()
+            else
+                goToStartingScreen()
+        })
+    }
+
+    private fun goToStartingScreen() {
+        lifecycleScope.launch{
+            withContext(Dispatchers.IO){
+                delay(500)
+                viewModel.loading.postValue(false)
+                val intent = Intent(this@SplashScreenActivity, StartingScreen::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+                finish()
+            }
+        }
+    }
+
+    private fun starUpdateFlow() {
+        try {
+            appUpdateManager!!.startUpdateFlowForResult(
+                viewModel.appUpdateInfoPlayStore.value!!,
+                AppUpdateType.IMMEDIATE,
+                this,
+                CodeActivityForResult.IMMEDIATE_APP_UPDATE_REQ_CODE.code
+            )
+        } catch (e: SendIntentException) {
+            Log.e(TAG, "updateAppError:" + e.printStackTrace())
+        }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CodeActivityForResult.IMMEDIATE_APP_UPDATE_REQ_CODE.code) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, getString(R.string.actualizacion_cancelada), Toast.LENGTH_LONG)
+                    .show()
+            } else if (resultCode == RESULT_OK) {
+                Toast.makeText(this, getString(R.string.actualizacion_exitosa), Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                Toast.makeText(this, getString(R.string.actualizacion_fallida), Toast.LENGTH_LONG)
+                    .show()
+                viewModel.checkOnline(this)
+            }
+        }
     }
 
     private fun animationLoading(imageViewLoading: ImageView, state: Boolean) {
@@ -107,7 +170,10 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size)
+        Log.d(
+            TAG,
+            getString(R.string.on_permissions_granted) + requestCode + getString(R.string.double_point) + perms.size
+        )
         when (requestCode) {
             CodePermissions.WRITE_STORAGE.code -> viewModel.hasPermission(
                 this,
@@ -118,9 +184,12 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size)
+        Log.d(
+            TAG,
+            getString(R.string.permission_denied) + requestCode + getString(R.string.double_point) + perms.size
+        )
         viewModel.loading.postValue(false)
-        viewModel.snackBarTextCloseApp.postValue(resources.getString(R.string.permisos_denegados))
+        viewModel.snackBarTextCloseApp.postValue(getString(R.string.permisos_denegados))
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms))
             AppSettingsDialog.Builder(this).build().show()
     }
