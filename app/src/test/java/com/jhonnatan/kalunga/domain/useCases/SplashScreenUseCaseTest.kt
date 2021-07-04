@@ -85,7 +85,7 @@ class SplashScreenUseCaseTest() {
     }
 
     @Test
-    fun `Caso 1`(): Unit = runBlocking {
+    fun `Caso 01`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = splashScreenUseCase.getAppVersion()
             assertEquals("Versión " + BuildConfig.VERSION_NAME, result)
@@ -93,7 +93,7 @@ class SplashScreenUseCaseTest() {
     }
 
     @Test
-    fun `Caso 2`(): Unit = runBlocking {
+    fun `Caso 02`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             createVersions(4)
             val result = splashScreenUseCase.getAppVersion()
@@ -102,7 +102,7 @@ class SplashScreenUseCaseTest() {
     }
 
     @Test
-    fun `Caso 3`(): Unit = runBlocking {
+    fun `Caso 03`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             createVersions(1)
             val result = splashScreenUseCase.getAppVersion()
@@ -111,38 +111,45 @@ class SplashScreenUseCaseTest() {
     }
 
     @Test
-    fun `Caso 4`() {
+    fun `Caso 04`() {
         val result = splashScreenUseCase.getCodePermission(permissionWriteStorge)
         assertEquals(CodePermissions.WRITE_STORAGE.code,result)
     }
 
     @Test
-    fun `Caso 5`() {
+    fun `Caso 05`() {
         val result = splashScreenUseCase.getCodePermission(permissionCamera)
         assertEquals(CodePermissions.CAMERA.code,result)
     }
 
     @Test
-    fun `Caso 6`() {
+    fun `Caso 06`() {
         val result = splashScreenUseCase.getMessagePermission(permissionWriteStorge, context)
         assertEquals(context.getString(R.string.rationale_write_storage),result)
     }
 
     @Test
-    fun `Caso 7`() {
+    fun `Caso 07`() {
         val result = splashScreenUseCase.getMessagePermission(permissionCamera, context)
         assertEquals(context.getString(R.string.rationale_camera),result)
     }
 
     @Test
-    fun `Caso 8`() {
+    fun `Caso 08`() {
         val result = splashScreenUseCase.getMessagePermission(permissionInternet, context)
         assertEquals(context.getString(R.string.rationale_default),result)
     }
 
     @Test
-    fun `Caso 9`() {
+    fun `Caso 09`() {
         fakeAppUpdateManager.setUpdateAvailable(UpdateAvailability.UPDATE_AVAILABLE, AppUpdateType.IMMEDIATE)
+        val result = splashScreenUseCase.shouldBeUpdated(fakeAppUpdateManager)
+        assertEquals(true,result)
+    }
+
+    @Test
+    fun `Caso 10`() {
+        fakeAppUpdateManager.downloadStarts()
         val result = splashScreenUseCase.shouldBeUpdated(fakeAppUpdateManager)
         assertEquals(true,result)
     }
