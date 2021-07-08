@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.data.repositories.VersionRepository
+import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import kotlinx.coroutines.DelicateCoroutinesApi
 
@@ -20,6 +21,8 @@ class StartingScreenViewModel: ViewModel() {
 
     val navigateToSignUp = MutableLiveData<Boolean>()
     val loginGoogle = MutableLiveData<Boolean>()
+    val isConected = MutableLiveData<Boolean>()
+    val snackBarTextError = MutableLiveData<String>()
 
     init {
         navigateToSignUp.value = false
@@ -32,6 +35,10 @@ class StartingScreenViewModel: ViewModel() {
 
     fun loginGoogle (){
         loginGoogle.value = true
+    }
+
+    fun checkOnline(context: Context) {
+        isConected.postValue(UtilsNetwork().isOnline(context))
     }
 
 }

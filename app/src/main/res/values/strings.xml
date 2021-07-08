@@ -24,4 +24,6 @@
     <string name="iniciar_sesi_n_con_facebook">Iniciar sesión con Facebook</string>
     <string name="continuar_con_google">Continuar con Google</string>
     <string name="reg_strate_gratis">Regístrate gratis</string>
+    <string name="debe_tener_internet_continuar_google">Debe tener internet para continuar con Google</string>
+    <string name="error_login_google">Error al continuar con Google</string>
 </resources>

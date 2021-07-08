@@ -9,5 +9,6 @@ package com.jhonnatan.kalunga.domain.models
  ****/
 
 enum class CodeActivityForResult(val code: Int) {
-    IMMEDIATE_APP_UPDATE_REQ_CODE(0x1)
+    IMMEDIATE_APP_UPDATE_REQ_CODE(0x1),
+    LOGIN_GOOGLE(0X2)
 }
