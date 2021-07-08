@@ -1,6 +1,11 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.jhonnatan.kalunga.data.repositories.VersionRepository
+import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****
  * Project: kalunga
@@ -12,4 +17,22 @@ import androidx.lifecycle.ViewModel
 
 class StartingScreenViewModel: ViewModel() {
 
+}
+
+@DelicateCoroutinesApi
+@Suppress("UNCHECKED_CAST")
+class StartingScreenViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+
+    companion object {
+        @Volatile
+        private var instance: StartingScreenViewModelFactory? = null
+        fun getInstance(context: Context): StartingScreenViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: StartingScreenViewModelFactory()
+            }
+    }
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return StartingScreenViewModel() as T
+    }
 }

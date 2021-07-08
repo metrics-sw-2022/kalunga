@@ -20,4 +20,5 @@ object Injection {
         val splashScreenDataSource = VersionDataSource.getInstance(database.versionDAO())
         return VersionRepository.getInstance(splashScreenDataSource)
     }
+
 }
