@@ -21,6 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/LaunchTheme">
         <activity
+            android:name=".presentation.core.session.views.SignUpActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".presentation.core.home.views.StartingScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

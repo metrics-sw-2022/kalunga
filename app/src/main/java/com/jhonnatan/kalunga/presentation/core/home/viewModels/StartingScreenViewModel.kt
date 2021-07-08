@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.data.repositories.VersionRepository
@@ -16,6 +17,16 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  ****/
 
 class StartingScreenViewModel: ViewModel() {
+
+    val _navigateToSignUp = MutableLiveData<Boolean>()
+
+    init {
+        _navigateToSignUp.value = false
+    }
+
+    fun navigateToSignUp (){
+        _navigateToSignUp.value = true
+    }
 
 }
 
