@@ -9,14 +9,16 @@ buildscript {
     ext.multidex_version = '2.0.1'
     ext.easypermissions_version = '3.0.0'
     ext.playcore_version = '1.10.0'
+    ext.googleservices_version = '4.3.8'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "com.android.tools.build:gradle:4.2.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$sonarqube_version"
+        classpath "com.google.gms:google-services:$googleservices_version"
     }
 }
 

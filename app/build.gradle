@@ -4,6 +4,7 @@ plugins {
     id 'org.sonarqube'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -60,6 +61,8 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation "pub.devrel:easypermissions:$easypermissions_version"
     implementation "com.google.android.play:core:$playcore_version"
+    implementation platform('com.google.firebase:firebase-bom:28.2.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     kapt "androidx.room:room-compiler:$room_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"

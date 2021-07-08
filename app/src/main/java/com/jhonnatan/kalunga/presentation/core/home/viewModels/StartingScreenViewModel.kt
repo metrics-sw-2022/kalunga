@@ -18,14 +18,20 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 
 class StartingScreenViewModel: ViewModel() {
 
-    val _navigateToSignUp = MutableLiveData<Boolean>()
+    val navigateToSignUp = MutableLiveData<Boolean>()
+    val loginGoogle = MutableLiveData<Boolean>()
 
     init {
-        _navigateToSignUp.value = false
+        navigateToSignUp.value = false
+        loginGoogle.value = false
     }
 
     fun navigateToSignUp (){
-        _navigateToSignUp.value = true
+        navigateToSignUp.value = true
+    }
+
+    fun loginGoogle (){
+        loginGoogle.value = true
     }
 
 }

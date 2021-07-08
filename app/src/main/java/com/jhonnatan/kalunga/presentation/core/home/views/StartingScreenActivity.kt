@@ -27,9 +27,14 @@ class StartingScreenActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vModel = viewModel
 
-        viewModel._navigateToSignUp.observe(this,{
+        viewModel.navigateToSignUp.observe(this,{
             if (it == true)
                 goToSignUp()
+        })
+
+        viewModel.loginGoogle.observe(this,{
+            if (it == true)
+                println("Se inicio google")
         })
     }
 

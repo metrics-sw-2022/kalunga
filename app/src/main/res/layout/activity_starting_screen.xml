@@ -98,6 +98,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/gill_sans_mt_bold"
             android:text="@string/continuar_con_google"
+            android:onClick="@{() -> vModel.loginGoogle()}"
             android:textColor="@color/purple_70"
             android:textSize="18sp"
             android:textAllCaps="false"
