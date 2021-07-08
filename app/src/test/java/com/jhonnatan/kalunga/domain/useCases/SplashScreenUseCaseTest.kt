@@ -10,10 +10,10 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
-import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
-import com.jhonnatan.kalunga.data.source.local.entities.Version
-import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.data.repositories.source.local.dataBases.KalungaDB
+import com.jhonnatan.kalunga.data.repositories.source.local.dataSources.VersionDataSource
+import com.jhonnatan.kalunga.data.entities.Version
+import com.jhonnatan.kalunga.data.repositories.VersionRepository
 import com.jhonnatan.kalunga.domain.models.CodePermissions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
@@ -42,8 +42,8 @@ class SplashScreenUseCaseTest() {
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
-    private lateinit var splashScreenDataSource: SplashScreenDataSource
-    private lateinit var splashScreenRepository: SplashScreenRepository
+    private lateinit var versionDataSource: VersionDataSource
+    private lateinit var splashScreenRepository: VersionRepository
     private lateinit var splashScreenUseCase: SplashScreenUseCase
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val permissionCamera = Manifest.permission.CAMERA
@@ -69,8 +69,8 @@ class SplashScreenUseCaseTest() {
             context,
             KalungaDB::class.java
         ).allowMainThreadQueries().build()
-        splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
-        splashScreenRepository = SplashScreenRepository.getInstance(splashScreenDataSource)
+        versionDataSource = VersionDataSource.getInstance(database.versionDAO())
+        splashScreenRepository = VersionRepository.getInstance(versionDataSource)
         splashScreenUseCase = SplashScreenUseCase(splashScreenRepository)
         Dispatchers.setMain(mainThreadSurrogate)
     }

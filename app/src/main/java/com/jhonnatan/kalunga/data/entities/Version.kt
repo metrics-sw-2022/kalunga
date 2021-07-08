@@ -1,4 +1,4 @@
-package com.jhonnatan.kalunga.data.source.local.entities
+package com.jhonnatan.kalunga.data.entities
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import java.util.*
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.source.local.entities
+ * From: com.jhonnatan.kalunga.data.entities
  * Created by Jhonnatan E. Zamudio P. on 28/06/2021 at 11:01 a. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.

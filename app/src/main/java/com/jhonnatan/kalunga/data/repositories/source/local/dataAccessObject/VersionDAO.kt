@@ -1,18 +1,18 @@
-package com.jhonnatan.kalunga.data.source.local.dataAccessObject
+package com.jhonnatan.kalunga.data.repositories.source.local.dataAccessObject
 
 import androidx.room.*
-import com.jhonnatan.kalunga.data.source.local.entities.Version
+import com.jhonnatan.kalunga.data.entities.Version
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.source.local.dataAccessObject
+ * From: com.jhonnatan.kalunga.data.repositories.source.local.dataAccessObject
  * Created by Jhonnatan E. Zamudio P. on 28/06/2021 at 11:10 a. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  ****/
 
 @Dao
-interface SplashScreenDAO {
+interface VersionDAO {
     @Query("SELECT * FROM version ORDER BY versionCode DESC LIMIT 1")
     suspend fun lastVersion(): List<Version>
 

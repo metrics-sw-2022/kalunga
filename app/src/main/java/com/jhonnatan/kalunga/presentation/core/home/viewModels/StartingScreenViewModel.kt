@@ -1,5 +1,7 @@
 package com.jhonnatan.kalunga.presentation.core.home.viewModels
 
+import androidx.lifecycle.ViewModel
+
 /****
  * Project: kalunga
  * From: com.jhonnatan.kalunga.presentation.core.home.viewModels
@@ -8,5 +10,6 @@ package com.jhonnatan.kalunga.presentation.core.home.viewModels
  * All rights reserved 2021.
  ****/
 
-class StartingScreenViewModel {
+class StartingScreenViewModel: ViewModel() {
+
 }

@@ -7,8 +7,8 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.source.local.entities.Version
-import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.data.entities.Version
+import com.jhonnatan.kalunga.data.repositories.VersionRepository
 import com.jhonnatan.kalunga.domain.models.CodePermissions
 import java.util.*
 
@@ -20,13 +20,13 @@ import java.util.*
  * All rights reserved 2021.
  ****/
 
-class SplashScreenUseCase(private val repository: SplashScreenRepository) {
+class SplashScreenUseCase(private val versionRepository: VersionRepository) {
 
     suspend fun getAppVersion(): String {
-        val versionQuery = repository.queryLast()
+        val versionQuery = versionRepository.queryLast()
         val versionName =
             if (versionQuery.size == 1 && versionQuery.equals(BuildConfig.VERSION_NAME))
-                repository.queryLast()[0].versionName
+                versionRepository.queryLast()[0].versionName
             else
                 insertAppVersionDatabase()
         return "Versión $versionName"
@@ -34,7 +34,7 @@ class SplashScreenUseCase(private val repository: SplashScreenRepository) {
 
     private suspend fun insertAppVersionDatabase(): String {
         val versionName = BuildConfig.VERSION_NAME
-        repository.insert(
+        versionRepository.insert(
             Version(0, BuildConfig.VERSION_CODE, versionName, Calendar.getInstance().time)
         )
         return versionName

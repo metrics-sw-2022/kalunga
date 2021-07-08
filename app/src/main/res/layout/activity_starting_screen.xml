@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/fondo_pantalla_incio"
-        tools:context=".presentation.core.home.views.StartingScreen">
+        tools:context=".presentation.core.home.views.StartingScreenActivity">
 
         <ImageView
             android:id="@+id/imageViewLogo"

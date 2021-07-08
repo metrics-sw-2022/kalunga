@@ -114,7 +114,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
             withContext(Dispatchers.IO){
                 delay(500)
                 viewModel.loading.postValue(false)
-                val intent = Intent(this@SplashScreenActivity, StartingScreen::class.java)
+                val intent = Intent(this@SplashScreenActivity, StartingScreenActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                 finish()

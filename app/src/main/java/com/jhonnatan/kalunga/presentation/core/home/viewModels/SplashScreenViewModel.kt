@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import androidx.lifecycle.*
 import com.google.android.play.core.appupdate.AppUpdateInfo
-import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.data.repositories.VersionRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.CodePermissions
@@ -21,10 +21,10 @@ import pub.devrel.easypermissions.EasyPermissions
  ****/
 
 @DelicateCoroutinesApi
-class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
+class SplashScreenViewModel(versionRepository: VersionRepository) : ViewModel() {
 
     val version = MutableLiveData<String>()
-    val splashScreenUseCase = SplashScreenUseCase(repository)
+    val splashScreenUseCase = SplashScreenUseCase(versionRepository)
     val loading = MutableLiveData<Boolean>()
     val validatePermissions = MutableLiveData<Boolean>()
     val snackBarTextCloseApp = MutableLiveData<String>()
@@ -84,7 +84,7 @@ class SplashScreenViewModel(repository: SplashScreenRepository) : ViewModel() {
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class SplashScreenViewModelFactory(private val mSplashScreenRepository: SplashScreenRepository) :
+class SplashScreenViewModelFactory(private val versionRepository: VersionRepository) :
     ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -101,7 +101,7 @@ class SplashScreenViewModelFactory(private val mSplashScreenRepository: SplashSc
     }
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SplashScreenViewModel(mSplashScreenRepository) as T
+        return SplashScreenViewModel(versionRepository) as T
     }
 }
 

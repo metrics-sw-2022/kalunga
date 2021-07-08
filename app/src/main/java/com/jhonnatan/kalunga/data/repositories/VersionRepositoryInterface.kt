@@ -1,16 +1,16 @@
-package com.jhonnatan.kalunga.data.source.local.repositories
+package com.jhonnatan.kalunga.data.repositories
 
-import com.jhonnatan.kalunga.data.source.local.entities.Version
+import com.jhonnatan.kalunga.data.entities.Version
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.source.local.repositories
+ * From: com.jhonnatan.kalunga.data.repositories
  * Created by Jhonnatan E. Zamudio P. on 28/06/2021 at 12:06 p. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  ****/
 
-interface SplashScreenRepositoryInterface {
+interface VersionRepositoryInterface {
 
     suspend fun queryLast(): List<Version>
 

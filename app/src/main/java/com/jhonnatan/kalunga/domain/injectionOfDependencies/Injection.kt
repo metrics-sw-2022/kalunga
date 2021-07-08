@@ -1,9 +1,9 @@
 package com.jhonnatan.kalunga.domain.injectionOfDependencies
 
 import android.content.Context
-import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
-import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
-import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.data.repositories.source.local.dataBases.KalungaDB
+import com.jhonnatan.kalunga.data.repositories.source.local.dataSources.VersionDataSource
+import com.jhonnatan.kalunga.data.repositories.VersionRepository
 
 /****
  * Project: kalunga
@@ -15,9 +15,9 @@ import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenReposito
 
 object Injection {
 
-    fun providerSplashScreenRepository(context: Context): SplashScreenRepository {
+    fun providerSplashScreenRepository(context: Context): VersionRepository {
         val database = KalungaDB.getInstance(context)
-        val splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
-        return SplashScreenRepository.getInstance(splashScreenDataSource)
+        val splashScreenDataSource = VersionDataSource.getInstance(database.versionDAO())
+        return VersionRepository.getInstance(splashScreenDataSource)
     }
 }
