@@ -1,9 +1,9 @@
 package com.jhonnatan.kalunga.domain.injectionOfDependencies
 
 import android.content.Context
-import com.jhonnatan.kalunga.data.repositories.source.local.dataBases.KalungaDB
-import com.jhonnatan.kalunga.data.repositories.source.local.dataSources.VersionDataSource
-import com.jhonnatan.kalunga.data.repositories.VersionRepository
+import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
+import com.jhonnatan.kalunga.data.source.local.dataSources.VersionDataSource
+import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
 
 /****
  * Project: kalunga

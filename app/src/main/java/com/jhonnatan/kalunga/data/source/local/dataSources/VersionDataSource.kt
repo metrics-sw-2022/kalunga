@@ -1,11 +1,11 @@
-package com.jhonnatan.kalunga.data.repositories.source.local.dataSources
+package com.jhonnatan.kalunga.data.source.local.dataSources
 
-import com.jhonnatan.kalunga.data.repositories.source.local.dataAccessObject.VersionDAO
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
+import com.jhonnatan.kalunga.data.source.local.dataAccessObject.VersionDAO
+import com.jhonnatan.kalunga.data.source.local.entities.Version
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.repositories.source.local.dataSources
+ * From: com.jhonnatan.kalunga.data.source.local.dataSources
  * Created by Jhonnatan E. Zamudio P. on 28/06/2021 at 11:55 a. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.

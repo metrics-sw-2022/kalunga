@@ -7,8 +7,8 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
-import com.jhonnatan.kalunga.data.repositories.VersionRepository
+import com.jhonnatan.kalunga.data.source.local.entities.Version
+import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
 import com.jhonnatan.kalunga.domain.models.CodePermissions
 import java.util.*
 

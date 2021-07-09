@@ -1,17 +1,17 @@
-package com.jhonnatan.kalunga.data.repositories.source.local.dataBases
+package com.jhonnatan.kalunga.data.source.local.dataBases
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.jhonnatan.kalunga.data.repositories.source.local.dataAccessObject.VersionDAO
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Converters
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
+import com.jhonnatan.kalunga.data.source.local.dataAccessObject.VersionDAO
+import com.jhonnatan.kalunga.data.source.local.entities.Converters
+import com.jhonnatan.kalunga.data.source.local.entities.Version
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.repositories.source.local.databases
+ * From: com.jhonnatan.kalunga.data.source.local.databases
  * Created by Jhonnatan E. Zamudio P. on 28/06/2021 at 11:36 a. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.

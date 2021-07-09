@@ -10,10 +10,10 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.repositories.source.local.dataBases.KalungaDB
-import com.jhonnatan.kalunga.data.repositories.source.local.dataSources.VersionDataSource
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
-import com.jhonnatan.kalunga.data.repositories.VersionRepository
+import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
+import com.jhonnatan.kalunga.data.source.local.dataSources.VersionDataSource
+import com.jhonnatan.kalunga.data.source.local.entities.Version
+import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
 import com.jhonnatan.kalunga.domain.models.CodePermissions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain

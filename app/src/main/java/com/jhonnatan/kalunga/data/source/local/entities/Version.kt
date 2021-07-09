@@ -1,4 +1,4 @@
-package com.jhonnatan.kalunga.data.repositories.source.local.entities
+package com.jhonnatan.kalunga.data.source.local.entities
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,15 +8,15 @@ import java.util.*
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.repositories.source.local.entities
- * Created by Jhonnatan E. Zamudio P. on 7/07/2021 at 8:47 p. m.
+ * From: com.jhonnatan.kalunga.data.source.local.entities
+ * Created by Jhonnatan E. Zamudio P. on 28/06/2021 at 11:01 a. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  ****/
 
 @Parcelize
 @Entity
-data class User (
+data class Version (
     @PrimaryKey(autoGenerate = true) var id: Int,
     var versionCode: Int,
     var versionName: String,

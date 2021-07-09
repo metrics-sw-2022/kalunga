@@ -1,4 +1,4 @@
-package com.jhonnatan.kalunga.domain.common.utils
+package com.jhonnatan.kalunga.data.source.remote.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

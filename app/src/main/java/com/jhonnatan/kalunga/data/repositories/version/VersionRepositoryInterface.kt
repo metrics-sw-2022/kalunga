@@ -1,6 +1,6 @@
-package com.jhonnatan.kalunga.data.repositories
+package com.jhonnatan.kalunga.data.repositories.version
 
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
+import com.jhonnatan.kalunga.data.source.local.entities.Version
 
 /****
  * Project: kalunga

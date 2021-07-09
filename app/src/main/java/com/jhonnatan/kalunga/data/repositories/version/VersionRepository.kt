@@ -1,7 +1,7 @@
-package com.jhonnatan.kalunga.data.repositories
+package com.jhonnatan.kalunga.data.repositories.version
 
-import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
-import com.jhonnatan.kalunga.data.repositories.source.local.dataSources.VersionDataSource
+import com.jhonnatan.kalunga.data.source.local.entities.Version
+import com.jhonnatan.kalunga.data.source.local.dataSources.VersionDataSource
 
 /****
  * Project: kalunga
@@ -11,7 +11,8 @@ import com.jhonnatan.kalunga.data.repositories.source.local.dataSources.VersionD
  * All rights reserved 2021.
  ****/
 
-class VersionRepository (private val versionDataSource: VersionDataSource) : VersionRepositoryInterface {
+class VersionRepository (private val versionDataSource: VersionDataSource) :
+    VersionRepositoryInterface {
 
     companion object{
         @Volatile

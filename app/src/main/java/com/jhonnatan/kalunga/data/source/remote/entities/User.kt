@@ -1,11 +1,11 @@
-package com.jhonnatan.kalunga.data.repositories.source.remote.entities
+package com.jhonnatan.kalunga.data.source.remote.entities
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
 /****
  * Project: kalunga
- * From: com.jhonnatan.kalunga.data.repositories.source.remote.entities
+ * From: com.jhonnatan.kalunga.data.source.remote.entities
  * Created by Jhonnatan E. Zamudio P. on 8/07/2021 at 10:11 p. m.
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.

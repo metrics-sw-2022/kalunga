@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.jhonnatan.kalunga.data.repositories.VersionRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
-import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****

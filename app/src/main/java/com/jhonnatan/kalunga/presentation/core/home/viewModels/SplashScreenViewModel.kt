@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import androidx.lifecycle.*
 import com.google.android.play.core.appupdate.AppUpdateInfo
-import com.jhonnatan.kalunga.data.repositories.VersionRepository
+import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.CodePermissions
