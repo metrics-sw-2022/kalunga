@@ -17,11 +17,17 @@ import kotlinx.coroutines.withContext
 class UserService {
 
     private val retrofit = RetrofitHelper.getRetrofit()
+    val response = retrofit.create(UserApiClient::class.java)
+
+    suspend fun getUsers():List<ResponseUsers>{
+        return withContext(Dispatchers.IO){
+            response.getAllUsers().body() ?: emptyList()
+        }
+    }
 
     suspend fun getUserByAccount(account: String):List<ResponseUsers>{
-        return withContext(Dispatchers.IO){
-            val response = retrofit.create(UserApiClient::class.java).getUserByAccount(account)
-            response.body() ?: emptyList()
+        return withContext(Dispatchers.IO) {
+            response.getUserByAccount(account).body() ?: emptyList()
         }
     }
 }

@@ -13,4 +13,6 @@ import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 interface UserRepositoryInterface {
 
     suspend fun getUserByAccountRemote(account: String): List<ResponseUsers>
+
+    suspend fun getUsersRemote(): List<ResponseUsers>
 }

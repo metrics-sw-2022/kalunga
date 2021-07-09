@@ -22,6 +22,10 @@ class UserRepository(private val userService: UserService) : UserRepositoryInter
             }
     }
 
+    override suspend fun getUsersRemote(): List<ResponseUsers> {
+        return userService.getUsers()
+    }
+
     override suspend fun getUserByAccountRemote(account: String): List<ResponseUsers> {
         return userService.getUserByAccount(account)
     }

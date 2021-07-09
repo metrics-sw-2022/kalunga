@@ -14,8 +14,10 @@ import com.jhonnatan.kalunga.data.repositories.user.UserRepository
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
     suspend fun getUserByAccountRemote(acct: GoogleSignInAccount): Boolean {
-        val response = userRepository.getUserByAccountRemote(acct.email!!)
+        val response = userRepository.getUserByAccountRemote(acct.id!!)
+        val response1 = userRepository.getUsersRemote()
         println("La data es: " + response)
+        println("La data es: " + response1)
         return false
     }
 }
