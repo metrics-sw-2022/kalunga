@@ -1,7 +1,9 @@
 package com.jhonnatan.kalunga.data.source.remote.retrofit
 
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 /****
  * Project: kalunga
@@ -13,9 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
     fun getRetrofit():Retrofit {
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .create()
+
         return Retrofit.Builder()
             .baseUrl("https://venecambios-kalunga.com/api/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 }

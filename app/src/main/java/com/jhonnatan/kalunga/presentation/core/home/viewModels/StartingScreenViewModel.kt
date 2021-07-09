@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.launch
 
 /****
  * Project: kalunga
@@ -43,8 +46,10 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
         isConected.postValue(UtilsNetwork().isOnline(context))
     }
 
-    fun serverUserExist() {
-
+    fun serverUserExist(acct: GoogleSignInAccount) {
+        viewModelScope.launch {
+            startingScreenUseCase.getUserByAccountRemote(acct)
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
-import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
 
 /****
  * Project: kalunga
@@ -13,4 +13,9 @@ import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
 
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
+    suspend fun getUserByAccountRemote(acct: GoogleSignInAccount): Boolean {
+        val response = userRepository.getUserByAccountRemote(acct.email!!)
+        println("La data es: " + response)
+        return false
+    }
 }

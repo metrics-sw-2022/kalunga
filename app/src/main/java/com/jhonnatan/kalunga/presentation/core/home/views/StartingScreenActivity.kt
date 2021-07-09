@@ -78,9 +78,7 @@ class StartingScreenActivity : AppCompatActivity() {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             if (task.isSuccessful) {
                 val acct: GoogleSignInAccount = task.result!!
-                println("El valor es " + acct.email)
-                println("El valor es " + acct.id)
-                println("El valor es " + acct.displayName)
+                viewModel.serverUserExist(acct)
             } else {
                 Log.e(TAG, "loginGoogleError:" + task.exception.toString())
                 viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
