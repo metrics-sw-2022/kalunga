@@ -41,6 +41,10 @@ class StartingScreenViewModel: ViewModel() {
         isConected.postValue(UtilsNetwork().isOnline(context))
     }
 
+    fun serverUserExist(){
+
+    }
+
 }
 
 @DelicateCoroutinesApi
