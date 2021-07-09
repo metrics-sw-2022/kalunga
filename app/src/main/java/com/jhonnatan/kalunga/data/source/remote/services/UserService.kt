@@ -1,6 +1,6 @@
 package com.jhonnatan.kalunga.data.source.remote.services
 
-import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseQueryByAccountUser
+import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import com.jhonnatan.kalunga.data.source.remote.interfaces.UserApiClient
 import com.jhonnatan.kalunga.data.source.remote.retrofit.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ class UserService {
 
     private val retrofit = RetrofitHelper.getRetrofit()
 
-    suspend fun getUserByAccount(account: String):List<ResponseQueryByAccountUser>{
+    suspend fun getUserByAccount(account: String):List<ResponseUsers>{
         return withContext(Dispatchers.IO){
             val response = retrofit.create(UserApiClient::class.java).getUserByAccount(account)
             response.body() ?: emptyList()

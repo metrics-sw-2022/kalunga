@@ -11,8 +11,8 @@ import com.jhonnatan.kalunga.data.source.remote.entities.User
  * All rights reserved 2021.
  ****/
 
-data class ResponseQueryByAccountUser(
+data class ResponseUsers(
     @SerializedName("status") val status: String,
     @SerializedName("message") val message: String,
-    @SerializedName("data") val data: User,
+    @SerializedName("data") val data: List<User>,
 )

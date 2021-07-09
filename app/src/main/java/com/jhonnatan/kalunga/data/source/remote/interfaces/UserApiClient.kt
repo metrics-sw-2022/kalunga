@@ -1,6 +1,6 @@
 package com.jhonnatan.kalunga.data.source.remote.interfaces
 
-import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseQueryByAccountUser
+import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,7 +14,11 @@ import retrofit2.http.Path
  ****/
 
 interface UserApiClient {
+
+    @GET("users")
+    suspend fun getAllUsers(): Response<List<ResponseUsers>>
+
     @GET("users/{account}")
-    suspend fun getUserByAccount(@Path("account") account: String): Response<List<ResponseQueryByAccountUser>>
+    suspend fun getUserByAccount(@Path("account") account: String): Response<List<ResponseUsers>>
 
 }

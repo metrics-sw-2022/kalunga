@@ -1,6 +1,6 @@
 package com.jhonnatan.kalunga.data.repositories.user
 
-import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseQueryByAccountUser
+import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import com.jhonnatan.kalunga.data.source.remote.services.UserService
 
 /****
@@ -22,7 +22,7 @@ class UserRepository(private val userService: UserService) : UserRepositoryInter
             }
     }
 
-    override suspend fun getUserByAccountRemote(account: String): List<ResponseQueryByAccountUser> {
+    override suspend fun getUserByAccountRemote(account: String): List<ResponseUsers> {
         return userService.getUserByAccount(account)
     }
 

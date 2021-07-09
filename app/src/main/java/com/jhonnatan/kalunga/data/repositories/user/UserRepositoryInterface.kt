@@ -1,6 +1,6 @@
 package com.jhonnatan.kalunga.data.repositories.user
 
-import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseQueryByAccountUser
+import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 
 /****
  * Project: kalunga
@@ -12,5 +12,5 @@ import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseQuery
 
 interface UserRepositoryInterface {
 
-    suspend fun getUserByAccountRemote(account: String): List<ResponseQueryByAccountUser>
+    suspend fun getUserByAccountRemote(account: String): List<ResponseUsers>
 }
