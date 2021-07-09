@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.jhonnatan.kalunga.data.repositories.user.UserRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
+import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
+import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 /****
@@ -15,23 +18,24 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  * All rights reserved 2021.
  ****/
 
-class StartingScreenViewModel: ViewModel() {
+class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
     val navigateToSignUp = MutableLiveData<Boolean>()
     val loginGoogle = MutableLiveData<Boolean>()
     val isConected = MutableLiveData<Boolean>()
     val snackBarTextError = MutableLiveData<String>()
+    val startingScreenUseCase = StartingScreenUseCase(userRepository)
 
     init {
         navigateToSignUp.value = false
         loginGoogle.value = false
     }
 
-    fun navigateToSignUp (){
+    fun navigateToSignUp() {
         navigateToSignUp.value = true
     }
 
-    fun loginGoogle (){
+    fun loginGoogle() {
         loginGoogle.value = true
     }
 
@@ -39,7 +43,7 @@ class StartingScreenViewModel: ViewModel() {
         isConected.postValue(UtilsNetwork().isOnline(context))
     }
 
-    fun serverUserExist(){
+    fun serverUserExist() {
 
     }
 
@@ -47,18 +51,21 @@ class StartingScreenViewModel: ViewModel() {
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class StartingScreenViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class StartingScreenViewModelFactory(private val userRepository: UserRepository) :
+    ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
         private var instance: StartingScreenViewModelFactory? = null
         fun getInstance(context: Context): StartingScreenViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: StartingScreenViewModelFactory()
+                instance ?: StartingScreenViewModelFactory(
+                    Injection.providerStartingScreenRepository()
+                )
             }
     }
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return StartingScreenViewModel() as T
+        return StartingScreenViewModel(userRepository) as T
     }
 }

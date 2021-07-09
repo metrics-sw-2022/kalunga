@@ -93,9 +93,7 @@ class SplashScreenViewModelFactory(private val versionRepository: VersionReposit
         fun getInstance(context: Context): SplashScreenViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: SplashScreenViewModelFactory(
-                    Injection.providerSplashScreenRepository(
-                        context
-                    )
+                    Injection.providerSplashScreenRepository(context)
                 )
             }
     }
