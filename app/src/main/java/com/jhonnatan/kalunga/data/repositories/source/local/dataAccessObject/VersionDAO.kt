@@ -1,7 +1,7 @@
 package com.jhonnatan.kalunga.data.repositories.source.local.dataAccessObject
 
 import androidx.room.*
-import com.jhonnatan.kalunga.data.entities.Version
+import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
 
 /****
  * Project: kalunga

@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jhonnatan.kalunga.data.repositories.source.local.dataAccessObject.VersionDAO
-import com.jhonnatan.kalunga.data.entities.Converters
-import com.jhonnatan.kalunga.data.entities.Version
+import com.jhonnatan.kalunga.data.repositories.source.local.entities.Converters
+import com.jhonnatan.kalunga.data.repositories.source.local.entities.Version
 
 /****
  * Project: kalunga
