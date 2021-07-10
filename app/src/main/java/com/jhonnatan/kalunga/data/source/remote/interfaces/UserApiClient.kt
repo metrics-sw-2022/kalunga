@@ -1,9 +1,9 @@
 package com.jhonnatan.kalunga.data.source.remote.interfaces
 
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
 import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /****
  * Project: kalunga
@@ -20,5 +20,9 @@ interface UserApiClient {
 
     @GET("users/{account}")
     suspend fun getUserByAccount(@Path("account") account: String): Response<List<ResponseUsers>>
+
+    @Headers("Content-Type: application/json")
+    @POST("users/new")
+    suspend fun insertUser(@Body requestUsers: RequestUsers): Response<List<ResponseUsers>>
 
 }

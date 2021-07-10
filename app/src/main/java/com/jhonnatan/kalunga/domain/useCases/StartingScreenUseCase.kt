@@ -2,6 +2,7 @@ package com.jhonnatan.kalunga.domain.useCases
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
 
 /****
  * Project: kalunga
@@ -16,8 +17,23 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
     suspend fun getUserByAccountRemote(acct: GoogleSignInAccount): Boolean {
         val response = userRepository.getUserByAccountRemote(acct.id!!)
         val response1 = userRepository.getUsersRemote()
+        val response2 = userRepository.insertUser(RequestUsers(
+            "tecsco20131@gmail.com",
+            "Jhotec2013",
+            3,
+            true,
+            0,
+            "tecsco20131@gmail.com",
+            "Jhonnatan E Zamudio P",
+            0,
+            "1016055000",
+            "+57 311 2949556",
+            "CO",
+            "Bogotá"
+        ))
         println("La data es: " + response)
         println("La data es: " + response1)
+        println("La data es: " + response2)
         return false
     }
 }

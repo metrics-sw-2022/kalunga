@@ -1,17 +1,11 @@
 package com.jhonnatan.kalunga.data.source.remote.services
 
-import android.R
-import android.widget.Toast
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseError
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
 import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import com.jhonnatan.kalunga.data.source.remote.interfaces.UserApiClient
 import com.jhonnatan.kalunga.data.source.remote.retrofit.RetrofitHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
-import retrofit2.Converter
 
 
 /****
@@ -36,6 +30,12 @@ class UserService {
     suspend fun getUserByAccount(account: String):List<ResponseUsers>{
         return withContext(Dispatchers.IO) {
             response.getUserByAccount(account).body() ?: emptyList()
+        }
+    }
+
+    suspend fun insertUser(requestUsers: RequestUsers):List<ResponseUsers>{
+        return withContext(Dispatchers.IO){
+            response.insertUser(requestUsers).body() ?: emptyList()
         }
     }
 }

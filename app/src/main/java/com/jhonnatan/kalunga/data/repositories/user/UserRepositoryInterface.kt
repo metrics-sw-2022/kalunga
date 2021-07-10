@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.data.repositories.user
 
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
 import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 
 /****
@@ -15,4 +16,6 @@ interface UserRepositoryInterface {
     suspend fun getUserByAccountRemote(account: String): List<ResponseUsers>
 
     suspend fun getUsersRemote(): List<ResponseUsers>
+
+    suspend fun insertUser(requestUsers: RequestUsers): List<ResponseUsers>
 }
