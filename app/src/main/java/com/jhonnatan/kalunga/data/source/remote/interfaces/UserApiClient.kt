@@ -30,4 +30,7 @@ interface UserApiClient {
     @PUT("users/update/{account}")
     suspend fun updateUser(@Path("account") account: String,@Body requestUsersUpdate: RequestUsersUpdate): Response<List<ResponseUsers>>
 
+    @DELETE("users/delete/{account}")
+    suspend fun deleteUser(@Path("account") account: String): Response<List<ResponseUsers>>
+
 }

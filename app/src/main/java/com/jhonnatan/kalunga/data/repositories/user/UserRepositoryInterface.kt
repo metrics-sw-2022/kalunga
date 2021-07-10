@@ -21,4 +21,6 @@ interface UserRepositoryInterface {
     suspend fun insertUser(requestUsers: RequestUsers): List<ResponseUsers>
 
     suspend fun updateUser(account: String,requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers>
+
+    suspend fun deleteUser(account: String): List<ResponseUsers>
 }

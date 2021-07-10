@@ -45,4 +45,10 @@ class UserService {
             response.updateUser(account,requestUsersUpdate).body() ?: emptyList()
         }
     }
+
+    suspend fun deleteUser(account: String): List<ResponseUsers>{
+        return withContext(Dispatchers.IO){
+            response.deleteUser(account).body() ?: emptyList()
+        }
+    }
 }

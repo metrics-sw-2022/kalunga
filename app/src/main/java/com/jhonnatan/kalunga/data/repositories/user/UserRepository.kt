@@ -40,4 +40,8 @@ class UserRepository(private val userService: UserService) : UserRepositoryInter
         return userService.updateUser(account, requestUsersUpdate)
     }
 
+    override suspend fun deleteUser(account: String): List<ResponseUsers> {
+        return userService.deleteUser(account)
+    }
+
 }
