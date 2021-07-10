@@ -13,7 +13,7 @@ import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
-    suspend fun getUserByAccountRemote(account: String?): List<Any> {
+    suspend fun getUserByAccountRemote(account: String?): Any {
         val result = userRepository.getUserByAccountRemote(account!!)
         if(!result.isEmpty()) {
             if (result[0].message != null) {
@@ -23,6 +23,6 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
                 return listOf(true, result[0].data)
             }
         }
-        return listOf("", "")
+        return listOf(null,"Error en el servidor, por favor intente más tarde")
     }
 }

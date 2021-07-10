@@ -89,7 +89,7 @@ class StartingScreenUseCaseTest() {
     fun `Caso 03`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote("")
-            assertEquals(listOf(null), result)
+            assertEquals(listOf(null,"Error en el servidor, por favor intente más tarde"), result)
         }
     }
 
