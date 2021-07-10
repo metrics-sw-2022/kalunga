@@ -85,5 +85,13 @@ class StartingScreenUseCaseTest() {
         }
     }
 
+    @Test
+    fun `Caso 03`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = startingScreenUseCase.getUserByAccountRemote("")
+            assertEquals(listOf(null), result)
+        }
+    }
+
 
 }

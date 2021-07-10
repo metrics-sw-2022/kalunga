@@ -14,12 +14,14 @@ import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
     suspend fun getUserByAccountRemote(account: String?): List<Any> {
-        val result = userRepository.getUserByAccountRemote(account!!)[0]
-        if (result.message!= null ) {
-            if (result.message.equals("No existe el usuario en la base de datos"))
-                return listOf(false)
-        } else {
-            return listOf(true, result.data)
+        val result = userRepository.getUserByAccountRemote(account!!)
+        if(!result.isEmpty()) {
+            if (result[0].message != null) {
+                if (result[0].message.equals("No existe el usuario en la base de datos"))
+                    return listOf(false)
+            } else {
+                return listOf(true, result[0].data)
+            }
         }
         return listOf("", "")
     }
