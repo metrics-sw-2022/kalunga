@@ -1,8 +1,10 @@
 package com.jhonnatan.kalunga.data.source.remote.retrofit
 
 import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 /****
@@ -19,9 +21,16 @@ object RetrofitHelper {
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create()
 
+        val okHttpClient: OkHttpClient? = OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build()
+
         return Retrofit.Builder()
             .baseUrl("https://venecambios-kalunga.com/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(okHttpClient)
             .build()
     }
 }
