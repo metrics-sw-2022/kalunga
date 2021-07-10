@@ -13,6 +13,6 @@ import com.jhonnatan.kalunga.data.source.remote.entities.User
 
 data class ResponseUsers(
     @SerializedName("status") val status: String,
-    @SerializedName("message") val message: String,
-    @SerializedName("data") val data: List<User>,
+    @SerializedName("message") val message: String?,
+    @SerializedName("data") val data: List<User>?,
 )
