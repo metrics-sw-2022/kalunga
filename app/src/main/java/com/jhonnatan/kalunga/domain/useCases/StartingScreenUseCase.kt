@@ -1,9 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
-import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
-import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsersUpdate
 
 /****
  * Project: kalunga
@@ -15,8 +12,8 @@ import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsersUp
 
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
-    suspend fun getUserByAccountRemote(acct: GoogleSignInAccount): Boolean {
+    suspend fun getUserByAccountRemote(acct: String?): Boolean {
 
-        return false
+        return true
     }
 }

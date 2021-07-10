@@ -22,32 +22,35 @@ class UserService {
     private val retrofit = RetrofitHelper.getRetrofit()
     val response = retrofit.create(UserApiClient::class.java)
 
-    suspend fun getUsers():List<ResponseUsers>{
-        return withContext(Dispatchers.IO){
+    suspend fun getUsers(): List<ResponseUsers> {
+        return withContext(Dispatchers.IO) {
             response.getAllUsers().body() ?: emptyList()
         }
     }
 
-    suspend fun getUserByAccount(account: String):List<ResponseUsers>{
+    suspend fun getUserByAccount(account: String): List<ResponseUsers> {
         return withContext(Dispatchers.IO) {
             response.getUserByAccount(account).body() ?: emptyList()
         }
     }
 
-    suspend fun insertUser(requestUsers: RequestUsers):List<ResponseUsers>{
-        return withContext(Dispatchers.IO){
+    suspend fun insertUser(requestUsers: RequestUsers): List<ResponseUsers> {
+        return withContext(Dispatchers.IO) {
             response.insertUser(requestUsers).body() ?: emptyList()
         }
     }
 
-    suspend fun updateUser(account: String, requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers>{
-        return withContext(Dispatchers.IO){
-            response.updateUser(account,requestUsersUpdate).body() ?: emptyList()
+    suspend fun updateUser(
+        account: String,
+        requestUsersUpdate: RequestUsersUpdate
+    ): List<ResponseUsers> {
+        return withContext(Dispatchers.IO) {
+            response.updateUser(account, requestUsersUpdate).body() ?: emptyList()
         }
     }
 
-    suspend fun deleteUser(account: String): List<ResponseUsers>{
-        return withContext(Dispatchers.IO){
+    suspend fun deleteUser(account: String): List<ResponseUsers> {
+        return withContext(Dispatchers.IO) {
             response.deleteUser(account).body() ?: emptyList()
         }
     }

@@ -48,7 +48,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
     fun serverUserExist(acct: GoogleSignInAccount) {
         viewModelScope.launch {
-            startingScreenUseCase.getUserByAccountRemote(acct)
+            startingScreenUseCase.getUserByAccountRemote(acct.id)
         }
     }
 
