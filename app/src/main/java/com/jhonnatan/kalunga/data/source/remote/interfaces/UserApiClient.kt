@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.data.source.remote.interfaces
 
 import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import retrofit2.Response
 import retrofit2.http.*
@@ -24,5 +25,9 @@ interface UserApiClient {
     @Headers("Content-Type: application/json")
     @POST("users/new")
     suspend fun insertUser(@Body requestUsers: RequestUsers): Response<List<ResponseUsers>>
+
+    @Headers("Content-Type: application/json")
+    @PUT("users/update/{account}")
+    suspend fun updateUser(@Path("account") account: String,@Body requestUsersUpdate: RequestUsersUpdate): Response<List<ResponseUsers>>
 
 }

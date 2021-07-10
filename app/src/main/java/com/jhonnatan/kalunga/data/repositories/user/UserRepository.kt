@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.data.repositories.user
 
 import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import com.jhonnatan.kalunga.data.source.remote.services.UserService
 
@@ -33,6 +34,10 @@ class UserRepository(private val userService: UserService) : UserRepositoryInter
 
     override suspend fun insertUser(requestUsers: RequestUsers): List<ResponseUsers> {
         return userService.insertUser(requestUsers)
+    }
+
+    override suspend fun updateUser(account: String, requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers> {
+        return userService.updateUser(account, requestUsersUpdate)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.data.source.remote.services
 
 import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsers
+import com.jhonnatan.kalunga.data.source.remote.entities.requests.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 import com.jhonnatan.kalunga.data.source.remote.interfaces.UserApiClient
 import com.jhonnatan.kalunga.data.source.remote.retrofit.RetrofitHelper
@@ -36,6 +37,12 @@ class UserService {
     suspend fun insertUser(requestUsers: RequestUsers):List<ResponseUsers>{
         return withContext(Dispatchers.IO){
             response.insertUser(requestUsers).body() ?: emptyList()
+        }
+    }
+
+    suspend fun updateUser(account: String, requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers>{
+        return withContext(Dispatchers.IO){
+            response.updateUser(account,requestUsersUpdate).body() ?: emptyList()
         }
     }
 }
