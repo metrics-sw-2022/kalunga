@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases
 
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
+import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
 
 /****
  * Project: kalunga
@@ -12,8 +13,10 @@ import com.jhonnatan.kalunga.data.repositories.user.UserRepository
 
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
-    suspend fun getUserByAccountRemote(acct: String?): Boolean {
-
-        return true
+    suspend fun getUserByAccountRemote(account: String?): List<Any> {
+        val result = userRepository.getUserByAccountRemote(account!!)[0]
+        if (result.message.equals("No existe el usuario en la base de datos"))
+            return listOf(false)
+        return listOf("", "")
     }
 }
