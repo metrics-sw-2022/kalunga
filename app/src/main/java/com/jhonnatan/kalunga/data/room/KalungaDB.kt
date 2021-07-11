@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.jhonnatan.kalunga.data.user.entities.User
+import com.jhonnatan.kalunga.data.user.source.UserDAO
 import com.jhonnatan.kalunga.data.version.source.VersionDAO
 import com.jhonnatan.kalunga.data.version.entities.Version
 
@@ -16,24 +18,21 @@ import com.jhonnatan.kalunga.data.version.entities.Version
  * All rights reserved 2021.
  ****/
 
-@Database(
-    entities = [
-        Version::class],
-    version = 1
-)
+@Database(entities = [Version::class, User::class], version = 2)
 @TypeConverters(Converters::class)
-abstract class KalungaDB: RoomDatabase() {
+abstract class KalungaDB : RoomDatabase() {
 
     abstract fun versionDAO(): VersionDAO
+    abstract fun userDAO(): UserDAO
 
     companion object {
         @Volatile
         private var INSTANCE: KalungaDB? = null
 
         fun getInstance(context: Context): KalungaDB {
-            synchronized(this){
+            synchronized(this) {
                 var instance = INSTANCE
-                if (instance == null){
+                if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         KalungaDB::class.java,
