@@ -14,10 +14,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityStartingScreenBinding
-import com.jhonnatan.kalunga.domain.enumeration.CodeActivityForResult
-import com.jhonnatan.kalunga.domain.enumeration.TypeSnackBar
+import com.jhonnatan.kalunga.domain.enumeration.*
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModelFactory
+import com.jhonnatan.kalunga.presentation.core.session.views.ConfigurationActivity
 import com.jhonnatan.kalunga.presentation.core.session.views.SignUpActivity
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
@@ -87,7 +87,14 @@ class StartingScreenActivity : AppCompatActivity() {
     }
 
     private fun goToConfiguration() {
-        val intent = Intent(this@StartingScreenActivity, SignUpActivity::class.java)
+        val intent = Intent(this@StartingScreenActivity, ConfigurationActivity::class.java)
+        intent.putExtra("ACCOUNT", viewModel.userAccount.value!!.id)
+        intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.id)
+        intent.putExtra("STATUS_USER", CodeStatusUser.ENABLED_USER.code)
+        intent.putExtra("SESSION_STATE", CodeSessionState.STARTED.code)
+        intent.putExtra("TYPE_USER", CodeTypeUser.STANDART.code)
+        intent.putExtra("EMAIL", viewModel.userAccount.value!!.email)
+        intent.putExtra("FULL_NAME", viewModel.userAccount.value!!.displayName)
         startActivity(intent)
         overridePendingTransition(R.anim.left_in, R.anim.left_out)
         finish()
@@ -102,6 +109,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 viewModel.serverUserExist(acct)
             } else {
                 Log.e(TAG, "loginGoogleError:" + task.exception.toString())
+                viewModel.loadingDialog.value = false
                 viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
             }
             mGoogleSignInClient.signOut()
