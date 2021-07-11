@@ -4,6 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
 import com.jhonnatan.kalunga.data.source.remote.entities.User
 import com.jhonnatan.kalunga.data.source.remote.services.UserService
+import com.jhonnatan.kalunga.domain.entities.ResponseStartingUseCase
+import com.jhonnatan.kalunga.domain.enumeration.ResponseCodeServices
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertArrayEquals
@@ -72,7 +74,7 @@ class StartingScreenUseCaseTest() {
     fun `Caso 01`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote("1")
-            assertEquals(listOf(false), result)
+            assertEquals(ResponseStartingUseCase(false,null), result)
         }
     }
 
@@ -81,7 +83,7 @@ class StartingScreenUseCaseTest() {
         val user = cloneUserServer()
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote(user.account)
-            assertEquals(listOf(true, listOf(user)), result)
+            assertEquals(ResponseStartingUseCase(true, listOf(user)), result)
         }
     }
 
@@ -89,7 +91,7 @@ class StartingScreenUseCaseTest() {
     fun `Caso 03`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote("")
-            assertEquals(listOf(null,"Error en el servidor, por favor intente más tarde"), result)
+            assertEquals(ResponseStartingUseCase(null, ResponseCodeServices.SERVER_ERROR.value), result)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.jhonnatan.kalunga.domain.models
+package com.jhonnatan.kalunga.domain.enumeration
 
 /****
  * Project: kalunga

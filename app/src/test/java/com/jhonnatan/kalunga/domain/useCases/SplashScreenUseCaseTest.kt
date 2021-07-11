@@ -14,7 +14,7 @@ import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
 import com.jhonnatan.kalunga.data.source.local.dataSources.VersionDataSource
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
-import com.jhonnatan.kalunga.domain.models.CodePermissions
+import com.jhonnatan.kalunga.domain.enumeration.CodePermissions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain

@@ -9,7 +9,7 @@ import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.source.local.entities.Version
 import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
-import com.jhonnatan.kalunga.domain.models.CodePermissions
+import com.jhonnatan.kalunga.domain.enumeration.CodePermissions
 import java.util.*
 
 /****

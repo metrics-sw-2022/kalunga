@@ -28,10 +28,12 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     val isConected = MutableLiveData<Boolean>()
     val snackBarTextError = MutableLiveData<String>()
     val startingScreenUseCase = StartingScreenUseCase(userRepository)
+    val loadingDialog = MutableLiveData<Boolean>()
 
     init {
         navigateToSignUp.value = false
         loginGoogle.value = false
+        loadingDialog.value = false
     }
 
     fun navigateToSignUp() {
@@ -39,6 +41,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     }
 
     fun loginGoogle() {
+        loadingDialog.value = true
         loginGoogle.value = true
     }
 
@@ -48,7 +51,15 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
     fun serverUserExist(acct: GoogleSignInAccount) {
         viewModelScope.launch {
-            val result = startingScreenUseCase.getUserByAccountRemote(acct.id)
+            val result = startingScreenUseCase.getUserByAccountRemote(acct.email)
+            when(result.status){
+                false -> print("false")
+                true -> print("true")
+                null -> {
+                    loadingDialog.value = true
+                }
+
+            }
         }
     }
 

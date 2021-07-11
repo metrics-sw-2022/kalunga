@@ -18,9 +18,9 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
-import com.jhonnatan.kalunga.domain.models.CodeActivityForResult
-import com.jhonnatan.kalunga.domain.models.CodePermissions
-import com.jhonnatan.kalunga.domain.models.TypeSnackBar
+import com.jhonnatan.kalunga.domain.enumeration.CodeActivityForResult
+import com.jhonnatan.kalunga.domain.enumeration.CodePermissions
+import com.jhonnatan.kalunga.domain.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar

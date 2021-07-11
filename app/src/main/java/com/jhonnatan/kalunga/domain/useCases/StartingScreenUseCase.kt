@@ -1,8 +1,8 @@
 package com.jhonnatan.kalunga.domain.useCases
 
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
-import com.jhonnatan.kalunga.data.source.remote.entities.responses.ResponseUsers
-import com.jhonnatan.kalunga.domain.models.ResponseCodeServices
+import com.jhonnatan.kalunga.domain.entities.ResponseStartingUseCase
+import com.jhonnatan.kalunga.domain.enumeration.ResponseCodeServices
 
 /****
  * Project: kalunga
@@ -14,14 +14,14 @@ import com.jhonnatan.kalunga.domain.models.ResponseCodeServices
 
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
-    suspend fun getUserByAccountRemote(account: String?): Any {
+    suspend fun getUserByAccountRemote(account: String?): ResponseStartingUseCase {
         val result = userRepository.getUserByAccountRemote(account!!)
         if(!result.isEmpty()) {
             if (result[0].data != null)
-                return listOf(true, result[0].data)
+                return ResponseStartingUseCase(true,result[0].data)
             else if (result[0].message.equals(ResponseCodeServices.USER_DOES_NOT_EXIST_DB.value))
-                return listOf(false)
+                return ResponseStartingUseCase(false,null)
         }
-        return listOf(null,ResponseCodeServices.SERVER_ERROR.value)
+        return ResponseStartingUseCase(null,ResponseCodeServices.SERVER_ERROR.value)
     }
 }

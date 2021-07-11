@@ -14,12 +14,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityStartingScreenBinding
-import com.jhonnatan.kalunga.domain.models.CodeActivityForResult
-import com.jhonnatan.kalunga.domain.models.TypeSnackBar
+import com.jhonnatan.kalunga.domain.enumeration.CodeActivityForResult
+import com.jhonnatan.kalunga.domain.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.session.views.SignUpActivity
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
+import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 
@@ -69,6 +70,13 @@ class StartingScreenActivity : AppCompatActivity() {
                 TypeSnackBar.WARNING.code,
                 this
             )
+        })
+
+        viewModel.loadingDialog.observe(this,{
+            if (it == true) {
+                LoadingDialog().startLoadingDialog(this)
+            } else
+                LoadingDialog().hideLoadingDialog()
         })
     }
 
