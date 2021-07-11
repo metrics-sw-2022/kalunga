@@ -3,6 +3,7 @@ package com.jhonnatan.kalunga.domain.injectionOfDependencies
 import android.content.Context
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.room.KalungaDB
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
@@ -23,9 +24,11 @@ object Injection {
         return VersionRepository.getInstance(splashScreenDataSource)
     }
 
-    fun providerStartingScreenRepository(): UserRepository {
-        val userService = UserDataSourceRemote()
-        return UserRepository.getInstance(userService)
+    fun providerStartingScreenRepository(context: Context): UserRepository {
+        val database = KalungaDB.getInstance(context)
+        val userDataSourceRemote = UserDataSourceRemote()
+        val userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
+        return UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
     }
 
 }
