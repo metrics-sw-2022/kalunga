@@ -1,9 +1,12 @@
 package com.jhonnatan.kalunga.data.user.repository
 
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.entities.RequestUsers
 import com.jhonnatan.kalunga.data.user.entities.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.user.entities.ResponseUsers
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import com.jhonnatan.kalunga.data.user.entities.User
+import com.jhonnatan.kalunga.data.version.entities.Version
 
 /****
  * Project: kalunga
@@ -13,14 +16,20 @@ import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
  * All rights reserved 2021.
  ****/
 
-class UserRepository(private val userDataSourceRemote: UserDataSourceRemote) : UserRepositoryInterface {
+class UserRepository(
+    private val userDataSourceRemote: UserDataSourceRemote,
+    private val userDataSourceLocal: UserDataSourceLocal
+) : UserRepositoryInterface {
 
     companion object {
         @Volatile
         private var instance: UserRepository? = null
-        fun getInstance(userDataSourceRemote: UserDataSourceRemote): UserRepository =
+        fun getInstance(
+            userDataSourceRemote: UserDataSourceRemote,
+            userDataSourceLocal: UserDataSourceLocal
+        ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(userDataSourceRemote)
+                instance ?: UserRepository(userDataSourceRemote,userDataSourceLocal)
             }
     }
 
@@ -32,16 +41,39 @@ class UserRepository(private val userDataSourceRemote: UserDataSourceRemote) : U
         return userDataSourceRemote.getUserByAccount(account)
     }
 
-    override suspend fun insertUser(requestUsers: RequestUsers): List<ResponseUsers> {
+    override suspend fun insertUserRemote(requestUsers: RequestUsers): List<ResponseUsers> {
         return userDataSourceRemote.insertUser(requestUsers)
     }
 
-    override suspend fun updateUser(account: String, requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers> {
+    override suspend fun updateUserRemote(
+        account: String,
+        requestUsersUpdate: RequestUsersUpdate
+    ): List<ResponseUsers> {
         return userDataSourceRemote.updateUser(account, requestUsersUpdate)
     }
 
-    override suspend fun deleteUser(account: String): List<ResponseUsers> {
+    override suspend fun deleteUserRemote(account: String): List<ResponseUsers> {
         return userDataSourceRemote.deleteUser(account)
+    }
+
+    override suspend fun getUserByAccountLocal(account: String): List<User> {
+        return userDataSourceLocal.getUserByAccount(account)
+    }
+
+    override suspend fun insertUserLocal(user: User) {
+        userDataSourceLocal.insertUser(user)
+    }
+
+    override suspend fun updateUserLocal(user: User) {
+        userDataSourceLocal.updateUser(user)
+    }
+
+    override suspend fun deleteUserLocal(user: User) {
+        userDataSourceLocal.deleteUser(user)
+    }
+
+    override suspend fun clearUsersLocal() {
+        userDataSourceLocal.clearUsers()
     }
 
 }

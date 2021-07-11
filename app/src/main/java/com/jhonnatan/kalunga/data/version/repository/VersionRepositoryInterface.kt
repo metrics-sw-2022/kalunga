@@ -12,13 +12,13 @@ import com.jhonnatan.kalunga.data.version.entities.Version
 
 interface VersionRepositoryInterface {
 
-    suspend fun queryLast(): List<Version>
+    suspend fun queryLastVersionLocal(): List<Version>
 
-    suspend fun insert(version: Version)
+    suspend fun insertVersionLocal(version: Version)
 
-    suspend fun update(version: Version)
+    suspend fun updateVersionLocal(version: Version)
 
-    suspend fun delete(version: Version)
+    suspend fun deleteVersionLocal(version: Version)
 
-    suspend fun clear()
+    suspend fun clearVersionsLocal()
 }

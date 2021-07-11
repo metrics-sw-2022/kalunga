@@ -23,24 +23,24 @@ class VersionRepository (private val versionDataSourceLocal: VersionDataSourceLo
             }
     }
 
-    override suspend fun queryLast(): List<Version> {
-        return versionDataSourceLocal.queryLast()
+    override suspend fun queryLastVersionLocal(): List<Version> {
+        return versionDataSourceLocal.queryLastVersion()
     }
 
-    override suspend fun insert(version: Version) {
-        versionDataSourceLocal.insert(version)
+    override suspend fun insertVersionLocal(version: Version) {
+        versionDataSourceLocal.insertVersion(version)
     }
 
-    override suspend fun update(version: Version) {
-        versionDataSourceLocal.update(version)
+    override suspend fun updateVersionLocal(version: Version) {
+        versionDataSourceLocal.updateVersion(version)
     }
 
-    override suspend fun delete(version: Version) {
-        versionDataSourceLocal.delete(version)
+    override suspend fun deleteVersionLocal(version: Version) {
+        versionDataSourceLocal.deleteVersion(version)
     }
 
-    override suspend fun clear() {
-        versionDataSourceLocal.clear()
+    override suspend fun clearVersionsLocal() {
+        versionDataSourceLocal.clearVersions()
     }
 
 

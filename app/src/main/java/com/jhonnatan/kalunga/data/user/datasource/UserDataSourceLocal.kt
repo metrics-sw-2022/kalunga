@@ -2,7 +2,6 @@ package com.jhonnatan.kalunga.data.user.datasource
 
 import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.source.UserDAO
-import com.jhonnatan.kalunga.data.version.entities.Version
 
 /****
  * Project: kalunga
@@ -20,13 +19,13 @@ class UserDataSourceLocal private constructor(private val userDAO: UserDAO){
             INSTANCE ?: UserDataSourceLocal(userDAO)
     }
 
-    suspend fun queryUser(account: String): List<User> = userDAO.queryUser(account)
+    suspend fun getUserByAccount(account: String): List<User> = userDAO.getUserByAccount(account)
 
-    suspend fun insert(user: User) = userDAO.insertUser(user)
+    suspend fun insertUser(user: User) = userDAO.insertUser(user)
 
-    suspend fun update(user: User) = userDAO.updateUser(user)
+    suspend fun updateUser(user: User) = userDAO.updateUser(user)
 
-    suspend fun delete(user: User) = userDAO.deleteUser(user)
+    suspend fun deleteUser(user: User) = userDAO.deleteUser(user)
 
-    suspend fun clear() = userDAO.clearUsers()
+    suspend fun clearUsers() = userDAO.clearUsers()
 }

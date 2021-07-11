@@ -23,10 +23,10 @@ import java.util.*
 class SplashScreenUseCase(private val versionRepository: VersionRepository) {
 
     suspend fun getAppVersion(): String {
-        val versionQuery = versionRepository.queryLast()
+        val versionQuery = versionRepository.queryLastVersionLocal()
         val versionName =
             if (versionQuery.size == 1 && versionQuery.equals(BuildConfig.VERSION_NAME))
-                versionRepository.queryLast()[0].versionName
+                versionRepository.queryLastVersionLocal()[0].versionName
             else
                 insertAppVersionDatabase()
         return "Versión $versionName"
@@ -34,7 +34,7 @@ class SplashScreenUseCase(private val versionRepository: VersionRepository) {
 
     private suspend fun insertAppVersionDatabase(): String {
         val versionName = BuildConfig.VERSION_NAME
-        versionRepository.insert(
+        versionRepository.insertVersionLocal(
             Version(0, BuildConfig.VERSION_CODE, versionName, Calendar.getInstance().time)
         )
         return versionName

@@ -19,13 +19,13 @@ class VersionDataSourceLocal private constructor(private val versionDAO: Version
             INSTANCE ?: VersionDataSourceLocal(versionDAO)
     }
 
-    suspend fun queryLast(): List<Version> = versionDAO.lastVersion()
+    suspend fun queryLastVersion(): List<Version> = versionDAO.lastVersion()
 
-    suspend fun insert(version: Version) = versionDAO.insertVersion(version)
+    suspend fun insertVersion(version: Version) = versionDAO.insertVersion(version)
 
-    suspend fun update(version: Version) = versionDAO.updateVersion(version)
+    suspend fun updateVersion(version: Version) = versionDAO.updateVersion(version)
 
-    suspend fun delete(version: Version) = versionDAO.deleteVersion(version)
+    suspend fun deleteVersion(version: Version) = versionDAO.deleteVersion(version)
 
-    suspend fun clear() = versionDAO.clearVersions()
+    suspend fun clearVersions() = versionDAO.clearVersions()
 }

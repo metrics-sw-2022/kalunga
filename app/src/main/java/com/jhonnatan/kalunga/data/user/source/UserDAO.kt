@@ -15,7 +15,7 @@ import com.jhonnatan.kalunga.data.version.entities.Version
 @Dao
 interface UserDAO {
     @Query("SELECT * FROM User WHERE account = :account")
-    suspend fun queryUser(account: String): List<User>
+    suspend fun getUserByAccount(account: String): List<User>
 
     @Insert
     suspend fun insertUser(user: User)

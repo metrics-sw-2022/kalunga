@@ -3,6 +3,8 @@ package com.jhonnatan.kalunga.data.user.repository
 import com.jhonnatan.kalunga.data.user.entities.RequestUsers
 import com.jhonnatan.kalunga.data.user.entities.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.user.entities.ResponseUsers
+import com.jhonnatan.kalunga.data.user.entities.User
+import com.jhonnatan.kalunga.data.version.entities.Version
 
 /****
  * Project: kalunga
@@ -18,9 +20,19 @@ interface UserRepositoryInterface {
 
     suspend fun getUsersRemote(): List<ResponseUsers>
 
-    suspend fun insertUser(requestUsers: RequestUsers): List<ResponseUsers>
+    suspend fun insertUserRemote(requestUsers: RequestUsers): List<ResponseUsers>
 
-    suspend fun updateUser(account: String,requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers>
+    suspend fun updateUserRemote(account: String, requestUsersUpdate: RequestUsersUpdate): List<ResponseUsers>
 
-    suspend fun deleteUser(account: String): List<ResponseUsers>
+    suspend fun deleteUserRemote(account: String): List<ResponseUsers>
+
+    suspend fun getUserByAccountLocal(account: String): List<User>
+
+    suspend fun insertUserLocal(user: User)
+
+    suspend fun updateUserLocal(user: User)
+
+    suspend fun deleteUserLocal(user: User)
+
+    suspend fun clearUsersLocal()
 }

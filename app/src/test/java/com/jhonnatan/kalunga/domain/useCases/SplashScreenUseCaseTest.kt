@@ -52,7 +52,7 @@ class SplashScreenUseCaseTest() {
 
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {
-            splashScreenRepository.insert(
+            splashScreenRepository.insertVersionLocal(
                 Version(
                     0,
                     x,
