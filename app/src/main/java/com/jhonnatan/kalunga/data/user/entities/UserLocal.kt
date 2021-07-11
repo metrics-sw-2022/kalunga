@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import org.w3c.dom.DocumentType
 import java.util.*
 
 /****
@@ -18,7 +19,14 @@ import java.util.*
 @Entity
 data class UserLocal (
     @PrimaryKey(autoGenerate = true) var id: Int,
-    var versionCode: Int,
-    var versionName: String,
-    var versionDate: Date
+    var account: String,
+    var sessionState: Boolean,
+    var typeUser: Int,
+    var email: String,
+    var fullName: String,
+    var documentType: Int,
+    var documentNumber: String,
+    var phoneNumber: String,
+    var country: String,
+    var city: String
 ): Parcelable
