@@ -43,17 +43,9 @@ class StartingScreenUseCaseTest() {
 
     private fun cloneUserServer(): UserRemote {
         return UserRemote(
-            3,
             "unitTesting@kalunga.com",
-            "Jhotec2013",
             0,
             3,
-            "d41d8cd98f00b204e9800998ecf8427e",
-            "0000",
-            false,
-            convertDate("0000-00-00 00:00:00"),
-            convertDate("0000-00-00 00:00:00"),
-            convertDate("2021-07-10 21:24:19"),
             3,
             "unitTesting@kalunga.com",
             "Jhonnatan E Zamudio P",

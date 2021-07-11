@@ -12,17 +12,9 @@ import java.util.*
  ****/
 
 data class UserRemote(
-    @SerializedName("id") val id: Int,
     @SerializedName("account") val account: String,
-    @SerializedName("password_user") val passwordUser: String,
     @SerializedName("login_attempts") val loginAttempts: Int,
     @SerializedName("status_user") val statusUser: Int,
-    @SerializedName("validation_code") val validationCode: String,
-    @SerializedName("pin") val pin: String,
-    @SerializedName("session_state") val sessionState: Boolean,
-    @SerializedName("session_start") val sessionStart: Date,
-    @SerializedName("session_closing") val sessionClosing: Date,
-    @SerializedName("registration_date") val registrationDate: Date,
     @SerializedName("type_user") val typeUser: Int,
     @SerializedName("email") val email: String,
     @SerializedName("full_name") val fullName: String,

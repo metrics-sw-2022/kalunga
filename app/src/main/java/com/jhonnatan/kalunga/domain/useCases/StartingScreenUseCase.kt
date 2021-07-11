@@ -26,6 +26,9 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
     }
 
     suspend fun getUserByAccountLocal(account: String): Boolean? {
+        val result = userRepository.getUserByAccountLocal(account)
+        if (result.isEmpty())
+            return false
         return null
     }
 }

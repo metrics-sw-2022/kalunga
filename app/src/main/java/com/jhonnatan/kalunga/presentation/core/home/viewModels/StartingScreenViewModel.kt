@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.models.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
@@ -52,13 +53,14 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
         isConected.postValue(UtilsNetwork().isOnline(context))
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun serverUserExist(acct: GoogleSignInAccount) {
         userAccount.value = acct
         viewModelScope.launch {
-            val result = startingScreenUseCase.getUserByAccountRemote(acct.id!!)
+            val result = startingScreenUseCase.getUserByAccountRemote(acct.email!!)
             when(result.status){
                 false -> navigateToConfiguration()
-                true -> userExistDatabase(acct)
+                true -> userExistDatabase(result.message as List<UserRemote>)
                 null -> {
                     loadingDialog.value = false
                     snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
@@ -68,9 +70,9 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    private fun userExistDatabase(acct: GoogleSignInAccount) {
+    private fun userExistDatabase(user: List<UserRemote>) {
         viewModelScope.launch {
-            val result = startingScreenUseCase.getUserByAccountLocal(acct.id!!)
+            val result = startingScreenUseCase.getUserByAccountLocal(user[0].account)
         }
     }
 
