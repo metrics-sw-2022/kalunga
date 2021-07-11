@@ -9,16 +9,20 @@ import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
-import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
+import com.jhonnatan.kalunga.data.user.entities.User
+import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
+import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.text.SimpleDateFormat
 import java.util.*
 
 /****
@@ -40,6 +44,7 @@ class StartingScreenUseCaseTest() {
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
+    private val faker = Faker()
 
     private fun cloneUserServer(): UserRemote {
         return UserRemote(
@@ -57,9 +62,24 @@ class StartingScreenUseCaseTest() {
         )
     }
 
-    private fun convertDate(date: String): Date {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        return Date(sdf.parse(date)!!.time)
+    private suspend fun createUsers(i: Int) {
+        for (x in 1..i) {
+            userRepository.insertUserLocal(
+                User(
+                    x,
+                    x.toString(),
+                    false,
+                    CodeTypeUser.STANDART.code,
+                    faker.internet.email(),
+                    faker.name.name(),
+                    0,
+                    faker.code.asin(),
+                    faker.phoneNumber.cellPhone(),
+                    faker.address.country(),
+                    faker.address.city()
+                )
+            )
+        }
     }
 
     @Before
@@ -70,16 +90,23 @@ class StartingScreenUseCaseTest() {
         ).allowMainThreadQueries().build()
         userDataSourceRemote = UserDataSourceRemote()
         userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
-        userRepository = UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
+        userRepository = UserRepository.getInstance(userDataSourceRemote, userDataSourceLocal)
         startingScreenUseCase = StartingScreenUseCase(userRepository)
         Dispatchers.setMain(mainThreadSurrogate)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
+        mainThreadSurrogate.close()
+        database.close()
     }
 
     @Test
     fun `Caso 01`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote("1")
-            assertEquals(ResponseStartingUseCase(false,null), result)
+            assertEquals(ResponseStartingUseCase(false, null), result)
         }
     }
 
@@ -96,7 +123,10 @@ class StartingScreenUseCaseTest() {
     fun `Caso 03`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote("")
-            assertEquals(ResponseStartingUseCase(null, ResponseCodeServices.SERVER_ERROR.value), result)
+            assertEquals(
+                ResponseStartingUseCase(null, ResponseCodeServices.SERVER_ERROR.value),
+                result
+            )
         }
     }
 
@@ -105,6 +135,15 @@ class StartingScreenUseCaseTest() {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountLocal("123456")
             assertEquals(false, result)
+        }
+    }
+
+    @Test
+    fun `Caso 05`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            createUsers(2)
+            val result = startingScreenUseCase.getUserByAccountLocal("1")
+            assertEquals(true, result)
         }
     }
 
