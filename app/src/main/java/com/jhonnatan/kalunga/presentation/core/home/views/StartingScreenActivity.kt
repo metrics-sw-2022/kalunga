@@ -36,6 +36,7 @@ class StartingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModelFactory = StartingScreenViewModelFactory.getInstance(this)
+        val loadingDialog = LoadingDialog(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[StartingScreenViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_starting_screen)
         binding.lifecycleOwner = this
@@ -74,9 +75,9 @@ class StartingScreenActivity : AppCompatActivity() {
 
         viewModel.loadingDialog.observe(this,{
             if (it == true) {
-                LoadingDialog().startLoadingDialog(this)
+                loadingDialog.startLoadingDialog()
             } else
-                LoadingDialog().hideLoadingDialog()
+                loadingDialog.hideLoadingDialog()
         })
     }
 

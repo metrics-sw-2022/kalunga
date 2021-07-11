@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.jhonnatan.kalunga.data.repositories.user.UserRepository
 import com.jhonnatan.kalunga.domain.common.utils.UtilsNetwork
+import com.jhonnatan.kalunga.domain.enumeration.ResponseCodeServices
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -33,7 +34,6 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     init {
         navigateToSignUp.value = false
         loginGoogle.value = false
-        loadingDialog.value = false
     }
 
     fun navigateToSignUp() {
@@ -56,7 +56,8 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
                 false -> print("false")
                 true -> print("true")
                 null -> {
-                    loadingDialog.value = true
+                    loadingDialog.value = false
+                    snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
                 }
 
             }
