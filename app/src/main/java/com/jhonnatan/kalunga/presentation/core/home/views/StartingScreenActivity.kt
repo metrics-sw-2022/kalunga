@@ -79,6 +79,18 @@ class StartingScreenActivity : AppCompatActivity() {
             } else
                 loadingDialog.hideLoadingDialog()
         })
+
+        viewModel.navigateToConfiguration.observe(this,{
+            if (it == true)
+                goToConfiguration()
+        })
+    }
+
+    private fun goToConfiguration() {
+        val intent = Intent(this@StartingScreenActivity, SignUpActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
+        finish()
     }
 
     @SuppressLint("MissingSuperCall")
