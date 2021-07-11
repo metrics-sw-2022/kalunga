@@ -1,9 +1,15 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import android.content.Context
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.jhonnatan.kalunga.data.room.KalungaDB
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
 import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 import kotlinx.coroutines.*
@@ -28,9 +34,12 @@ import java.util.*
 class StartingScreenUseCaseTest() {
 
     private lateinit var userDataSourceRemote: UserDataSourceRemote
+    private lateinit var userDataSourceLocal: UserDataSourceLocal
     private lateinit var userRepository: UserRepository
     private lateinit var startingScreenUseCase: StartingScreenUseCase
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    private var context = ApplicationProvider.getApplicationContext<Context>()
+    private lateinit var database: KalungaDB
 
     private fun cloneUserServer(): UserRemote {
         return UserRemote(
@@ -63,8 +72,13 @@ class StartingScreenUseCaseTest() {
 
     @Before
     fun setup() {
+        database = Room.inMemoryDatabaseBuilder(
+            context,
+            KalungaDB::class.java
+        ).allowMainThreadQueries().build()
         userDataSourceRemote = UserDataSourceRemote()
-        userRepository = UserRepository.getInstance(userDataSourceRemote)
+        userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
+        userRepository = UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
         startingScreenUseCase = StartingScreenUseCase(userRepository)
         Dispatchers.setMain(mainThreadSurrogate)
     }
@@ -94,5 +108,12 @@ class StartingScreenUseCaseTest() {
         }
     }
 
+    @Test
+    fun `Caso 04`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = startingScreenUseCase.getUserByAccountLocal("123456")
+            assertEquals(false, result)
+        }
+    }
 
 }

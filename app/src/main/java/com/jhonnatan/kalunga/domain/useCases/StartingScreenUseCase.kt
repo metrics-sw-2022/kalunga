@@ -14,8 +14,8 @@ import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 
 class StartingScreenUseCase(private val userRepository: UserRepository) {
 
-    suspend fun getUserByAccountRemote(account: String?): ResponseStartingUseCase {
-        val result = userRepository.getUserByAccountRemote(account!!)
+    suspend fun getUserByAccountRemote(account: String): ResponseStartingUseCase {
+        val result = userRepository.getUserByAccountRemote(account)
         if(!result.isEmpty()) {
             if (result[0].data != null)
                 return ResponseStartingUseCase(true,result[0].data)
@@ -23,5 +23,9 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
                 return ResponseStartingUseCase(false,null)
         }
         return ResponseStartingUseCase(null,ResponseCodeServices.SERVER_ERROR.value)
+    }
+
+    suspend fun getUserByAccountLocal(account: String): Boolean? {
+        return null
     }
 }

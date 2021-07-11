@@ -55,10 +55,10 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     fun serverUserExist(acct: GoogleSignInAccount) {
         userAccount.value = acct
         viewModelScope.launch {
-            val result = startingScreenUseCase.getUserByAccountRemote(acct.id)
+            val result = startingScreenUseCase.getUserByAccountRemote(acct.id!!)
             when(result.status){
                 false -> navigateToConfiguration()
-                true -> print("true")
+                true -> userExistDatabase(acct)
                 null -> {
                     loadingDialog.value = false
                     snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
@@ -67,6 +67,13 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
             }
         }
     }
+
+    private fun userExistDatabase(acct: GoogleSignInAccount) {
+        viewModelScope.launch {
+            val result = startingScreenUseCase.getUserByAccountLocal(acct.id!!)
+        }
+    }
+
     fun navigateToConfiguration() {
         loadingDialog.value = false
         navigateToConfiguration.value = true
