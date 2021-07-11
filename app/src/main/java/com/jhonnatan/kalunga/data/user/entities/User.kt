@@ -17,7 +17,7 @@ import java.util.*
 
 @Parcelize
 @Entity
-data class UserLocal (
+data class User (
     @PrimaryKey(autoGenerate = true) var id: Int,
     var account: String,
     var sessionState: Boolean,
