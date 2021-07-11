@@ -1,8 +1,8 @@
 package com.jhonnatan.kalunga.domain.useCases
 
-import com.jhonnatan.kalunga.data.repositories.user.UserRepository
-import com.jhonnatan.kalunga.domain.entities.ResponseStartingUseCase
-import com.jhonnatan.kalunga.domain.enumeration.ResponseCodeServices
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
+import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 
 /****
  * Project: kalunga

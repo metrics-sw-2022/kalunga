@@ -10,11 +10,11 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
-import com.jhonnatan.kalunga.data.source.local.dataSources.VersionDataSource
-import com.jhonnatan.kalunga.data.source.local.entities.Version
-import com.jhonnatan.kalunga.data.repositories.version.VersionRepository
-import com.jhonnatan.kalunga.domain.enumeration.CodePermissions
+import com.jhonnatan.kalunga.data.room.KalungaDB
+import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
+import com.jhonnatan.kalunga.data.version.entities.Version
+import com.jhonnatan.kalunga.data.version.repository.VersionRepository
+import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -42,7 +42,7 @@ class SplashScreenUseCaseTest() {
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
-    private lateinit var versionDataSource: VersionDataSource
+    private lateinit var versionDataSourceLocal: VersionDataSourceLocal
     private lateinit var splashScreenRepository: VersionRepository
     private lateinit var splashScreenUseCase: SplashScreenUseCase
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -69,8 +69,8 @@ class SplashScreenUseCaseTest() {
             context,
             KalungaDB::class.java
         ).allowMainThreadQueries().build()
-        versionDataSource = VersionDataSource.getInstance(database.versionDAO())
-        splashScreenRepository = VersionRepository.getInstance(versionDataSource)
+        versionDataSourceLocal = VersionDataSourceLocal.getInstance(database.versionDAO())
+        splashScreenRepository = VersionRepository.getInstance(versionDataSourceLocal)
         splashScreenUseCase = SplashScreenUseCase(splashScreenRepository)
         Dispatchers.setMain(mainThreadSurrogate)
     }

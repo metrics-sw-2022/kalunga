@@ -14,7 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityStartingScreenBinding
-import com.jhonnatan.kalunga.domain.enumeration.*
+import com.jhonnatan.kalunga.domain.models.enumeration.*
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.session.views.ConfigurationActivity
@@ -59,6 +59,7 @@ class StartingScreenActivity : AppCompatActivity() {
         viewModel.isConected.observe(this,{
             if (it == true){
                 val loginIntent: Intent = mGoogleSignInClient.signInIntent
+                @Suppress("DEPRECATION")
                 startActivityForResult(loginIntent, CodeActivityForResult.LOGIN_GOOGLE.code)
             } else
                 viewModel.snackBarTextError.postValue(getString(R.string.debe_tener_internet_continuar_google))

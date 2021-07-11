@@ -6,7 +6,7 @@ import android.os.Build
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.domain.enumeration.TypeSnackBar
+import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
 
 /****
  * Project: kalunga

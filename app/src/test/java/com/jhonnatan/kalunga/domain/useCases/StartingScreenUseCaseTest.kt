@@ -1,14 +1,13 @@
 package com.jhonnatan.kalunga.domain.useCases
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.jhonnatan.kalunga.data.repositories.user.UserRepository
-import com.jhonnatan.kalunga.data.source.remote.entities.User
-import com.jhonnatan.kalunga.data.source.remote.services.UserService
-import com.jhonnatan.kalunga.domain.entities.ResponseStartingUseCase
-import com.jhonnatan.kalunga.domain.enumeration.ResponseCodeServices
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import com.jhonnatan.kalunga.data.user.entities.UserRemote
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
+import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -28,13 +27,13 @@ import java.util.*
 @ExperimentalCoroutinesApi
 class StartingScreenUseCaseTest() {
 
-    private lateinit var userService: UserService
+    private lateinit var userDataSourceRemote: UserDataSourceRemote
     private lateinit var userRepository: UserRepository
     private lateinit var startingScreenUseCase: StartingScreenUseCase
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
-    private fun cloneUserServer(): User {
-        return User(
+    private fun cloneUserServer(): UserRemote {
+        return UserRemote(
             3,
             "unitTesting@kalunga.com",
             "Jhotec2013",
@@ -64,8 +63,8 @@ class StartingScreenUseCaseTest() {
 
     @Before
     fun setup() {
-        userService = UserService()
-        userRepository = UserRepository.getInstance(userService)
+        userDataSourceRemote = UserDataSourceRemote()
+        userRepository = UserRepository.getInstance(userDataSourceRemote)
         startingScreenUseCase = StartingScreenUseCase(userRepository)
         Dispatchers.setMain(mainThreadSurrogate)
     }
