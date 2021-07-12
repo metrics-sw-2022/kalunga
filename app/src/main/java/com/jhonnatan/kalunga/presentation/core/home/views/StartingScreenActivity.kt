@@ -21,6 +21,7 @@ import com.jhonnatan.kalunga.presentation.core.session.views.ConfigurationActivi
 import com.jhonnatan.kalunga.presentation.core.session.views.SignUpActivity
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
+import com.jhonnatan.kalunga.presentation.features.dashboard.views.DashboardActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 
@@ -85,6 +86,18 @@ class StartingScreenActivity : AppCompatActivity() {
             if (it == true)
                 goToConfiguration()
         })
+
+        viewModel.navigateToDashboard.observe(this,{
+            if (it == true)
+                gotoDashboard()
+        })
+    }
+
+    private fun gotoDashboard() {
+        val intent = Intent(this@StartingScreenActivity, DashboardActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
+        finish()
     }
 
     private fun goToConfiguration() {

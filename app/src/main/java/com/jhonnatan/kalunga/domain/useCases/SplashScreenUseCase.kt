@@ -23,12 +23,12 @@ import java.util.*
 class SplashScreenUseCase(private val versionRepository: VersionRepository) {
 
     suspend fun getAppVersion(): String {
+        val versionName: String
         val versionQuery = versionRepository.queryLastVersionLocal()
-        val versionName =
-            if (versionQuery.size == 1 && versionQuery.equals(BuildConfig.VERSION_NAME))
-                versionRepository.queryLastVersionLocal()[0].versionName
-            else
-                insertAppVersionDatabase()
+        if (versionQuery.size == 1 && versionQuery[0].versionName.equals(BuildConfig.VERSION_NAME))
+            versionName = versionQuery[0].versionName
+        else
+            versionName = insertAppVersionDatabase()
         return "Versión $versionName"
     }
 

@@ -33,11 +33,13 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     val loadingDialog = MutableLiveData<Boolean>()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val userAccount = MutableLiveData<GoogleSignInAccount>()
+    val navigateToDashboard = MutableLiveData<Boolean>()
 
     init {
         navigateToSignUp.value = false
         loginGoogle.value = false
         navigateToConfiguration.value = false
+        navigateToDashboard.value = false
     }
 
     fun navigateToSignUp() {
@@ -73,7 +75,18 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     private fun userExistDatabase(user: List<UserRemote>) {
         viewModelScope.launch {
             val result = startingScreenUseCase.getUserByAccountLocal(user[0].account)
+            if (result.status!!)
+                println("actualizarlo")
+            else {
+                startingScreenUseCase.createUserLocal(user[0])
+                navigateToDashboard()
+            }
         }
+    }
+
+    private fun navigateToDashboard() {
+        loadingDialog.value = false
+        navigateToDashboard.value = true
     }
 
     fun navigateToConfiguration() {
