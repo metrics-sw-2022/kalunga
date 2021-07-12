@@ -45,6 +45,7 @@ class StartingScreenUseCaseTest() {
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
     private val faker = Faker()
+    val users: MutableList<User> = ArrayList()
 
     private fun cloneUserServer(): UserRemote {
         return UserRemote(
@@ -63,11 +64,11 @@ class StartingScreenUseCaseTest() {
     }
 
     private suspend fun createUsers(i: Int) {
-        for (x in 1..i) {
-            userRepository.insertUserLocal(
+        for (x in 0 until i) {
+            users.add(
                 User(
-                    x,
-                    x.toString(),
+                    x+1,
+                    (x+1).toString(),
                     false,
                     CodeTypeUser.STANDART.code,
                     faker.internet.email(),
@@ -79,6 +80,7 @@ class StartingScreenUseCaseTest() {
                     faker.address.city()
                 )
             )
+            userRepository.insertUserLocal(users[x])
         }
     }
 
@@ -99,6 +101,7 @@ class StartingScreenUseCaseTest() {
     fun tearDown() {
         Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
+        database.clearAllTables()
         database.close()
     }
 
@@ -134,7 +137,7 @@ class StartingScreenUseCaseTest() {
     fun `Caso 04`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountLocal("123456")
-            assertEquals(false, result)
+            assertEquals(ResponseStartingUseCase(false, null), result)
         }
     }
 
@@ -142,8 +145,8 @@ class StartingScreenUseCaseTest() {
     fun `Caso 05`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             createUsers(2)
-            val result = startingScreenUseCase.getUserByAccountLocal("1")
-            assertEquals(true, result)
+            val result = startingScreenUseCase.getUserByAccountLocal(users[0].account)
+            assertEquals(ResponseStartingUseCase(true, listOf(users[0])), result)
         }
     }
 

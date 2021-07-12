@@ -25,10 +25,10 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
         return ResponseStartingUseCase(null,ResponseCodeServices.SERVER_ERROR.value)
     }
 
-    suspend fun getUserByAccountLocal(account: String): Boolean? {
+    suspend fun getUserByAccountLocal(account: String): ResponseStartingUseCase {
         val result = userRepository.getUserByAccountLocal(account)
         if (result.isEmpty())
-            return false
-        return null
+            return ResponseStartingUseCase(false,null)
+        return ResponseStartingUseCase(true,result)
     }
 }
