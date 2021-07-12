@@ -54,4 +54,9 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
             )
         )
     }
+
+    suspend fun updateUserLocal(user: List<User>) {
+        user[0].sessionState = true
+        userRepository.updateUserLocal(user[0])
+    }
 }
