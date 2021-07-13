@@ -12,6 +12,7 @@ import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.models.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
+import com.jhonnatan.kalunga.domain.models.enumeration.TypeLogin
 import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -35,12 +36,16 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val userAccount = MutableLiveData<GoogleSignInAccount>()
     val navigateToDashboard = MutableLiveData<Boolean>()
+    val typeLogin = MutableLiveData<String>()
+    val loginFacebook = MutableLiveData<Boolean>()
 
     init {
         navigateToSignUp.value = false
         loginGoogle.value = false
         navigateToConfiguration.value = false
         navigateToDashboard.value = false
+        typeLogin.value = ""
+        loginFacebook.value = false
     }
 
     fun navigateToSignUp() {
@@ -48,8 +53,15 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     }
 
     fun loginGoogle() {
+        typeLogin.value = TypeLogin.GOOGLE.value
         loadingDialog.value = true
         loginGoogle.value = true
+    }
+
+    fun loginFacebook() {
+        typeLogin.value = TypeLogin.FACEBOOK.value
+        loadingDialog.value = true
+        loginFacebook.value = true
     }
 
     fun checkOnline(context: Context) {

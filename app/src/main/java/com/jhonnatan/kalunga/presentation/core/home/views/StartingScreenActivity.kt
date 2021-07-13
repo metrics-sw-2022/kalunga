@@ -47,26 +47,43 @@ class StartingScreenActivity : AppCompatActivity() {
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
 
-        viewModel.navigateToSignUp.observe(this,{
+        viewModel.navigateToSignUp.observe(this, {
             if (it == true)
                 goToSignUp()
         })
 
-        viewModel.loginGoogle.observe(this,{
+        viewModel.loginGoogle.observe(this, {
             if (it == true)
                 viewModel.checkOnline(this)
         })
 
-        viewModel.isConected.observe(this,{
-            if (it == true){
-                val loginIntent: Intent = mGoogleSignInClient.signInIntent
-                @Suppress("DEPRECATION")
-                startActivityForResult(loginIntent, CodeActivityForResult.LOGIN_GOOGLE.code)
-            } else
-                viewModel.snackBarTextError.postValue(getString(R.string.debe_tener_internet_continuar_google))
+        viewModel.loginFacebook.observe(this, {
+            if (it == true)
+                viewModel.checkOnline(this)
         })
 
-        viewModel.snackBarTextError.observe(this,{
+        viewModel.isConected.observe(this, {
+            when (viewModel.typeLogin.value) {
+                TypeLogin.GOOGLE.value -> {
+                    if (it == true)
+                        loginWithGoogle()
+                    else {
+                        viewModel.loadingDialog.value = false
+                        viewModel.snackBarTextError.postValue(getString(R.string.debe_tener_internet_continuar_google))
+                    }
+                }
+                TypeLogin.FACEBOOK.value -> {
+                    if (it == true)
+                        loginWithFacebook()
+                    else {
+                        viewModel.loadingDialog.value = false
+                        viewModel.snackBarTextError.postValue(getString(R.string.internet_sesion_facebook))
+                    }
+                }
+            }
+        })
+
+        viewModel.snackBarTextError.observe(this, {
             CustomSnackBar().showSnackBar(
                 it,
                 binding.layoutContain,
@@ -75,22 +92,32 @@ class StartingScreenActivity : AppCompatActivity() {
             )
         })
 
-        viewModel.loadingDialog.observe(this,{
+        viewModel.loadingDialog.observe(this, {
             if (it == true) {
                 loadingDialog.startLoadingDialog()
             } else
                 loadingDialog.hideLoadingDialog()
         })
 
-        viewModel.navigateToConfiguration.observe(this,{
+        viewModel.navigateToConfiguration.observe(this, {
             if (it == true)
                 goToConfiguration()
         })
 
-        viewModel.navigateToDashboard.observe(this,{
+        viewModel.navigateToDashboard.observe(this, {
             if (it == true)
                 gotoDashboard()
         })
+    }
+
+    private fun loginWithFacebook() {
+        println("Inicio sesión con Facebook")
+    }
+
+    private fun loginWithGoogle() {
+        val loginIntent: Intent = mGoogleSignInClient.signInIntent
+        @Suppress("DEPRECATION")
+        startActivityForResult(loginIntent, CodeActivityForResult.LOGIN_GOOGLE.code)
     }
 
     private fun gotoDashboard() {

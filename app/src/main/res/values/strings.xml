@@ -27,4 +27,7 @@
     <string name="debe_tener_internet_continuar_google">Debe tener internet para continuar con Google</string>
     <string name="error_login_google">Error al continuar con Google</string>
     <string name="cargando_puntos">Cargando…</string>
+    <string name="facebook_app_id">343656394016606</string>
+    <string name="fb_login_protocol_scheme">fb343656394016606</string>
+    <string name="internet_sesion_facebook">Debe tener internet para iniciar sesión con Facebook</string>
 </resources>

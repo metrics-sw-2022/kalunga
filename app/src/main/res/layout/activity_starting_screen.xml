@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/gill_sans_mt_bold"
             android:text="@string/iniciar_sesi_n_con_facebook"
+            android:onClick="@{() -> vModel.loginFacebook()}"
             android:textColor="@color/purple_70"
             android:textSize="18sp"
             android:textAllCaps="false"
