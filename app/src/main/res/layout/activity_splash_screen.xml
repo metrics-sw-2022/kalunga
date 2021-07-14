@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="vModel"
             type="com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel" />
@@ -14,7 +13,7 @@
         android:id="@+id/layout_contain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/fondo_inicio"
+        android:background="@drawable/background_lanch"
         tools:context=".presentation.core.home.views.SplashScreenActivity">
 
         <ImageView

@@ -1,9 +1,12 @@
 package com.jhonnatan.kalunga.domain.injectionOfDependencies
 
 import android.content.Context
-import com.jhonnatan.kalunga.data.source.local.dataBases.KalungaDB
-import com.jhonnatan.kalunga.data.source.local.dataSources.SplashScreenDataSource
-import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import com.jhonnatan.kalunga.data.room.KalungaDB
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
+import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
+import com.jhonnatan.kalunga.data.version.repository.VersionRepository
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
 
 /****
  * Project: kalunga
@@ -15,9 +18,17 @@ import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenReposito
 
 object Injection {
 
-    fun providerSplashScreenRepository(context: Context): SplashScreenRepository {
+    fun providerSplashScreenRepository(context: Context): VersionRepository {
         val database = KalungaDB.getInstance(context)
-        val splashScreenDataSource = SplashScreenDataSource.getInstance(database.splashScreenDAO())
-        return SplashScreenRepository.getInstance(splashScreenDataSource)
+        val splashScreenDataSource = VersionDataSourceLocal.getInstance(database.versionDAO())
+        return VersionRepository.getInstance(splashScreenDataSource)
     }
+
+    fun providerStartingScreenRepository(context: Context): UserRepository {
+        val database = KalungaDB.getInstance(context)
+        val userDataSourceRemote = UserDataSourceRemote()
+        val userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
+        return UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
+    }
+
 }

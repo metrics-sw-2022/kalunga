@@ -7,9 +7,9 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.source.local.entities.Version
-import com.jhonnatan.kalunga.data.source.local.repositories.SplashScreenRepository
-import com.jhonnatan.kalunga.domain.models.CodePermissions
+import com.jhonnatan.kalunga.data.version.entities.Version
+import com.jhonnatan.kalunga.data.version.repository.VersionRepository
+import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
 import java.util.*
 
 /****
@@ -20,21 +20,21 @@ import java.util.*
  * All rights reserved 2021.
  ****/
 
-class SplashScreenUseCase(private val repository: SplashScreenRepository) {
+class SplashScreenUseCase(private val versionRepository: VersionRepository) {
 
     suspend fun getAppVersion(): String {
-        val versionQuery = repository.queryLast()
-        val versionName =
-            if (versionQuery.size == 1 && versionQuery.equals(BuildConfig.VERSION_NAME))
-                repository.queryLast()[0].versionName
-            else
-                insertAppVersionDatabase()
+        val versionName: String
+        val versionQuery = versionRepository.queryLastVersionLocal()
+        if (versionQuery.size == 1 && versionQuery[0].versionName.equals(BuildConfig.VERSION_NAME))
+            versionName = versionQuery[0].versionName
+        else
+            versionName = insertAppVersionDatabase()
         return "Versión $versionName"
     }
 
     private suspend fun insertAppVersionDatabase(): String {
         val versionName = BuildConfig.VERSION_NAME
-        repository.insert(
+        versionRepository.insertVersionLocal(
             Version(0, BuildConfig.VERSION_CODE, versionName, Calendar.getInstance().time)
         )
         return versionName

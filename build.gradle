@@ -9,14 +9,33 @@ buildscript {
     ext.multidex_version = '2.0.1'
     ext.easypermissions_version = '3.0.0'
     ext.playcore_version = '1.10.0'
+    ext.googleservices_version = '4.3.8'
+    ext.retrofit_version= '2.9.0'
+    ext.core_ktx_version = '1.6.0'
+    ext.appcompat_version = '1.3.0'
+    ext.material_version = '1.4.0'
+    ext.constraintlayout_version = '2.0.4'
+    ext.fragment_ktx_version = '1.3.5'
+    ext.play_services_version = '19.0.0'
+    ext.firebase_bom_version = '28.2.0'
+    ext.junit_version = '4.13.2'
+    ext.test_core_version = '1.4.0'
+    ext.robolectric_version = '4.5.1'
+    ext.test_junit_version = '1.1.3'
+    ext.mockito_kotlin_version = '3.2.0'
+    ext.mockito_core_version = '3.9.0'
+    ext.espresso_core_version = '3.4.0'
+    ext.facebook_sdk_version = '4.42.0'
+    ext.facebook_login_version = '5.15.3'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.1"
+        classpath "com.android.tools.build:gradle:4.2.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$sonarqube_version"
+        classpath "com.google.gms:google-services:$googleservices_version"
     }
 }
 

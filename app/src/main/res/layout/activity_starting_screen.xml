@@ -1,8 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.core.home.views.StartingScreen">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name="vModel"
+            type="com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_contain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/fondo_pantalla_incio"
+        tools:context=".presentation.core.home.views.StartingScreenActivity">
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/logo_kalunga_fondo_blanco"
+            android:src="@mipmap/ic_circle_logo_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <TextView
+            android:id="@+id/textViewLeyenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gill_sans_mt_extra_bold"
+            android:text="@string/env_a_dinero_de_manera_segura_y_responsable"
+            android:textColor="@color/error"
+            android:textSize="23sp"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewSlogan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gill_sans_mt_light"
+            android:text="@string/te_ofrecemos_la_mejor_tasa"
+            android:textColor="@color/purple"
+            android:textSize="28sp"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLeyenda" />
+
+        <TextView
+            android:id="@+id/textViewIniciarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gill_sans_mt_bold"
+            android:text="@string/iniciar_sesi_n"
+            android:onClick="@{() -> vModel.navigateToLogIn()}"
+            android:textColor="@color/purple"
+            android:textSize="21sp"
+            android:gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/buttonFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gill_sans_mt_bold"
+            android:text="@string/iniciar_sesi_n_con_facebook"
+            android:onClick="@{() -> vModel.loginFacebook()}"
+            android:textColor="@color/purple_70"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:background="@drawable/boton"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:drawableStart="@drawable/ic_facebook"
+            android:paddingStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewIniciarSesion"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/buttonGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gill_sans_mt_bold"
+            android:text="@string/continuar_con_google"
+            android:onClick="@{() -> vModel.loginGoogle()}"
+            android:textColor="@color/purple_70"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:background="@drawable/boton"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:drawableStart="@mipmap/google"
+            android:paddingStart="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonFacebook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/buttonRegistrarse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gill_sans_mt_bold"
+            android:text="@string/reg_strate_gratis"
+            android:onClick="@{() -> vModel.navigateToSignUp()}"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:background="@drawable/boton_oscuro"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGoogle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -18,9 +18,9 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
-import com.jhonnatan.kalunga.domain.models.CodeActivityForResult
-import com.jhonnatan.kalunga.domain.models.CodePermissions
-import com.jhonnatan.kalunga.domain.models.TypeSnackBar
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeActivityForResult
+import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
+import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
@@ -114,7 +114,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
             withContext(Dispatchers.IO){
                 delay(500)
                 viewModel.loading.postValue(false)
-                val intent = Intent(this@SplashScreenActivity, StartingScreen::class.java)
+                val intent = Intent(this@SplashScreenActivity, StartingScreenActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                 finish()
