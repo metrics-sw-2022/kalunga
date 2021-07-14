@@ -70,35 +70,17 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     fun serverUserExist() {
-        /*
-        if (typeLogin.value.equals(TypeLogin.GOOGLE.value)){
-            userAccount.value = acct!!
-            viewModelScope.launch {
-                val result = startingScreenUseCase.getUserByAccountRemote(acct.id!!)
-                when(result.status){
-                    false -> navigateToConfiguration()
-                    true -> userExistDatabase(result.message as List<UserRemote>)
-                    null -> {
-                        loadingDialog.value = false
-                        snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
-                    }
+        viewModelScope.launch {
+            val result = startingScreenUseCase.getUserByAccountRemote(userAccount.value!!.id)
+            when(result.status){
+                false -> navigateToConfiguration()
+                true -> userExistDatabase(result.message as List<UserRemote>)
+                null -> {
+                    loadingDialog.value = false
+                    snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
                 }
             }
-        } else if (typeLogin.value.equals(TypeLogin.FACEBOOK.value)){
-            val request = GraphRequest.newMeRequest(token) { acctu, response ->
-                val Cuenta = acctu.getString("id")
-                val email = acctu.getString("email")
-                val nombre = acctu.getString("name")
-                println("Los datos son: " + Cuenta)
-                println("Los datos son: " + email)
-                println("Los datos son: " + nombre)
-            }
-            val parameters = Bundle()
-            parameters.putString("fields", "id,name,email")
-            request.parameters = parameters
-            request.executeAsync()
         }
-         */
     }
 
     @Suppress("UNCHECKED_CAST")
