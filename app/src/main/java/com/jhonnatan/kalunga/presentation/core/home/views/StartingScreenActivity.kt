@@ -25,6 +25,7 @@ import com.jhonnatan.kalunga.domain.models.enumeration.*
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.StartingScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.session.views.ConfigurationActivity
+import com.jhonnatan.kalunga.presentation.core.session.views.LogInActivity
 import com.jhonnatan.kalunga.presentation.core.session.views.SignUpActivity
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
@@ -116,6 +117,18 @@ class StartingScreenActivity : AppCompatActivity() {
             if (it == true)
                 gotoDashboard()
         })
+
+        viewModel.navigateToLogIn.observe(this, {
+            if (it == true)
+                goToLogIn()
+        })
+    }
+
+    private fun goToLogIn() {
+        val intent = Intent(this@StartingScreenActivity, LogInActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
+        finish()
     }
 
     private fun loginWithFacebook() {

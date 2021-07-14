@@ -38,6 +38,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     val navigateToDashboard = MutableLiveData<Boolean>()
     val typeLogin = MutableLiveData<String>()
     val loginFacebook = MutableLiveData<Boolean>()
+    val navigateToLogIn = MutableLiveData<Boolean>()
 
     init {
         navigateToSignUp.value = false
@@ -50,6 +51,10 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
     fun navigateToSignUp() {
         navigateToSignUp.value = true
+    }
+
+    fun navigateToLogIn() {
+        navigateToLogIn.value = true
     }
 
     fun loginGoogle() {
