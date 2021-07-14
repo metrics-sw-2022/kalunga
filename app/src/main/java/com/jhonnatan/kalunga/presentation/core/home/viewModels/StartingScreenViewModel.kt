@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.models.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
+import com.jhonnatan.kalunga.domain.models.entities.UserAccountData
 import com.jhonnatan.kalunga.domain.models.enumeration.TypeLogin
 import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -34,7 +34,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     val startingScreenUseCase = StartingScreenUseCase(userRepository)
     val loadingDialog = MutableLiveData<Boolean>()
     val navigateToConfiguration = MutableLiveData<Boolean>()
-    val userAccount = MutableLiveData<GoogleSignInAccount>()
+    val userAccount = MutableLiveData<UserAccountData>()
     val navigateToDashboard = MutableLiveData<Boolean>()
     val typeLogin = MutableLiveData<String>()
     val loginFacebook = MutableLiveData<Boolean>()
@@ -69,19 +69,36 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun serverUserExist(acct: GoogleSignInAccount) {
-        userAccount.value = acct
-        viewModelScope.launch {
-            val result = startingScreenUseCase.getUserByAccountRemote(acct.id!!)
-            when(result.status){
-                false -> navigateToConfiguration()
-                true -> userExistDatabase(result.message as List<UserRemote>)
-                null -> {
-                    loadingDialog.value = false
-                    snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
+    fun serverUserExist() {
+        /*
+        if (typeLogin.value.equals(TypeLogin.GOOGLE.value)){
+            userAccount.value = acct!!
+            viewModelScope.launch {
+                val result = startingScreenUseCase.getUserByAccountRemote(acct.id!!)
+                when(result.status){
+                    false -> navigateToConfiguration()
+                    true -> userExistDatabase(result.message as List<UserRemote>)
+                    null -> {
+                        loadingDialog.value = false
+                        snackBarTextError.value = ResponseCodeServices.SERVER_ERROR.value
+                    }
                 }
             }
+        } else if (typeLogin.value.equals(TypeLogin.FACEBOOK.value)){
+            val request = GraphRequest.newMeRequest(token) { acctu, response ->
+                val Cuenta = acctu.getString("id")
+                val email = acctu.getString("email")
+                val nombre = acctu.getString("name")
+                println("Los datos son: " + Cuenta)
+                println("Los datos son: " + email)
+                println("Los datos son: " + nombre)
+            }
+            val parameters = Bundle()
+            parameters.putString("fields", "id,name,email")
+            request.parameters = parameters
+            request.executeAsync()
         }
+         */
     }
 
     @Suppress("UNCHECKED_CAST")

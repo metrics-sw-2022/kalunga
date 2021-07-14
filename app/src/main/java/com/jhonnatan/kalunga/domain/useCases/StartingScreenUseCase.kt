@@ -37,7 +37,7 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
             return ResponseStartingUseCase(true, result)
     }
 
-    suspend fun createUserLocal(userRemote: UserRemote){
+    suspend fun createUserLocal(userRemote: UserRemote) {
         userRepository.insertUserLocal(
             User(
                 0,
@@ -59,4 +59,5 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
         user[0].sessionState = true
         userRepository.updateUserLocal(user[0])
     }
+
 }
