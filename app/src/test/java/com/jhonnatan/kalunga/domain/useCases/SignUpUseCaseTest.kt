@@ -1,14 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
-import androidx.room.Room
-import com.jhonnatan.kalunga.BuildConfig
-import com.jhonnatan.kalunga.data.room.KalungaDB
-import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
-import com.jhonnatan.kalunga.data.version.repository.VersionRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.setMain
+import io.github.serpro69.kfaker.Faker
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -22,6 +14,7 @@ import org.junit.Test
  */
 class SignUpUseCaseTest(){
     private lateinit var signUpUseCase: SignUpUseCase
+    private val faker = Faker()
 
     @Before
     fun setup() {
@@ -32,5 +25,11 @@ class SignUpUseCaseTest(){
     fun `Caso 01`(){
         val result = signUpUseCase.areFieldsEmpty("")
         assertEquals(true, result)
+    }
+
+    @Test
+    fun `Caso 02`(){
+        val result = signUpUseCase.areFieldsEmpty(faker.animal.name())
+        assertEquals(false, result)
     }
 }
