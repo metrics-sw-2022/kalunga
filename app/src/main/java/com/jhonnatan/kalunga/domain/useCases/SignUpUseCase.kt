@@ -12,8 +12,9 @@ class SignUpUseCase {
     fun areFieldsEmpty(text: String) : Boolean? {
         if (text.isEmpty()){
             return true
+        } else {
+            return false
         }
-        return null
     }
 
 }
