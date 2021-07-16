@@ -31,4 +31,11 @@
     <string name="fb_login_protocol_scheme">fb343656394016606</string>
     <string name="internet_sesion_facebook">Debe tener internet para iniciar sesión con Facebook</string>
     <string name="error_login_facebook">Error al iniciar sesión con Facebook</string>
+    <string name="crea_tu_cuenta">Crea tu cuenta</string>
+    <string name="correo_electronico">Correo Electrónico</string>
+    <string name="nombre">Nombre</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="confirmar_contraseña">Confirmar contraseña</string>
+    <string name="continuar">Continuar</string>
+    <string name="ya_tienes_cuenta">¿Ya tienes una cuenta?</string>
 </resources>
