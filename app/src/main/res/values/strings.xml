@@ -38,4 +38,7 @@
     <string name="confirmar_contraseña">Confirmar contraseña</string>
     <string name="continuar">Continuar</string>
     <string name="ya_tienes_cuenta">¿Ya tienes una cuenta?</string>
+    <string name="cono_atr_s">ícono atrás</string>
+    <string name="ver_u_ocultar_confirmaci_n_de_contrase_a">ver u ocultar confirmación de contraseña</string>
+    <string name="ver_u_ocultar_contrase_a">ver u ocultar contraseña</string>
 </resources>

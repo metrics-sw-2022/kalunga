@@ -57,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewLeyenda" />
 
         <TextView
-            android:id="@+id/textViewIniciarSesion"
+            android:id="@+id/textViewLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gill_sans_mt_bold"
@@ -89,7 +89,7 @@
             android:layout_marginBottom="10dp"
             android:drawableStart="@drawable/ic_facebook"
             android:paddingStart="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewIniciarSesion"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="RtlCompat,RtlSymmetry" />

@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <!--
+
         <data>
             <variable
                 name="vModel"
-                type="com.jhonnatan.kalunga.presentation.core.home.viewModels.RegistrateViewModel.kt" />
-        </data>-->
+                type="com.jhonnatan.kalunga.presentation.core.session.viewModels.SignUpViewModel" />
+        </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:background="@mipmap/fondo_pantalla_sesion">
 
         <ImageView
-            android:id="@+id/backButton"
+            android:id="@+id/imageViewBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_back_button"
@@ -24,7 +24,8 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlCompat,RtlSymmetry" />
+            tools:ignore="RtlCompat,RtlSymmetry"
+            android:contentDescription="@string/cono_atr_s" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
-                android:id="@+id/textViewTitulo"
+                android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gill_sans_mt_bold"
@@ -45,7 +46,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input"
@@ -61,15 +62,31 @@
                 android:textSize="22sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="35dp"
                 android:drawableLeft="@drawable/ic_mail"
                 android:drawablePadding="10dp"
+                android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitulo" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                android:autofillHints="email"
+                android:drawableStart="@drawable/ic_mail" />
+
+            <TextView
+                android:id="@+id/textViewEmailError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input"
@@ -88,12 +105,28 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_person"
                 android:drawablePadding="10dp"
+                android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+                android:autofillHints="name"
+                android:drawableStart="@drawable/ic_person" />
+
+            <TextView
+                android:id="@+id/textViewNameError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input"
@@ -112,25 +145,42 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="10dp"
+                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name"
-            />
+                app:layout_constraintTop_toBottomOf="@+id/editTextName"
+                android:autofillHints="password"
+                android:drawableStart="@drawable/ic_lock" />
 
+
+            <TextView
+                android:id="@+id/textViewPasswordError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
             <ImageView
-                android:id="@+id/showButton"
+                android:id="@+id/imageViewShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/ic_eye_line"
-                app:layout_constraintBottom_toTopOf="@+id/passwordConfirm"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextPassword"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name" />
+                app:layout_constraintTop_toTopOf="@+id/editTextPassword"
+                android:contentDescription="@string/ver_u_ocultar_contrase_a"
+                android:layout_marginEnd="30dp" />
 
 
             <EditText
-                android:id="@+id/passwordConfirm"
+                android:id="@+id/editTextPasswordConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input"
@@ -149,23 +199,40 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="10dp"
+                android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+                android:autofillHints="confirm password"
+                android:drawableStart="@drawable/ic_lock" />
 
+            <TextView
+                android:id="@+id/textViewPasswordConfirmError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirm" />
 
             <ImageView
-                android:id="@+id/showButton2"
+                android:id="@+id/imageViewShowConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/ic_eye_line"
-                app:layout_constraintBottom_toTopOf="@+id/buttonNext"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextPasswordConfirm"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password" />
+                app:layout_constraintTop_toTopOf="@+id/editTextPasswordConfirm"
+                android:contentDescription="@string/ver_u_ocultar_confirmaci_n_de_contrase_a"
+                android:layout_marginEnd="30dp" />
 
             <Button
-                android:id="@+id/buttonNext"
+                android:id="@+id/buttonContinue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -177,31 +244,31 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="22sp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="35dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordConfirm" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextPasswordConfirm" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/textViewCuenta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gill_sans_mt_bold"
             android:gravity="center_horizontal"
             android:text="@string/ya_tienes_cuenta"
-            android:textColor="@color/purple"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_marginBottom="10dp"
-            android:alpha="0.8"
+            android:alpha="0.7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="25dp" />
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp" />
 
 
         <TextView
-            android:id="@+id/textViewIniciarSesion"
+            android:id="@+id/textViewLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gill_sans_mt_bold"
@@ -212,6 +279,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginRight="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="30dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
