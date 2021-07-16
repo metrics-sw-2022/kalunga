@@ -10,6 +10,9 @@ package com.jhonnatan.kalunga.domain.useCases
 class SignUpUseCase {
 
     fun areFieldsEmpty(text: String) : Boolean? {
+        if (text.isEmpty()){
+            return true
+        }
         return null
     }
 
