@@ -9,12 +9,8 @@ package com.jhonnatan.kalunga.domain.useCases
  **/
 class SignUpUseCase {
 
-    fun areFieldsEmpty(text: String) : Boolean? {
-        if (text.isEmpty()){
-            return true
-        } else {
-            return false
-        }
+    fun areFieldsEmpty(text: String) : Boolean {
+        return text.isEmpty()
     }
 
 }
