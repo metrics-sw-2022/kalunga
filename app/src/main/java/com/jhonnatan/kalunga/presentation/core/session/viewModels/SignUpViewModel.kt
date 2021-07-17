@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeField
+import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
+import com.jhonnatan.kalunga.domain.useCases.SignUpUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 /**
@@ -14,24 +16,37 @@ import kotlinx.coroutines.DelicateCoroutinesApi
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class SignUpViewModel : ViewModel(){
+class SignUpViewModel : ViewModel() {
 
     val errorEmail = MutableLiveData<String>()
     val errorName = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
     val errorPasswordConfirm = MutableLiveData<String>()
+    val signUpUseCase = SignUpUseCase()
 
     init {
-        errorEmail.value = ""
-        errorName.value = ""
-        errorPassword.value = ""
-        errorPasswordConfirm.value = ""
+        errorEmail.value = ResponseErrorField.DEFAULT.value
+        errorName.value = ResponseErrorField.DEFAULT.value
+        errorPassword.value = ResponseErrorField.DEFAULT.value
+        errorPasswordConfirm.value = ResponseErrorField.DEFAULT.value
     }
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
-        /*when(field){
-            CodeField.EMAIL_FIELD.code ->
-        }*/
+
+        if (signUpUseCase.areFieldsEmpty(text.toString())) {
+            setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
+        } else {
+            setErrorText(field, ResponseErrorField.DEFAULT.value)
+        }
+    }
+
+    private fun setErrorText(field: Int, value: String) {
+        when (field) {
+            CodeField.EMAIL_FIELD.code -> errorEmail.value = value
+            CodeField.NAME_FIELD.code -> errorName.value = value
+            CodeField.PASSWORD_FIELD.code -> errorPassword.value = value
+            CodeField.PASSWORD_CONFIRM_FIELD.code -> errorPasswordConfirm.value = value
+        }
     }
 }
 
