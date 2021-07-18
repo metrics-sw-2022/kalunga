@@ -1,9 +1,11 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.data.user.entities.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeKey
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeSessionState
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
@@ -58,6 +60,10 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
     suspend fun updateUserLocal(user: List<User>) {
         user[0].sessionState = true
         userRepository.updateUserLocal(user[0])
+    }
+
+    suspend fun startRemoteSession(account: String) {
+        userRepository.updateUserRemote(account, RequestUsersUpdate(CodeKey.SESSION_STATE.value,true))
     }
 
 }

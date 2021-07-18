@@ -76,7 +76,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     fun serverUserExist() {
         viewModelScope.launch {
-            val result = startingScreenUseCase.getUserByAccountRemote(userAccount.value!!.id)
+            val result = startingScreenUseCase.getUserByAccountRemote(userAccount.value!!.email)
             when(result.status){
                 false -> navigateToConfiguration()
                 true -> userExistDatabase(result.message as List<UserRemote>)
@@ -92,13 +92,18 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     private fun userExistDatabase(user: List<UserRemote>) {
         viewModelScope.launch {
             val result = startingScreenUseCase.getUserByAccountLocal(user[0].account)
-            if (result.status!!) {
+            if (result.status!!)
                 startingScreenUseCase.updateUserLocal(result.message as List<User>)
-                navigateToDashboard()
-            } else {
+            else
                 startingScreenUseCase.createUserLocal(user[0])
-                navigateToDashboard()
-            }
+            startRemoteSession()
+        }
+    }
+
+    private fun startRemoteSession() {
+        viewModelScope.launch {
+            startingScreenUseCase.startRemoteSession(userAccount.value!!.email)
+            navigateToDashboard()
         }
     }
 
