@@ -9,8 +9,15 @@ package com.jhonnatan.kalunga.domain.useCases
  **/
 class SignUpUseCase {
 
+    private var emailValidation =
+        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+
     fun areFieldsEmpty(text: String) : Boolean {
         return text.isEmpty()
+    }
+
+    fun isValidEmail(text: String) : Boolean? {
+        return null
     }
 
 }
