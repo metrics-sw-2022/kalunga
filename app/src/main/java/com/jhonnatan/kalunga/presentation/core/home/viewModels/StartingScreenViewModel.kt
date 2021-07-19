@@ -26,22 +26,13 @@ import kotlinx.coroutines.launch
 
 class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
+    val snackBarTextWarning = MutableLiveData<String>()
     val snackBarTextError = MutableLiveData<String>()
     val startingScreenUseCase = StartingScreenUseCase(userRepository)
     val loadingDialog = MutableLiveData<Boolean>()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val userAccount = MutableLiveData<UserAccountData>()
     val navigateToDashboard = MutableLiveData<Boolean>()
-    val navigateToLogIn = MutableLiveData<Boolean>()
-
-    init {
-        navigateToConfiguration.value = false
-        navigateToDashboard.value = false
-    }
-
-    fun navigateToLogIn() {
-        navigateToLogIn.value = true
-    }
 
     fun checkOnline(context: Context): Boolean {
         return UtilsNetwork().isOnline(context)

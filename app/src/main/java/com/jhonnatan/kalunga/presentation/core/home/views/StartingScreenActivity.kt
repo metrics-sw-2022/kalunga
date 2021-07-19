@@ -64,7 +64,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 loginWithGoogle()
             else {
                 viewModel.loadingDialog.value = false
-                viewModel.snackBarTextError.postValue(getString(R.string.debe_tener_internet_continuar_google))
+                viewModel.snackBarTextWarning.postValue(getString(R.string.debe_tener_internet_continuar_google))
             }
         }
 
@@ -74,11 +74,13 @@ class StartingScreenActivity : AppCompatActivity() {
                 loginWithFacebook()
             else {
                 viewModel.loadingDialog.value = false
-                viewModel.snackBarTextError.postValue(getString(R.string.internet_sesion_facebook))
+                viewModel.snackBarTextWarning.postValue(getString(R.string.internet_sesion_facebook))
             }
         }
 
-        viewModel.snackBarTextError.observe(this, {
+        binding.textViewIniciarSesion.setOnClickListener { goToLogIn() }
+
+        viewModel.snackBarTextWarning.observe(this, {
             CustomSnackBar().showSnackBar(
                 it,
                 binding.layoutContain,
@@ -87,27 +89,25 @@ class StartingScreenActivity : AppCompatActivity() {
             )
         })
 
+        viewModel.snackBarTextError.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.layoutContain,
+                TypeSnackBar.ERROR.code,
+                this
+            )
+        })
+
         viewModel.loadingDialog.observe(this, {
-            if (it == true) {
+            if (it == true)
                 loadingDialog.startLoadingDialog()
-            } else
+            else
                 loadingDialog.hideLoadingDialog()
         })
 
-        viewModel.navigateToConfiguration.observe(this, {
-            if (it == true)
-                goToConfiguration()
-        })
+        viewModel.navigateToConfiguration.observe(this, { goToConfiguration() })
 
-        viewModel.navigateToDashboard.observe(this, {
-            if (it == true)
-                gotoDashboard()
-        })
-
-        viewModel.navigateToLogIn.observe(this, {
-            if (it == true)
-                goToLogIn()
-        })
+        viewModel.navigateToDashboard.observe(this, { gotoDashboard() })
     }
 
     private fun goToLogIn() {
@@ -147,7 +147,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 override fun onError(error: FacebookException?) {
                     Log.e(TAG, "loginFacebookError:" + error)
                     viewModel.loadingDialog.value = false
-                    viewModel.snackBarTextError.postValue(getString(R.string.error_login_facebook))
+                    viewModel.snackBarTextWarning.postValue(getString(R.string.error_login_facebook))
                 }
             })
     }
@@ -197,7 +197,7 @@ class StartingScreenActivity : AppCompatActivity() {
             else {
                 Log.e(TAG, "loginGoogleError:" + task.exception.toString())
                 viewModel.loadingDialog.value = false
-                viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
+                viewModel.snackBarTextWarning.postValue(getString(R.string.error_login_google))
             }
             mGoogleSignInClient.signOut()
         }
