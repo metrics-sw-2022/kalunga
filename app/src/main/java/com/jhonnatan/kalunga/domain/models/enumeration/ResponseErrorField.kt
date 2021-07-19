@@ -9,5 +9,6 @@ package com.jhonnatan.kalunga.domain.models.enumeration
  **/
 enum class ResponseErrorField (val value: String){
     DEFAULT(""),
-    ERROR_EMPTY("El campo está vacío")
+    ERROR_EMPTY("El campo está vacío"),
+    ERROR_INVALID("La dirección de correo no es válida")
 }

@@ -48,6 +48,14 @@ class SignUpViewModel : ViewModel() {
             CodeField.PASSWORD_CONFIRM_FIELD.code -> errorPasswordConfirm.value = value
         }
     }
+
+    fun isValidEmail(text: Editable?) {
+        /*if (signUpUseCase.isValidEmail(text.toString())) {
+            setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.ERROR_INVALID.value)
+        } else {
+            setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.DEFAULT.value)
+        }*/
+    }
 }
 
 

@@ -34,6 +34,7 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s,CodeField.EMAIL_FIELD.code)
+                viewModel.isValidEmail(s)
             }
 
         })
