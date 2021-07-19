@@ -16,8 +16,8 @@ class SignUpUseCase {
         return text.isEmpty()
     }
 
-    fun isValidEmail(text: String) : Boolean? {
-        return null
+    fun isValidEmail(text: String) : Boolean {
+        return text.matches(emailValidation.toRegex())
     }
 
 }
