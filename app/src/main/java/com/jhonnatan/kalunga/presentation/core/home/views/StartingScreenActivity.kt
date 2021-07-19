@@ -147,7 +147,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 override fun onError(error: FacebookException?) {
                     Log.e(TAG, "loginFacebookError:" + error)
                     viewModel.loadingDialog.value = false
-                    viewModel.snackBarTextWarning.postValue(getString(R.string.error_login_facebook))
+                    viewModel.snackBarTextError.postValue(getString(R.string.error_login_facebook))
                 }
             })
     }
@@ -197,7 +197,7 @@ class StartingScreenActivity : AppCompatActivity() {
             else {
                 Log.e(TAG, "loginGoogleError:" + task.exception.toString())
                 viewModel.loadingDialog.value = false
-                viewModel.snackBarTextWarning.postValue(getString(R.string.error_login_google))
+                viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
             }
             mGoogleSignInClient.signOut()
         }
