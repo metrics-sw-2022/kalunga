@@ -46,6 +46,7 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s,CodeField.NAME_FIELD.code)
+                viewModel.isValidLong(s,CodeField.NAME_FIELD.code)
             }
 
         })
