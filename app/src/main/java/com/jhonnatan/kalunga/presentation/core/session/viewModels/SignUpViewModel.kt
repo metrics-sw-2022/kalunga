@@ -4,6 +4,7 @@ import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeField
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 import com.jhonnatan.kalunga.domain.useCases.SignUpUseCase
@@ -22,6 +23,8 @@ class SignUpViewModel : ViewModel() {
     val errorName = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
     val errorPasswordConfirm = MutableLiveData<String>()
+    val buttonContinueDrawable = MutableLiveData<Int>()
+    val buttonContinueEnable = MutableLiveData<Boolean>()
     val signUpUseCase = SignUpUseCase()
 
     init {
@@ -105,6 +108,18 @@ class SignUpViewModel : ViewModel() {
             )
         }
     }
+
+    fun changeEnableButton() {
+        if (signUpUseCase.changeEnableButton(errorEmail.value.toString(), errorName.value.toString(), errorPassword.value.toString(), errorPasswordConfirm.value.toString())){
+            buttonContinueDrawable.value = R.drawable.boton_oscuro
+            buttonContinueEnable.value = true
+        } else {
+            buttonContinueDrawable.value = R.drawable.boton_oscuro_disabled
+            buttonContinueEnable.value = false
+        }
+    }
+
+
 }
 
 

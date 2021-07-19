@@ -35,6 +35,7 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s,CodeField.EMAIL_FIELD.code)
                 viewModel.isValidEmail(s)
+                viewModel.changeEnableButton()
             }
 
         })
@@ -47,6 +48,7 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s,CodeField.NAME_FIELD.code)
                 viewModel.isValidLong(s,CodeField.NAME_FIELD.code)
+                viewModel.changeEnableButton()
             }
 
         })
@@ -59,6 +61,7 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s,CodeField.PASSWORD_FIELD.code)
                 viewModel.isValidLong(s,CodeField.PASSWORD_FIELD.code)
+                viewModel.changeEnableButton()
             }
 
         })
@@ -72,6 +75,7 @@ class SignUpActivity : AppCompatActivity() {
                 viewModel.areFieldsEmpty(s,CodeField.PASSWORD_CONFIRM_FIELD.code)
                 viewModel.isValidLong(s,CodeField.PASSWORD_CONFIRM_FIELD.code)
                 viewModel.arePasswordsEqual(s,binding.editTextPassword.text.toString())
+                viewModel.changeEnableButton()
             }
 
         })
@@ -90,6 +94,14 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.errorPasswordConfirm.observe(this, {
             binding.textViewPasswordConfirmError.text = it
+        })
+
+        viewModel.buttonContinueDrawable.observe(this, {
+            binding.buttonContinue.setBackgroundResource(it)
+        })
+
+        viewModel.buttonContinueEnable.observe(this, {
+            binding.buttonContinue.isEnabled = it
         })
     }
 }
