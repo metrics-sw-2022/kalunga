@@ -171,7 +171,8 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 23`() {
-        val result = signUpUseCase.arePasswordsEqual(faker.animal.name(), faker.animal.name())
+        val animal = faker.animal.name()
+        val result = signUpUseCase.arePasswordsEqual(animal, animal)
         assertEquals(true, result)
     }
 }

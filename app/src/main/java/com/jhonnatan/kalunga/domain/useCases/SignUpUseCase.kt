@@ -24,8 +24,8 @@ class SignUpUseCase {
         return text.length > min
     }
 
-    fun arePasswordsEqual(password: String, confirmPassword: String) : Boolean? {
-        return null
+    fun arePasswordsEqual(password: String, confirmPassword: String) : Boolean {
+        return password.equals(confirmPassword)
     }
 
 }
