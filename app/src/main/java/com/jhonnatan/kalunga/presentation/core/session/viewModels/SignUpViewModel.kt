@@ -58,15 +58,18 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun isValidLong(text: Editable?, field: Int) {
-       /* when (field) {
+        when (field) {
             CodeField.NAME_FIELD.code -> {
-                if (signUpUseCase.isValidLong(text.toString(),2)) {
+                if (signUpUseCase.isValidLong(text.toString(), 2)) {
                     setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.DEFAULT.value)
                 } else {
-                    setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.ERROR_LONG_2_CHARACTERS.value)
+                    setErrorText(
+                        CodeField.NAME_FIELD.code,
+                        ResponseErrorField.ERROR_LONG_2_CHARACTERS.value
+                    )
                 }
             }
-        }*/
+        }
     }
 }
 
