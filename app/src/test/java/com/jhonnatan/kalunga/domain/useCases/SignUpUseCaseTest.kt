@@ -75,4 +75,11 @@ class SignUpUseCaseTest(){
         assertEquals(false, result)
     }
 
+    @Test
+    fun `Caso 10`(){
+        val result = signUpUseCase.isValidEmail(faker.animal.name()+"@"+faker.animal.name()+"."+faker.animal.name()+"/")
+        assertEquals(false, result)
+    }
+
+
 }
