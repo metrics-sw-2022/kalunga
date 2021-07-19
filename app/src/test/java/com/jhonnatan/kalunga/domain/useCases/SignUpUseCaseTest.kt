@@ -161,4 +161,11 @@ class SignUpUseCaseTest() {
         val result = signUpUseCase.isValidLong(faker.animal.name()+faker.animal.name()+faker.animal.name(), 5)
         assertEquals(true, result)
     }
+
+
+    @Test
+    fun `Caso 22`() {
+        val result = signUpUseCase.arePasswordsEqual(faker.animal.name(), faker.address.city())
+        assertEquals(false, result)
+    }
 }
