@@ -30,8 +30,8 @@ class SignUpUseCase {
         return password.equals(confirmPassword)
     }
 
-    fun changeEnableButton(email: String, name: String, password:String, confirmPassword: String) : Boolean? {
-        return null
+    fun changeEnableButton(email: String, name: String, password:String, confirmPassword: String) : Boolean {
+        return email.equals(ResponseErrorField.DEFAULT.value) && name.equals(ResponseErrorField.DEFAULT.value) && password.equals(ResponseErrorField.DEFAULT.value) && confirmPassword.equals(ResponseErrorField.DEFAULT.value)
     }
 
 }
