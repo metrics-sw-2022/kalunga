@@ -197,4 +197,10 @@ class SignUpUseCaseTest() {
         val result = signUpUseCase.changeEnableButton(faker.animal.name(),faker.animal.name(),ResponseErrorField.DEFAULT.value,faker.animal.name())
         assertEquals(false, result)
     }
+
+    @Test
+    fun `Caso 27`() {
+        val result = signUpUseCase.changeEnableButton(faker.animal.name(),faker.animal.name(),faker.animal.name(),ResponseErrorField.DEFAULT.value)
+        assertEquals(false, result)
+    }
 }
