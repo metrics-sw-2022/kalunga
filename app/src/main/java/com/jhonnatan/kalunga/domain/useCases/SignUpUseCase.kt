@@ -20,4 +20,8 @@ class SignUpUseCase {
         return text.matches(emailValidation.toRegex())
     }
 
+    fun isValidLong(text: String, min: Int) : Boolean? {
+        return null
+    }
+
 }
