@@ -56,43 +56,31 @@ class StartingScreenActivity : AppCompatActivity() {
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
 
-        viewModel.navigateToSignUp.observe(this, {
-            if (it == true)
-                goToSignUp()
-        })
+        binding.buttonRegistrarse.setOnClickListener { goToSignUp() }
 
-        viewModel.loginGoogle.observe(this, {
-            if (it == true)
-                viewModel.checkOnline(this)
-        })
-
-        viewModel.loginFacebook.observe(this, {
-            if (it == true)
-                viewModel.checkOnline(this)
-        })
-
-        viewModel.isConected.observe(this, {
-            when (viewModel.typeLogin.value) {
-                TypeLogin.GOOGLE.value -> {
-                    if (it == true)
-                        loginWithGoogle()
-                    else {
-                        viewModel.loadingDialog.value = false
-                        viewModel.snackBarTextError.postValue(getString(R.string.debe_tener_internet_continuar_google))
-                    }
-                }
-                TypeLogin.FACEBOOK.value -> {
-                    if (it == true)
-                        loginWithFacebook()
-                    else {
-                        viewModel.loadingDialog.value = false
-                        viewModel.snackBarTextError.postValue(getString(R.string.internet_sesion_facebook))
-                    }
-                }
+        binding.buttonGoogle.setOnClickListener {
+            viewModel.loadingDialog.value = true
+            if (viewModel.checkOnline(this))
+                loginWithGoogle()
+            else {
+                viewModel.loadingDialog.value = false
+                viewModel.snackBarTextWarning.postValue(getString(R.string.debe_tener_internet_continuar_google))
             }
-        })
+        }
 
-        viewModel.snackBarTextError.observe(this, {
+        binding.buttonFacebook.setOnClickListener {
+            viewModel.loadingDialog.value = true
+            if (viewModel.checkOnline(this))
+                loginWithFacebook()
+            else {
+                viewModel.loadingDialog.value = false
+                viewModel.snackBarTextWarning.postValue(getString(R.string.internet_sesion_facebook))
+            }
+        }
+
+        binding.textViewIniciarSesion.setOnClickListener { goToLogIn() }
+
+        viewModel.snackBarTextWarning.observe(this, {
             CustomSnackBar().showSnackBar(
                 it,
                 binding.layoutContain,
@@ -101,27 +89,25 @@ class StartingScreenActivity : AppCompatActivity() {
             )
         })
 
+        viewModel.snackBarTextError.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.layoutContain,
+                TypeSnackBar.ERROR.code,
+                this
+            )
+        })
+
         viewModel.loadingDialog.observe(this, {
-            if (it == true) {
+            if (it == true)
                 loadingDialog.startLoadingDialog()
-            } else
+            else
                 loadingDialog.hideLoadingDialog()
         })
 
-        viewModel.navigateToConfiguration.observe(this, {
-            if (it == true)
-                goToConfiguration()
-        })
+        viewModel.navigateToConfiguration.observe(this, { goToConfiguration() })
 
-        viewModel.navigateToDashboard.observe(this, {
-            if (it == true)
-                gotoDashboard()
-        })
-
-        viewModel.navigateToLogIn.observe(this, {
-            if (it == true)
-                goToLogIn()
-        })
+        viewModel.navigateToDashboard.observe(this, { gotoDashboard() })
     }
 
     private fun goToLogIn() {

@@ -58,7 +58,7 @@ class StartingScreenUseCaseTest() {
             0,
             "1016055000",
             "+57 311 2949556",
-            "CO",
+            "Colombia",
             "Bogotá"
         )
     }

@@ -12,7 +12,6 @@ import com.jhonnatan.kalunga.domain.models.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.entities.UserAccountData
-import com.jhonnatan.kalunga.domain.models.enumeration.TypeLogin
 import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -27,57 +26,23 @@ import kotlinx.coroutines.launch
 
 class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
 
-    val navigateToSignUp = MutableLiveData<Boolean>()
-    val loginGoogle = MutableLiveData<Boolean>()
-    val isConected = MutableLiveData<Boolean>()
+    val snackBarTextWarning = MutableLiveData<String>()
     val snackBarTextError = MutableLiveData<String>()
     val startingScreenUseCase = StartingScreenUseCase(userRepository)
     val loadingDialog = MutableLiveData<Boolean>()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val userAccount = MutableLiveData<UserAccountData>()
     val navigateToDashboard = MutableLiveData<Boolean>()
-    val typeLogin = MutableLiveData<String>()
-    val loginFacebook = MutableLiveData<Boolean>()
-    val navigateToLogIn = MutableLiveData<Boolean>()
 
-    init {
-        navigateToSignUp.value = false
-        loginGoogle.value = false
-        navigateToConfiguration.value = false
-        navigateToDashboard.value = false
-        typeLogin.value = ""
-        loginFacebook.value = false
-    }
-
-    fun navigateToSignUp() {
-        navigateToSignUp.value = true
-    }
-
-    fun navigateToLogIn() {
-        navigateToLogIn.value = true
-    }
-
-    fun loginGoogle() {
-        typeLogin.value = TypeLogin.GOOGLE.value
-        loadingDialog.value = true
-        loginGoogle.value = true
-    }
-
-    fun loginFacebook() {
-        typeLogin.value = TypeLogin.FACEBOOK.value
-        loadingDialog.value = true
-        loginFacebook.value = true
-    }
-
-    fun checkOnline(context: Context) {
-        isConected.postValue(UtilsNetwork().isOnline(context))
+    fun checkOnline(context: Context): Boolean {
+        return UtilsNetwork().isOnline(context)
     }
 
     @Suppress("UNCHECKED_CAST")
     fun serverUserExist() {
         viewModelScope.launch {
             val result = startingScreenUseCase.getUserByAccountRemote(userAccount.value!!.id)
-            when(result.status){
+            when (result.status) {
                 false -> navigateToConfiguration()
                 true -> userExistDatabase(result.message as List<UserRemote>)
                 null -> {
@@ -92,13 +57,18 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     private fun userExistDatabase(user: List<UserRemote>) {
         viewModelScope.launch {
             val result = startingScreenUseCase.getUserByAccountLocal(user[0].account)
-            if (result.status!!) {
+            if (result.status!!)
                 startingScreenUseCase.updateUserLocal(result.message as List<User>)
-                navigateToDashboard()
-            } else {
+            else
                 startingScreenUseCase.createUserLocal(user[0])
-                navigateToDashboard()
-            }
+            startRemoteSession(user[0].account)
+        }
+    }
+
+    private fun startRemoteSession(account: String) {
+        viewModelScope.launch {
+            startingScreenUseCase.startRemoteSession(account)
+            navigateToDashboard()
         }
     }
 
