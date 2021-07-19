@@ -1,5 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
+
 /**
  * Project: kalunga
  * From: com.jhonnatan.kalunga.domain.useCases
@@ -26,6 +28,10 @@ class SignUpUseCase {
 
     fun arePasswordsEqual(password: String, confirmPassword: String) : Boolean {
         return password.equals(confirmPassword)
+    }
+
+    fun changeEnableButton(email: String, name: String, password:String, confirmPassword: String) : Boolean? {
+        return null
     }
 
 }

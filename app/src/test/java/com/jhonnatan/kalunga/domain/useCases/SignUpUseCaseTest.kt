@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 import io.github.serpro69.kfaker.Faker
 import org.junit.Assert.*
 import org.junit.Before
@@ -176,6 +177,13 @@ class SignUpUseCaseTest() {
     fun `Caso 23`() {
         val animal = faker.animal.name()
         val result = signUpUseCase.arePasswordsEqual(animal, animal)
+        assertEquals(true, result)
+    }
+
+
+    @Test
+    fun `Caso 24`() {
+        val result = signUpUseCase.changeEnableButton(ResponseErrorField.DEFAULT.value,faker.animal.name(),faker.animal.name(),faker.animal.name())
         assertEquals(true, result)
     }
 }
