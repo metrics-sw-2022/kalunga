@@ -71,6 +71,7 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s,CodeField.PASSWORD_CONFIRM_FIELD.code)
                 viewModel.isValidLong(s,CodeField.PASSWORD_CONFIRM_FIELD.code)
+                viewModel.arePasswordsEqual(s,binding.editTextPassword.text.toString())
             }
 
         })

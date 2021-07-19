@@ -158,7 +158,10 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 21`() {
-        val result = signUpUseCase.isValidLong(faker.animal.name()+faker.animal.name()+faker.animal.name(), 5)
+        val result = signUpUseCase.isValidLong(
+            faker.animal.name() + faker.animal.name() + faker.animal.name(),
+            5
+        )
         assertEquals(true, result)
     }
 

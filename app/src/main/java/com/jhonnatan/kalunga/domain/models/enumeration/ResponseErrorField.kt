@@ -12,5 +12,6 @@ enum class ResponseErrorField (val value: String){
     ERROR_EMPTY("El campo está vacío"),
     ERROR_INVALID_MAIL("Ingresa un correo válido"),
     ERROR_LONG_2_CHARACTERS("Debe ser mayor a 2 caracteres"),
-    ERROR_LONG_5_CHARACTERS("Debe ser mayor a 5 caracteres")
+    ERROR_LONG_5_CHARACTERS("Debe ser mayor a 5 caracteres"),
+    ERROR_PASSWORD_DOESNT_MATCH("Las contraseñas no coinciden")
 }

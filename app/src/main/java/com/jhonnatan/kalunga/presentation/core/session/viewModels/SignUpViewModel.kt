@@ -81,7 +81,10 @@ class SignUpViewModel : ViewModel() {
             }
             CodeField.PASSWORD_CONFIRM_FIELD.code -> {
                 if (signUpUseCase.isValidLong(text.toString(), 5)) {
-                    setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.value)
+                    setErrorText(
+                        CodeField.PASSWORD_CONFIRM_FIELD.code,
+                        ResponseErrorField.DEFAULT.value
+                    )
                 } else {
                     setErrorText(
                         CodeField.PASSWORD_CONFIRM_FIELD.code,
@@ -89,6 +92,17 @@ class SignUpViewModel : ViewModel() {
                     )
                 }
             }
+        }
+    }
+
+    fun arePasswordsEqual(confirmPassword: Editable?, password: String) {
+        if (signUpUseCase.arePasswordsEqual(confirmPassword.toString(), password)) {
+            setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.value)
+        } else {
+            setErrorText(
+                CodeField.PASSWORD_CONFIRM_FIELD.code,
+                ResponseErrorField.ERROR_PASSWORD_DOESNT_MATCH.value
+            )
         }
     }
 }
