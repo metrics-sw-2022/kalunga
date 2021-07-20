@@ -26,8 +26,12 @@ class SignUpViewModel : ViewModel() {
     val buttonContinueDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
     val signUpUseCase = SignUpUseCase()
+    val navigateToConfiguration = MutableLiveData<Boolean>()
+    val navigateToLogIn = MutableLiveData<Boolean>()
 
     init {
+        navigateToConfiguration.value = false
+        navigateToLogIn.value = false
         errorEmail.value = ResponseErrorField.DEFAULT.value
         errorName.value = ResponseErrorField.DEFAULT.value
         errorPassword.value = ResponseErrorField.DEFAULT.value
@@ -119,7 +123,13 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
+    fun navigateToConfiguration() {
+        navigateToConfiguration.value = true
+    }
 
+    fun navigateToLogIn() {
+        navigateToLogIn.value = true
+    }
 }
 
 
