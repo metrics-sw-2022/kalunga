@@ -1,10 +1,18 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 import io.github.serpro69.kfaker.Faker
+import org.json.JSONArray
+import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 /**
  * Project: kalunga
@@ -16,6 +24,38 @@ import org.junit.Test
 class SignUpUseCaseTest() {
     private lateinit var signUpUseCase: SignUpUseCase
     private val faker = Faker()
+    private val emails = mutableListOf<String>()
+
+    private fun createDataPool(dataPool:String){
+        val pathDataPool =
+            "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/signUp/$dataPool.txt"
+        val jsonString = getDataTXT(pathDataPool)
+        if (jsonString != null){
+            try {
+                val dataPools = JSONArray(JSONObject(jsonString).optString("data_pool"))
+                generateData(dataPools)
+            }catch (ignore: Exception){}
+        }
+    }
+
+    private fun getDataTXT(path: String) :String? {
+        val txtFile = File(path)
+        var aux:String? = null
+        try {
+            val bufferedReader = BufferedReader(InputStreamReader(FileInputStream(txtFile)))
+            aux = bufferedReader.readLine()
+            bufferedReader.close()
+        } catch(ignore:Exception){}
+        return aux
+    }
+
+    private fun generateData(dataPool: JSONArray){
+        var data:JSONObject
+        for (id in 0 until dataPool.length()){
+            data = dataPool.getJSONObject(id)
+            emails.add(data["email"].toString())
+        }
+    }
 
     @Before
     fun setup() {
@@ -36,100 +76,20 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 03`() {
-        val result = signUpUseCase.isValidEmail(faker.animal.name())
-        assertEquals(false, result)
+        createDataPool("datapool_1")
+        for (id in 0 until emails.size){
+            val result = signUpUseCase.isValidEmail(emails[id])
+            assertEquals(false, result)
+        }
     }
 
     @Test
     fun `Caso 04`() {
-        val result = signUpUseCase.isValidEmail(faker.animal.name() + "@")
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 05`() {
-        val result = signUpUseCase.isValidEmail(faker.animal.name() + "@" + faker.animal.name())
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 06`() {
-        val result =
-            signUpUseCase.isValidEmail(faker.animal.name() + "@" + faker.animal.name() + ".")
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 07`() {
-        val result = signUpUseCase.isValidEmail(
-            faker.animal.name() + "@" + faker.animal.name() + "." + faker.animal.name().first()
-        )
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 08`() {
-        val result =
-            signUpUseCase.isValidEmail("/" + faker.animal.name() + "@" + faker.animal.name() + "." + faker.animal.name())
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 09`() {
-        val result =
-            signUpUseCase.isValidEmail(faker.animal.name() + "@/" + faker.animal.name() + "." + faker.animal.name())
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 10`() {
-        val result =
-            signUpUseCase.isValidEmail(faker.animal.name() + "@" + faker.animal.name() + "." + faker.animal.name() + "/")
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 11`() {
-        val result =
-            signUpUseCase.isValidEmail(faker.animal.name() + "@" + faker.animal.name() + "." + faker.animal.name() + ".")
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 12`() {
-        val result = signUpUseCase.isValidEmail(
-            faker.animal.name() + "@" + faker.animal.name() + "." + faker.animal.name() + "." + faker.animal.name()
-                .first()
-        )
-        assertEquals(false, result)
-    }
-
-    @Test
-    fun `Caso 13`() {
-        val result =
-            signUpUseCase.isValidEmail(faker.animal.name() + "@" + faker.animal.name() + "." + faker.animal.name())
-        assertEquals(true, result)
-    }
-
-    @Test
-    fun `Caso 14`() {
-        val result =
-            signUpUseCase.isValidEmail("hola@hola.com.co")
-        assertEquals(true, result)
-    }
-
-    @Test
-    fun `Caso 15`() {
-        val result =
-            signUpUseCase.isValidEmail("_" + faker.animal.name() + "-@" + faker.animal.name() + "." + faker.animal.name())
-        assertEquals(true, result)
-    }
-
-    @Test
-    fun `Caso 16`() {
-        val result =
-            signUpUseCase.isValidEmail(faker.animal.name() + "@-" + faker.animal.name() + "." + faker.animal.name())
-        assertEquals(true, result)
+        createDataPool("datapool_2")
+        for (id in 0 until emails.size){
+            val result = signUpUseCase.isValidEmail(emails[id])
+            assertEquals(true, result)
+        }
     }
 
     @Test
