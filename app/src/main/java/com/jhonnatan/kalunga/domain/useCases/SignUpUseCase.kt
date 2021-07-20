@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.domain.models.enumeration.CodePatterns
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 
 /**
@@ -11,31 +12,33 @@ import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
  **/
 class SignUpUseCase {
 
-    private var emailValidation =
-        "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-
-    fun areFieldsEmpty(text: String) : Boolean {
+    fun areFieldsEmpty(text: String): Boolean {
         return text.isEmpty()
     }
 
-    fun isValidEmail(text: String) : Boolean {
-        return text.matches(emailValidation.toRegex())
+    fun isValidEmail(text: String): Boolean {
+        return text.matches(CodePatterns.EMAIL_VALIDATION.value.toRegex())
     }
 
-    fun isValidLong(text: String, min: Int) : Boolean {
+    fun isValidLong(text: String, min: Int): Boolean {
         return text.length > min
     }
 
-    fun arePasswordsEqual(password: String, confirmPassword: String) : Boolean {
-        return password.equals(confirmPassword)
+    fun arePasswordsEqual(password: String, confirmPassword: String): Boolean {
+        return password == confirmPassword
     }
 
-    fun changeEnableButton(email: String, name: String, password:String, confirmPassword: String, emailErrorText: String, nameErrorText: String, passwordErrorText:String, confirmPasswordErrorText: String) : Boolean {
-        return emailErrorText.equals(ResponseErrorField.DEFAULT.value) && nameErrorText.equals(
-            ResponseErrorField.DEFAULT.value
-        ) && passwordErrorText.equals(ResponseErrorField.DEFAULT.value) && confirmPasswordErrorText.equals(
-            ResponseErrorField.DEFAULT.value
-        ) && !email.isEmpty() && !name.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()
+    fun changeEnableButton(
+        email: String,
+        name: String,
+        password: String,
+        confirmPassword: String,
+        emailErrorText: String,
+        nameErrorText: String,
+        passwordErrorText: String,
+        confirmPasswordErrorText: String
+    ): Boolean {
+        return emailErrorText == ResponseErrorField.DEFAULT.value && nameErrorText == ResponseErrorField.DEFAULT.value && passwordErrorText == ResponseErrorField.DEFAULT.value && confirmPasswordErrorText == ResponseErrorField.DEFAULT.value && email.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
     }
 
 }
