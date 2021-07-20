@@ -38,7 +38,12 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s, CodeField.EMAIL_FIELD.code)
                 viewModel.isValidEmail(s)
-                viewModel.changeEnableButton(binding.editTextEmail.text.toString(), binding.editTextName.text.toString(), binding.editTextPassword.text.toString(), binding.editTextPasswordConfirm.text.toString())
+                viewModel.changeEnableButton(
+                    binding.editTextEmail.text.toString(),
+                    binding.editTextName.text.toString(),
+                    binding.editTextPassword.text.toString(),
+                    binding.editTextPasswordConfirm.text.toString()
+                )
             }
 
         })
@@ -51,7 +56,12 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s, CodeField.NAME_FIELD.code)
                 viewModel.isValidLong(s, CodeField.NAME_FIELD.code)
-                viewModel.changeEnableButton(binding.editTextEmail.text.toString(), binding.editTextName.text.toString(), binding.editTextPassword.text.toString(), binding.editTextPasswordConfirm.text.toString())
+                viewModel.changeEnableButton(
+                    binding.editTextEmail.text.toString(),
+                    binding.editTextName.text.toString(),
+                    binding.editTextPassword.text.toString(),
+                    binding.editTextPasswordConfirm.text.toString()
+                )
             }
 
         })
@@ -64,7 +74,12 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.areFieldsEmpty(s, CodeField.PASSWORD_FIELD.code)
                 viewModel.isValidLong(s, CodeField.PASSWORD_FIELD.code)
-                viewModel.changeEnableButton(binding.editTextEmail.text.toString(), binding.editTextName.text.toString(), binding.editTextPassword.text.toString(), binding.editTextPasswordConfirm.text.toString())
+                viewModel.changeEnableButton(
+                    binding.editTextEmail.text.toString(),
+                    binding.editTextName.text.toString(),
+                    binding.editTextPassword.text.toString(),
+                    binding.editTextPasswordConfirm.text.toString()
+                )
             }
 
         })
@@ -78,7 +93,12 @@ class SignUpActivity : AppCompatActivity() {
                 viewModel.areFieldsEmpty(s, CodeField.PASSWORD_CONFIRM_FIELD.code)
                 viewModel.isValidLong(s, CodeField.PASSWORD_CONFIRM_FIELD.code)
                 viewModel.arePasswordsEqual(s, binding.editTextPassword.text.toString())
-                viewModel.changeEnableButton(binding.editTextEmail.text.toString(), binding.editTextName.text.toString(), binding.editTextPassword.text.toString(), binding.editTextPasswordConfirm.text.toString())
+                viewModel.changeEnableButton(
+                    binding.editTextEmail.text.toString(),
+                    binding.editTextName.text.toString(),
+                    binding.editTextPassword.text.toString(),
+                    binding.editTextPasswordConfirm.text.toString()
+                )
             }
 
         })

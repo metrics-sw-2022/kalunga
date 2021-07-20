@@ -31,7 +31,11 @@ class SignUpUseCase {
     }
 
     fun changeEnableButton(email: String, name: String, password:String, confirmPassword: String, emailErrorText: String, nameErrorText: String, passwordErrorText:String, confirmPasswordErrorText: String) : Boolean {
-        return emailErrorText.equals(ResponseErrorField.DEFAULT.value) && nameErrorText.equals(ResponseErrorField.DEFAULT.value) && passwordErrorText.equals(ResponseErrorField.DEFAULT.value) && confirmPasswordErrorText.equals(ResponseErrorField.DEFAULT.value) && !email.isEmpty() && !name.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()
+        return emailErrorText.equals(ResponseErrorField.DEFAULT.value) && nameErrorText.equals(
+            ResponseErrorField.DEFAULT.value
+        ) && passwordErrorText.equals(ResponseErrorField.DEFAULT.value) && confirmPasswordErrorText.equals(
+            ResponseErrorField.DEFAULT.value
+        ) && !email.isEmpty() && !name.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()
     }
 
 }
