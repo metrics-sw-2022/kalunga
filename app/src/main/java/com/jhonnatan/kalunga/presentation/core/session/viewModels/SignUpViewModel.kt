@@ -114,13 +114,13 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun changeEnableButton(email: String, name: String, password:String, confirmPassword: String) {
-        /*if (signUpUseCase.changeEnableButton(email, name, password, confirmPassword, errorEmail.value.toString(), errorName.value.toString(), errorPassword.value.toString(), errorPasswordConfirm.value.toString())){
+        if (signUpUseCase.changeEnableButton(email, name, password, confirmPassword, errorEmail.value.toString(), errorName.value.toString(), errorPassword.value.toString(), errorPasswordConfirm.value.toString())){
             buttonContinueDrawable.value = R.drawable.boton_oscuro
             buttonContinueEnable.value = true
         } else {
             buttonContinueDrawable.value = R.drawable.boton_oscuro_disabled
             buttonContinueEnable.value = false
-        }*/
+        }
     }
 
     fun navigateToConfiguration() {
