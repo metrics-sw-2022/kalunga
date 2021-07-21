@@ -12,8 +12,9 @@ import com.jhonnatan.kalunga.domain.models.enumeration.CodeUserData
 import com.jhonnatan.kalunga.presentation.core.home.views.StartingScreenActivity
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.SignUpViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.SignUpViewModelFactory
+import kotlinx.coroutines.DelicateCoroutinesApi
 
-
+@DelicateCoroutinesApi
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var viewModel: SignUpViewModel

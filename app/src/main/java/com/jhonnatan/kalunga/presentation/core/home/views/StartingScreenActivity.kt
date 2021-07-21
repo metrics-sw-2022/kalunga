@@ -138,7 +138,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 override fun onSuccess(result: LoginResult?) {
                     result?.let {
                         val token = it.accessToken
-                        val request = GraphRequest.newMeRequest(token) { account, response ->
+                        val request = GraphRequest.newMeRequest(token) { account, _ ->
                             viewModel.userAccount.value = UserAccountData(
                                 account.getString("id"),
                                 account.getString("name"),
