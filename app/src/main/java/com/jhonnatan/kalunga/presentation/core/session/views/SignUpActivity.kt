@@ -3,6 +3,7 @@ package com.jhonnatan.kalunga.presentation.core.session.views
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -58,11 +59,11 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.showPassword.observe(this, {
             if (it){
-                binding.editTextPassword.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.editTextPassword.transformationMethod =
+                    PasswordTransformationMethod()
                 binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye_line)
             } else {
-                binding.editTextPassword.inputType = InputType.TYPE_CLASS_TEXT
+                binding.editTextPassword.transformationMethod = null
                 binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye)
             }
             binding.editTextPassword.setSelection(binding.editTextPassword.length())
@@ -70,11 +71,11 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.showPasswordConfirm.observe(this, {
             if (it){
-                binding.editTextPasswordConfirm.inputType =
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.editTextPasswordConfirm.transformationMethod =
+                    PasswordTransformationMethod()
                 binding.imageViewShowConfirm.setBackgroundResource(R.drawable.ic_eye_line)
             } else {
-                binding.editTextPasswordConfirm.inputType = InputType.TYPE_CLASS_TEXT
+                binding.editTextPasswordConfirm.transformationMethod = null
                 binding.imageViewShowConfirm.setBackgroundResource(R.drawable.ic_eye)
             }
             binding.editTextPasswordConfirm.setSelection(binding.editTextPasswordConfirm.length())

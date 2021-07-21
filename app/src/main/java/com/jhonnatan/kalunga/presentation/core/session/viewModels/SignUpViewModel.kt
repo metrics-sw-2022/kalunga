@@ -47,7 +47,7 @@ class SignUpViewModel : ViewModel() {
         errorName.value = ResponseErrorField.DEFAULT.value
         errorPassword.value = ResponseErrorField.DEFAULT.value
         errorPasswordConfirm.value = ResponseErrorField.DEFAULT.value
-        userAccount.value = UserAccountData("","","","")
+        userAccount.value = UserAccountData("","","","", "")
         passwordCounter.value = 0
         passwordConfirmCounter.value = 0
         validEmail.value = 0
@@ -60,6 +60,13 @@ class SignUpViewModel : ViewModel() {
 
         if (signUpUseCase.areFieldsEmpty(text.toString())) {
             setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
+            when (field) {
+                CodeField.EMAIL_FIELD.code -> validEmail.value = 0
+                CodeField.NAME_FIELD.code -> validName.value = 0
+                CodeField.PASSWORD_FIELD.code -> validPassword.value = 0
+                CodeField.PASSWORD_CONFIRM_FIELD.code -> validPasswordConfirm.value = 0
+            }
+            changeEnableButton()
         } else {
             setErrorText(field, ResponseErrorField.DEFAULT.value)
             when (field) {
@@ -80,11 +87,14 @@ class SignUpViewModel : ViewModel() {
                         CodeLong.PASSWORD_FIELD.code,
                         validPassword
                     )
+                    arePasswordsEqual(userAccount.value!!.passwordConfirm,userAccount.value!!.password)
                 }
-                CodeField.PASSWORD_CONFIRM_FIELD.code -> arePasswordsEqual(text,userAccount.value!!.password)
+                CodeField.PASSWORD_CONFIRM_FIELD.code -> {
+                    userAccount.value!!.passwordConfirm = text.toString()
+                    arePasswordsEqual(userAccount.value!!.passwordConfirm,userAccount.value!!.password)
+                }
             }
         }
-        changeEnableButton()
     }
 
     private fun setErrorText(field: Int, value: String) {
@@ -123,8 +133,8 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun arePasswordsEqual(confirmPassword: Editable?, password: String) {
-        if (signUpUseCase.arePasswordsEqual(confirmPassword.toString(), password)) {
+    private fun arePasswordsEqual(confirmPassword: String, password: String) {
+        if (signUpUseCase.arePasswordsEqual(confirmPassword, password)) {
             setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.value)
             validPasswordConfirm.value = 1
             changeEnableButton()
@@ -139,7 +149,7 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun changeEnableButton() {
-        /*if (signUpUseCase.changeEnableButton(
+        if (signUpUseCase.changeEnableButton(
                 validEmail.value!!,
                 validName.value!!,
                 validPassword.value!!,
@@ -151,7 +161,7 @@ class SignUpViewModel : ViewModel() {
         } else {
             buttonContinueDrawable.value = R.drawable.boton_oscuro_disabled
             buttonContinueEnable.value = false
-        }*/
+        }
     }
 
     fun navigateToConfiguration() {

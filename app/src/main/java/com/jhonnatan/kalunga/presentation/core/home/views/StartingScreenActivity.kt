@@ -143,6 +143,7 @@ class StartingScreenActivity : AppCompatActivity() {
                                 account.getString("id"),
                                 account.getString("name"),
                                 account.getString("email"),
+                                account.getString("id"),
                                 account.getString("id")
                             )
                             viewModel.serverUserExist()
@@ -205,7 +206,7 @@ class StartingScreenActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val acct: GoogleSignInAccount = task.result!!
                 viewModel.userAccount.value =
-                    UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!)
+                    UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!, acct.id!!)
                 viewModel.serverUserExist()
             } else if (errorCode!!.contains("12501"))
                 viewModel.loadingDialog.value = false
