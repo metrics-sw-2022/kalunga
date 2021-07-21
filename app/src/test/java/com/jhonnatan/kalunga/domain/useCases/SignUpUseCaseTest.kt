@@ -93,32 +93,25 @@ class SignUpUseCaseTest() {
     }
 
     @Test
-    fun `Caso 17`() {
-        val result =
-            signUpUseCase.isValidEmail("_" + faker.animal.name() + "-@-" + faker.animal.name() + "." + faker.animal.name())
-        assertEquals(true, result)
-    }
-
-    @Test
-    fun `Caso 18`() {
+    fun `Caso 05`() {
         val result = signUpUseCase.isValidLong(faker.animal.name().first().toString(), 2)
         assertEquals(false, result)
     }
 
     @Test
-    fun `Caso 19`() {
+    fun `Caso 06`() {
         val result = signUpUseCase.isValidLong(faker.animal.name(), 2)
         assertEquals(true, result)
     }
 
     @Test
-    fun `Caso 20`() {
+    fun `Caso 07`() {
         val result = signUpUseCase.isValidLong(faker.animal.name().first().toString(), 5)
         assertEquals(false, result)
     }
 
     @Test
-    fun `Caso 21`() {
+    fun `Caso 08`() {
         val result = signUpUseCase.isValidLong(
             faker.animal.name() + faker.animal.name() + faker.animal.name(),
             5
