@@ -41,13 +41,8 @@ class SignUpUseCase {
         return emailErrorText == ResponseErrorField.DEFAULT.value && nameErrorText == ResponseErrorField.DEFAULT.value && passwordErrorText == ResponseErrorField.DEFAULT.value && confirmPasswordErrorText == ResponseErrorField.DEFAULT.value && email.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
     }
 
-    fun isNumberPair(number: Int) :Boolean? {
-        if(number % 2!=0){
-            return false
-        }else{
-            return true
-        }
-        return null
+    fun isNumberPair(number: Int) :Boolean {
+        return number % 2 == 0
     }
 
 }
