@@ -121,13 +121,13 @@ class SignUpUseCaseTest() {
 
 
     @Test
-    fun `Caso 22`() {
+    fun `Caso 09`() {
         val result = signUpUseCase.arePasswordsEqual(faker.animal.name(), faker.address.city())
         assertEquals(false, result)
     }
 
     @Test
-    fun `Caso 23`() {
+    fun `Caso 10`() {
         val animal = faker.animal.name()
         val result = signUpUseCase.arePasswordsEqual(animal, animal)
         assertEquals(true, result)
