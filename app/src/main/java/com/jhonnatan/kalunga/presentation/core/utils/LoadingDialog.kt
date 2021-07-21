@@ -15,7 +15,7 @@ import com.jhonnatan.kalunga.R
  ****/
 
 class LoadingDialog (val context: Context) {
-    var dialog: AlertDialog? = null
+    private var dialog: AlertDialog? = null
 
     fun startLoadingDialog() {
         val builder = AlertDialog.Builder(context,R.style.CustomDialog)

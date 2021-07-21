@@ -203,17 +203,19 @@ class StartingScreenActivity : AppCompatActivity() {
         if (requestCode == CodeActivityForResult.LOGIN_GOOGLE.code) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             val errorCode = task.exception?.message
-            if (task.isSuccessful) {
-                val acct: GoogleSignInAccount = task.result!!
-                viewModel.userAccount.value =
-                    UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!, acct.id!!)
-                viewModel.serverUserExist()
-            } else if (errorCode!!.contains("12501"))
-                viewModel.loadingDialog.value = false
-            else {
-                Log.e(tag, "loginGoogleError:" + task.exception.toString())
-                viewModel.loadingDialog.value = false
-                viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
+            when {
+                task.isSuccessful -> {
+                    val acct: GoogleSignInAccount = task.result!!
+                    viewModel.userAccount.value =
+                        UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!, acct.id!!)
+                    viewModel.serverUserExist()
+                }
+                errorCode!!.contains("12501") -> viewModel.loadingDialog.value = false
+                else -> {
+                    Log.e(tag, "loginGoogleError:" + task.exception.toString())
+                    viewModel.loadingDialog.value = false
+                    viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
+                }
             }
             mGoogleSignInClient.signOut()
         }

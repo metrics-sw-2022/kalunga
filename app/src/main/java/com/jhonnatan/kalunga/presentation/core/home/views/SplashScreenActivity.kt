@@ -138,16 +138,20 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
     @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CodeActivityForResult.IMMEDIATE_APP_UPDATE_REQ_CODE.code) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, getString(R.string.actualizacion_cancelada), Toast.LENGTH_LONG)
-                    .show()
-            } else if (resultCode == RESULT_OK) {
-                Toast.makeText(this, getString(R.string.actualizacion_exitosa), Toast.LENGTH_LONG)
-                    .show()
-            } else {
-                Toast.makeText(this, getString(R.string.actualizacion_fallida), Toast.LENGTH_LONG)
-                    .show()
-                viewModel.checkOnline(this)
+            when (resultCode) {
+                RESULT_CANCELED -> {
+                    Toast.makeText(this, getString(R.string.actualizacion_cancelada), Toast.LENGTH_LONG)
+                        .show()
+                }
+                RESULT_OK -> {
+                    Toast.makeText(this, getString(R.string.actualizacion_exitosa), Toast.LENGTH_LONG)
+                        .show()
+                }
+                else -> {
+                    Toast.makeText(this, getString(R.string.actualizacion_fallida), Toast.LENGTH_LONG)
+                        .show()
+                    viewModel.checkOnline(this)
+                }
             }
         }
     }

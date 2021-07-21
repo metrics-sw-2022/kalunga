@@ -27,18 +27,18 @@ class SignUpViewModel : ViewModel() {
     val errorPasswordConfirm = MutableLiveData<String>()
     val buttonContinueDrawable = MutableLiveData<Int>()
     val buttonContinueEnable = MutableLiveData<Boolean>()
-    val signUpUseCase = SignUpUseCase()
+    private val signUpUseCase = SignUpUseCase()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val navigateToLogIn = MutableLiveData<Boolean>()
     var userAccount = MutableLiveData<UserAccountData>()
     var showPassword = MutableLiveData<Boolean>()
     var showPasswordConfirm = MutableLiveData<Boolean>()
-    var passwordCounter = MutableLiveData<Int>()
-    var passwordConfirmCounter = MutableLiveData<Int>()
-    var validEmail = MutableLiveData<Int>()
-    var validName = MutableLiveData<Int>()
-    var validPassword = MutableLiveData<Int>()
-    var validPasswordConfirm = MutableLiveData<Int>()
+    private var passwordCounter = MutableLiveData<Int>()
+    private var passwordConfirmCounter = MutableLiveData<Int>()
+    private var validEmail = MutableLiveData<Int>()
+    private var validName = MutableLiveData<Int>()
+    private var validPassword = MutableLiveData<Int>()
+    private var validPasswordConfirm = MutableLiveData<Int>()
 
     init {
         navigateToConfiguration.value = false
@@ -106,7 +106,7 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun isValidEmail(text: Editable?) {
+    private fun isValidEmail(text: Editable?) {
         if (signUpUseCase.isValidEmail(text.toString())) {
             setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.DEFAULT.value)
             validEmail.value = 1
@@ -118,7 +118,7 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun isValidLong(text: Editable?, code: Int, minValue: Int, validItem: MutableLiveData<Int>) {
+    private fun isValidLong(text: Editable?, code: Int, minValue: Int, validItem: MutableLiveData<Int>) {
         if (signUpUseCase.isValidLong(text.toString(), minValue)) {
             setErrorText(code, ResponseErrorField.DEFAULT.value)
             validItem.value = 1
