@@ -142,7 +142,8 @@ class StartingScreenActivity : AppCompatActivity() {
                             viewModel.userAccount.value = UserAccountData(
                                 account.getString("id"),
                                 account.getString("name"),
-                                account.getString("email")
+                                account.getString("email"),
+                                account.getString("id")
                             )
                             viewModel.serverUserExist()
                         }
@@ -182,7 +183,7 @@ class StartingScreenActivity : AppCompatActivity() {
     private fun goToConfiguration() {
         val intent = Intent(this@StartingScreenActivity, ConfigurationActivity::class.java)
         intent.putExtra("ACCOUNT", viewModel.userAccount.value!!.id)
-        intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.id)
+        intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.password)
         intent.putExtra("STATUS_USER", CodeStatusUser.ENABLED_USER.code)
         intent.putExtra("SESSION_STATE", CodeSessionState.STARTED.code)
         intent.putExtra("TYPE_USER", CodeTypeUser.STANDART.code)
@@ -204,7 +205,7 @@ class StartingScreenActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 val acct: GoogleSignInAccount = task.result!!
                 viewModel.userAccount.value =
-                    UserAccountData(acct.id!!, acct.displayName!!, acct.email!!)
+                    UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!)
                 viewModel.serverUserExist()
             } else if (errorCode!!.contains("12501"))
                 viewModel.loadingDialog.value = false

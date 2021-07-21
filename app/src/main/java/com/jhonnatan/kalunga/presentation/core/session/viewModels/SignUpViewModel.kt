@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
+import com.jhonnatan.kalunga.domain.models.entities.UserAccountData
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeField
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeLong
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 import com.jhonnatan.kalunga.domain.useCases.SignUpUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -28,6 +30,7 @@ class SignUpViewModel : ViewModel() {
     val signUpUseCase = SignUpUseCase()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val navigateToLogIn = MutableLiveData<Boolean>()
+    val userAccount = MutableLiveData<UserAccountData>()
 
     init {
         navigateToConfiguration.value = false
@@ -44,6 +47,12 @@ class SignUpViewModel : ViewModel() {
             setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
         } else {
             setErrorText(field, ResponseErrorField.DEFAULT.value)
+            when (field) {
+                CodeField.EMAIL_FIELD.code -> isValidEmail(text)
+                CodeField.NAME_FIELD.code -> isValidLong(text,CodeField.NAME_FIELD.code,CodeLong.NAME_FIELD.code)
+                CodeField.PASSWORD_FIELD.code -> isValidLong(text,CodeField.PASSWORD_FIELD.code,CodeLong.PASSWORD_FIELD.code)
+                CodeField.PASSWORD_CONFIRM_FIELD.code -> arePasswordsEqual(text,"")
+            }
         }
     }
 
@@ -64,41 +73,14 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun isValidLong(text: Editable?, field: Int) {
-        when (field) {
-            CodeField.NAME_FIELD.code -> {
-                if (signUpUseCase.isValidLong(text.toString(), 2)) {
-                    setErrorText(CodeField.NAME_FIELD.code, ResponseErrorField.DEFAULT.value)
-                } else {
-                    setErrorText(
-                        CodeField.NAME_FIELD.code,
-                        ResponseErrorField.ERROR_LONG_2_CHARACTERS.value
-                    )
-                }
-            }
-            CodeField.PASSWORD_FIELD.code -> {
-                if (signUpUseCase.isValidLong(text.toString(), 5)) {
-                    setErrorText(CodeField.PASSWORD_FIELD.code, ResponseErrorField.DEFAULT.value)
-                } else {
-                    setErrorText(
-                        CodeField.PASSWORD_FIELD.code,
-                        ResponseErrorField.ERROR_LONG_5_CHARACTERS.value
-                    )
-                }
-            }
-            CodeField.PASSWORD_CONFIRM_FIELD.code -> {
-                if (signUpUseCase.isValidLong(text.toString(), 5)) {
-                    setErrorText(
-                        CodeField.PASSWORD_CONFIRM_FIELD.code,
-                        ResponseErrorField.DEFAULT.value
-                    )
-                } else {
-                    setErrorText(
-                        CodeField.PASSWORD_CONFIRM_FIELD.code,
-                        ResponseErrorField.ERROR_LONG_5_CHARACTERS.value
-                    )
-                }
-            }
+    fun isValidLong(text: Editable?, code: Int, minValue: Int) {
+        if (signUpUseCase.isValidLong(text.toString(), minValue)) {
+            setErrorText(code, ResponseErrorField.DEFAULT.value)
+        } else {
+            setErrorText(
+                code,
+                ResponseErrorField.ERROR_LONG_CHARACTERS.value + minValue + ResponseErrorField.ERROR_CHARACTERS.value
+            )
         }
     }
 
