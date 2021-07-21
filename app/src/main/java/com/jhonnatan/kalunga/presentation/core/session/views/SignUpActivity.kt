@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySignUpBinding
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeUserData
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeSessionState
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeStatusUser
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.presentation.core.home.views.StartingScreenActivity
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.SignUpViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.SignUpViewModelFactory
@@ -95,9 +97,9 @@ class SignUpActivity : AppCompatActivity() {
         val intent = Intent(this@SignUpActivity, ConfigurationActivity::class.java)
         intent.putExtra("ACCOUNT", viewModel.userAccount.value!!.email)
         intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.password)
-        intent.putExtra("STATUS_USER", CodeUserData.UNVALIDATED_USER.value)
-        intent.putExtra("SESSION_STATE", CodeUserData.FINISHED.value)
-        intent.putExtra("TYPE_USER", CodeUserData.STANDART.value)
+        intent.putExtra("STATUS_USER", CodeStatusUser.UNVALIDATED_USER.code)
+        intent.putExtra("SESSION_STATE", CodeSessionState.FINISHED.code)
+        intent.putExtra("TYPE_USER", CodeTypeUser.STANDART.code)
         intent.putExtra("EMAIL", viewModel.userAccount.value!!.email)
         intent.putExtra("FULL_NAME", viewModel.userAccount.value!!.name)
         startActivity(intent)
