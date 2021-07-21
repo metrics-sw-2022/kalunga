@@ -144,10 +144,11 @@ class SignUpViewModel : ViewModel() {
         when (field) {
             CodeField.PASSWORD_FIELD.code -> {
                 passwordCounter.value = passwordCounter.value!! + 1
-                //isNumberPair(passwordCounter.value)
+                showPassword.value = signUpUseCase.isNumberPair(passwordCounter.value!!)
             }
             CodeField.PASSWORD_CONFIRM_FIELD.code -> {
-
+                passwordConfirmCounter.value = passwordConfirmCounter.value!! + 1
+                showPasswordConfirm.value = signUpUseCase.isNumberPair(passwordConfirmCounter.value!!)
             }
         }
     }

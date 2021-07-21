@@ -3,7 +3,6 @@ package com.jhonnatan.kalunga.presentation.core.session.views
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +27,6 @@ class SignUpActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
-
 
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
@@ -56,6 +54,30 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.buttonContinueEnable.observe(this, {
             binding.buttonContinue.isEnabled = it
+        })
+
+        viewModel.showPassword.observe(this, {
+            if (it){
+                binding.editTextPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye_line)
+            } else {
+                binding.editTextPassword.inputType = InputType.TYPE_CLASS_TEXT
+                binding.imageViewShow.setBackgroundResource(R.drawable.ic_eye)
+            }
+            binding.editTextPassword.setSelection(binding.editTextPassword.length())
+        })
+
+        viewModel.showPasswordConfirm.observe(this, {
+            if (it){
+                binding.editTextPasswordConfirm.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.imageViewShowConfirm.setBackgroundResource(R.drawable.ic_eye_line)
+            } else {
+                binding.editTextPasswordConfirm.inputType = InputType.TYPE_CLASS_TEXT
+                binding.imageViewShowConfirm.setBackgroundResource(R.drawable.ic_eye)
+            }
+            binding.editTextPasswordConfirm.setSelection(binding.editTextPasswordConfirm.length())
         })
 
         viewModel.navigateToConfiguration.observe(this, {
