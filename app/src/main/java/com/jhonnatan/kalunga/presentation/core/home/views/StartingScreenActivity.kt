@@ -161,7 +161,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException?) {
-                    Log.e(tag, "loginFacebookError:" + error)
+                    Log.e(tag, "loginFacebookError:$error")
                     viewModel.loadingDialog.value = false
                     viewModel.snackBarTextError.postValue(getString(R.string.error_login_facebook))
                 }
