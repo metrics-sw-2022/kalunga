@@ -1,7 +1,6 @@
 package com.jhonnatan.kalunga.data.user.entities
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /****
  * Project: kalunga

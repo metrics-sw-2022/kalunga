@@ -22,7 +22,7 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
 
     suspend fun getUserByAccountRemote(account: String): ResponseStartingUseCase {
         val result = userRepository.getUserByAccountRemote(account)
-        if (!result.isEmpty()) {
+        if (result.isNotEmpty()) {
             if (result[0].data != null)
                 return ResponseStartingUseCase(true, result[0].data)
             else if (result[0].message.equals(ResponseCodeServices.USER_DOES_NOT_EXIST_DB.value))
@@ -33,10 +33,10 @@ class StartingScreenUseCase(private val userRepository: UserRepository) {
 
     suspend fun getUserByAccountLocal(account: String): ResponseStartingUseCase {
         val result = userRepository.getUserByAccountLocal(account)
-        if (result.isEmpty())
-            return ResponseStartingUseCase(false, null)
+        return if (result.isEmpty())
+            ResponseStartingUseCase(false, null)
         else
-            return ResponseStartingUseCase(true, result)
+            ResponseStartingUseCase(true, result)
     }
 
     suspend fun createUserLocal(userRemote: UserRemote) {

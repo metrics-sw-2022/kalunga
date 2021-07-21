@@ -38,10 +38,10 @@ class StartingScreenActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StartingScreenViewModel
     private lateinit var binding: ActivityStartingScreenBinding
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInOptions: GoogleSignInOptions
     private val callbackManager = CallbackManager.Factory.create()
-    private val TAG = "StartingScreen"
+    private val tag = "StartingScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,11 +124,13 @@ class StartingScreenActivity : AppCompatActivity() {
                 override fun onSuccess(result: LoginResult?) {
                     result?.let {
                         val token = it.accessToken
-                        val request = GraphRequest.newMeRequest(token) { account, response ->
+                        val request = GraphRequest.newMeRequest(token) { account, _ ->
                             viewModel.userAccount.value = UserAccountData(
-                                account.getString("id"),
+                                account!!.getString("id"),
                                 account.getString("name"),
-                                account.getString("email")
+                                account.getString("email"),
+                                account.getString("id"),
+                                account.getString("id")
                             )
                             viewModel.serverUserExist()
                         }
@@ -145,7 +147,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException?) {
-                    Log.e(TAG, "loginFacebookError:" + error)
+                    Log.e(tag, "loginFacebookError:$error")
                     viewModel.loadingDialog.value = false
                     viewModel.snackBarTextError.postValue(getString(R.string.error_login_facebook))
                 }
@@ -168,7 +170,7 @@ class StartingScreenActivity : AppCompatActivity() {
     private fun goToConfiguration() {
         val intent = Intent(this@StartingScreenActivity, ConfigurationActivity::class.java)
         intent.putExtra("ACCOUNT", viewModel.userAccount.value!!.id)
-        intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.id)
+        intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.password)
         intent.putExtra("STATUS_USER", CodeStatusUser.ENABLED_USER.code)
         intent.putExtra("SESSION_STATE", CodeSessionState.STARTED.code)
         intent.putExtra("TYPE_USER", CodeTypeUser.STANDART.code)
@@ -187,17 +189,19 @@ class StartingScreenActivity : AppCompatActivity() {
         if (requestCode == CodeActivityForResult.LOGIN_GOOGLE.code) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             val errorCode = task.exception?.message
-            if (task.isSuccessful) {
-                val acct: GoogleSignInAccount = task.result!!
-                viewModel.userAccount.value =
-                    UserAccountData(acct.id!!, acct.displayName!!, acct.email!!)
-                viewModel.serverUserExist()
-            } else if (errorCode!!.contains("12501"))
-                viewModel.loadingDialog.value = false
-            else {
-                Log.e(TAG, "loginGoogleError:" + task.exception.toString())
-                viewModel.loadingDialog.value = false
-                viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
+            when {
+                task.isSuccessful -> {
+                    val acct: GoogleSignInAccount = task.result!!
+                    viewModel.userAccount.value =
+                        UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!, acct.id!!)
+                    viewModel.serverUserExist()
+                }
+                errorCode!!.contains("12501") -> viewModel.loadingDialog.value = false
+                else -> {
+                    Log.e(tag, "loginGoogleError:" + task.exception.toString())
+                    viewModel.loadingDialog.value = false
+                    viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
+                }
             }
             mGoogleSignInClient.signOut()
         }

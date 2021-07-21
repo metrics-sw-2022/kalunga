@@ -1,6 +1,5 @@
 package com.jhonnatan.kalunga.presentation.core.utils
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -16,7 +15,7 @@ import com.jhonnatan.kalunga.R
  ****/
 
 class LoadingDialog (val context: Context) {
-    var dialog: AlertDialog? = null
+    private var dialog: AlertDialog? = null
 
     fun startLoadingDialog() {
         val builder = AlertDialog.Builder(context,R.style.CustomDialog)

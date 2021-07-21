@@ -37,7 +37,7 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 @Suppress("NonAsciiCharacters")
 @ExperimentalCoroutinesApi
-class SplashScreenUseCaseTest() {
+class SplashScreenUseCaseTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
@@ -48,7 +48,7 @@ class SplashScreenUseCaseTest() {
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val permissionCamera = Manifest.permission.CAMERA
     private val permissionInternet = Manifest.permission.INTERNET
-    val fakeAppUpdateManager by lazy { Mockito.spy(FakeAppUpdateManager(context)) }
+    private val fakeAppUpdateManager by lazy { Mockito.spy(FakeAppUpdateManager(context)) }
 
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {

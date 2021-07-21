@@ -4,7 +4,6 @@ import com.jhonnatan.kalunga.data.user.entities.RequestUsers
 import com.jhonnatan.kalunga.data.user.entities.RequestUsersUpdate
 import com.jhonnatan.kalunga.data.user.entities.ResponseUsers
 import com.jhonnatan.kalunga.data.user.entities.User
-import com.jhonnatan.kalunga.data.version.entities.Version
 
 /****
  * Project: kalunga

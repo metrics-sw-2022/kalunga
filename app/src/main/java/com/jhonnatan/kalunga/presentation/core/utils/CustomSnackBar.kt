@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
+import kotlin.system.exitProcess
 
 /****
  * Project: kalunga
@@ -54,10 +55,10 @@ class CustomSnackBar {
     private fun buildSnackBar(layoutContain: ConstraintLayout, message: String, messageAction: String,
         exit: Boolean, rgb: Int) {
         val mySnackbar = Snackbar.make(layoutContain, message, Snackbar.LENGTH_INDEFINITE)
-        mySnackbar.setAction(messageAction, {
+        mySnackbar.setAction(messageAction) {
             if (exit)
-                System.exit(0)
-        })
+                exitProcess(0)
+        }
         mySnackbar.setBackgroundTint(rgb)
         mySnackbar.show()
     }

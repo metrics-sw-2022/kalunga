@@ -1,0 +1,1 @@
+{"data_pool":[{"email":"lsofia@outlook.com"},{"email":"lsofia@outlook.com.co"},{"email":"_lsofia-@outlook.com"},{"email":"_lsofia-@-outlook.com"}]}
