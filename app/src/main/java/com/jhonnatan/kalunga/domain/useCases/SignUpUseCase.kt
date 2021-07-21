@@ -29,16 +29,12 @@ class SignUpUseCase {
     }
 
     fun changeEnableButton(
-        email: String,
-        name: String,
-        password: String,
-        confirmPassword: String,
-        emailErrorText: String,
-        nameErrorText: String,
-        passwordErrorText: String,
-        confirmPasswordErrorText: String
-    ): Boolean {
-        return emailErrorText == ResponseErrorField.DEFAULT.value && nameErrorText == ResponseErrorField.DEFAULT.value && passwordErrorText == ResponseErrorField.DEFAULT.value && confirmPasswordErrorText == ResponseErrorField.DEFAULT.value && email.isNotEmpty() && name.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
+        email: Int,
+        name: Int,
+        password: Int,
+        confirmPassword: Int,
+    ): Boolean ? {
+        return null
     }
 
     fun isNumberPair(number: Int) :Boolean {

@@ -35,6 +35,10 @@ class SignUpViewModel : ViewModel() {
     var showPasswordConfirm = MutableLiveData<Boolean>()
     var passwordCounter = MutableLiveData<Int>()
     var passwordConfirmCounter = MutableLiveData<Int>()
+    var validEmail = MutableLiveData<Int>()
+    var validName = MutableLiveData<Int>()
+    var validPassword = MutableLiveData<Int>()
+    var validPasswordConfirm = MutableLiveData<Int>()
 
     init {
         navigateToConfiguration.value = false
@@ -46,6 +50,10 @@ class SignUpViewModel : ViewModel() {
         userAccount.value = UserAccountData("","","","")
         passwordCounter.value = 0
         passwordConfirmCounter.value = 0
+        validEmail.value = 0
+        validName.value = 0
+        validPassword.value = 0
+        validPasswordConfirm.value = 0
     }
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
@@ -62,15 +70,21 @@ class SignUpViewModel : ViewModel() {
                 }
                 CodeField.NAME_FIELD.code -> {
                     userAccount.value!!.name = text.toString()
-                    isValidLong(text,CodeField.NAME_FIELD.code,CodeLong.NAME_FIELD.code)
+                    isValidLong(text,CodeField.NAME_FIELD.code,CodeLong.NAME_FIELD.code, validName)
                 }
                 CodeField.PASSWORD_FIELD.code -> {
                     userAccount.value!!.password = text.toString()
-                    isValidLong(text,CodeField.PASSWORD_FIELD.code,CodeLong.PASSWORD_FIELD.code)
+                    isValidLong(
+                        text,
+                        CodeField.PASSWORD_FIELD.code,
+                        CodeLong.PASSWORD_FIELD.code,
+                        validPassword
+                    )
                 }
                 CodeField.PASSWORD_CONFIRM_FIELD.code -> arePasswordsEqual(text,userAccount.value!!.password)
             }
         }
+        changeEnableButton()
     }
 
     private fun setErrorText(field: Int, value: String) {
@@ -85,43 +99,51 @@ class SignUpViewModel : ViewModel() {
     fun isValidEmail(text: Editable?) {
         if (signUpUseCase.isValidEmail(text.toString())) {
             setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.DEFAULT.value)
+            validEmail.value = 1
+            changeEnableButton()
         } else {
             setErrorText(CodeField.EMAIL_FIELD.code, ResponseErrorField.ERROR_INVALID_MAIL.value)
+            validEmail.value = 0
+            changeEnableButton()
         }
     }
 
-    fun isValidLong(text: Editable?, code: Int, minValue: Int) {
+    fun isValidLong(text: Editable?, code: Int, minValue: Int, validItem: MutableLiveData<Int>) {
         if (signUpUseCase.isValidLong(text.toString(), minValue)) {
             setErrorText(code, ResponseErrorField.DEFAULT.value)
+            validItem.value = 1
+            changeEnableButton()
         } else {
             setErrorText(
                 code,
                 ResponseErrorField.ERROR_LONG_CHARACTERS.value + minValue + ResponseErrorField.ERROR_CHARACTERS.value
             )
+            validItem.value = 0
+            changeEnableButton()
         }
     }
 
     fun arePasswordsEqual(confirmPassword: Editable?, password: String) {
         if (signUpUseCase.arePasswordsEqual(confirmPassword.toString(), password)) {
             setErrorText(CodeField.PASSWORD_CONFIRM_FIELD.code, ResponseErrorField.DEFAULT.value)
+            validPasswordConfirm.value = 1
+            changeEnableButton()
         } else {
             setErrorText(
                 CodeField.PASSWORD_CONFIRM_FIELD.code,
                 ResponseErrorField.ERROR_PASSWORD_DOESNT_MATCH.value
             )
+            validPasswordConfirm.value = 0
+            changeEnableButton()
         }
     }
 
-    fun changeEnableButton(email: String, name: String, password: String, confirmPassword: String) {
-        if (signUpUseCase.changeEnableButton(
-                email,
-                name,
-                password,
-                confirmPassword,
-                errorEmail.value.toString(),
-                errorName.value.toString(),
-                errorPassword.value.toString(),
-                errorPasswordConfirm.value.toString()
+    fun changeEnableButton() {
+        /*if (signUpUseCase.changeEnableButton(
+                validEmail.value!!,
+                validName.value!!,
+                validPassword.value!!,
+                validPasswordConfirm.value!!
             )
         ) {
             buttonContinueDrawable.value = R.drawable.boton_oscuro
@@ -129,7 +151,7 @@ class SignUpViewModel : ViewModel() {
         } else {
             buttonContinueDrawable.value = R.drawable.boton_oscuro_disabled
             buttonContinueEnable.value = false
-        }
+        }*/
     }
 
     fun navigateToConfiguration() {

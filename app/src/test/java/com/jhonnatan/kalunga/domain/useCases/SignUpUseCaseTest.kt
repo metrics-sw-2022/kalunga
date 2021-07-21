@@ -25,15 +25,23 @@ class SignUpUseCaseTest() {
     private lateinit var signUpUseCase: SignUpUseCase
     private val faker = Faker()
     private val emails = mutableListOf<String>()
+    private val item1 = mutableListOf<Int>()
+    private val item2 = mutableListOf<Int>()
+    private val item3 = mutableListOf<Int>()
+    private val item4 = mutableListOf<Int>()
 
-    private fun createDataPool(dataPool:String){
+    private fun createDataPool(dataPool:String, type:Int){
         val pathDataPool =
             "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/signUp/$dataPool.txt"
         val jsonString = getDataTXT(pathDataPool)
         if (jsonString != null){
             try {
                 val dataPools = JSONArray(JSONObject(jsonString).optString("data_pool"))
-                generateData(dataPools)
+                if (type == 0) {
+                    generateData(dataPools)
+                } else if (type == 1){
+                    generateMultipleData(dataPools)
+                }
             }catch (ignore: Exception){}
         }
     }
@@ -57,6 +65,16 @@ class SignUpUseCaseTest() {
         }
     }
 
+    private fun generateMultipleData(dataPool: JSONArray){
+        var data:JSONObject
+        for (id in 0 until dataPool.length()){
+            data = dataPool.getJSONObject(id)
+            item1.add(data["item_1"] as Int)
+            item2.add(data["item_2"] as Int)
+            item3.add(data["item_3"] as Int)
+            item4.add(data["item_4"] as Int)
+        }
+    }
     @Before
     fun setup() {
         signUpUseCase = SignUpUseCase()
@@ -76,7 +94,7 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 03`() {
-        createDataPool("datapool_1")
+        createDataPool("datapool_1",0)
         for (id in 0 until emails.size){
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(false, result)
@@ -85,7 +103,7 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 04`() {
-        createDataPool("datapool_2")
+        createDataPool("datapool_2",0)
         for (id in 0 until emails.size){
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(true, result)
@@ -146,20 +164,13 @@ class SignUpUseCaseTest() {
     }
 
     @Test
-    fun `Caso 24`() {
-        val result = signUpUseCase.changeEnableButton(faker.animal.name(),"",faker.animal.name(),"",ResponseErrorField.DEFAULT.value,faker.animal.name(),faker.animal.name(),faker.animal.name())
-        assertEquals(false, result)
+    fun `Caso 13`() {
+        createDataPool("datapool_3",1)
+        for (id in 0 until item1.size){
+            val result = signUpUseCase.changeEnableButton(item1[id],item2[id],item3[id],item4[id])
+            assertEquals(false, result)
+        }
     }
 
-    @Test
-    fun `Caso 25`() {
-        val result = signUpUseCase.changeEnableButton(faker.animal.name(),faker.animal.name(),faker.animal.name(),faker.animal.name(),ResponseErrorField.DEFAULT.value,faker.animal.name(),faker.animal.name(),faker.animal.name())
-        assertEquals(false, result)
-    }
 
-    @Test
-    fun `Caso 26`() {
-        val result = signUpUseCase.changeEnableButton(faker.animal.name(),faker.animal.name(),faker.animal.name(),faker.animal.name(),ResponseErrorField.DEFAULT.value,ResponseErrorField.DEFAULT.value,ResponseErrorField.DEFAULT.value,ResponseErrorField.DEFAULT.value)
-        assertEquals(true, result)
-    }
 }
