@@ -18,7 +18,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Android Lint
-        run: ./gradlew lintDebug --stacktrace
+        run: ./gradlew lintDebug --scan
 
       - name: Upload html test report
         uses: actions/upload-artifact@v2
