@@ -9,8 +9,8 @@ package com.jhonnatan.kalunga.domain.models.entities
  ****/
 
 data class UserAccountData(
-    val id: String,
-    val name: String,
-    val email: String,
-    val password: String
+    var id: String,
+    var name: String,
+    var email: String,
+    var password: String
 )

@@ -30,7 +30,11 @@ class SignUpViewModel : ViewModel() {
     val signUpUseCase = SignUpUseCase()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val navigateToLogIn = MutableLiveData<Boolean>()
-    val userAccount = MutableLiveData<UserAccountData>()
+    var userAccount = MutableLiveData<UserAccountData>()
+    var showPassword = MutableLiveData<Boolean>()
+    var showPasswordConfirm = MutableLiveData<Boolean>()
+    var passwordCounter = MutableLiveData<Int>()
+    var passwordConfirmCounter = MutableLiveData<Int>()
 
     init {
         navigateToConfiguration.value = false
@@ -39,6 +43,9 @@ class SignUpViewModel : ViewModel() {
         errorName.value = ResponseErrorField.DEFAULT.value
         errorPassword.value = ResponseErrorField.DEFAULT.value
         errorPasswordConfirm.value = ResponseErrorField.DEFAULT.value
+        userAccount.value = UserAccountData("","","","")
+        passwordCounter.value = 0
+        passwordConfirmCounter.value = 0
     }
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
@@ -48,10 +55,20 @@ class SignUpViewModel : ViewModel() {
         } else {
             setErrorText(field, ResponseErrorField.DEFAULT.value)
             when (field) {
-                CodeField.EMAIL_FIELD.code -> isValidEmail(text)
-                CodeField.NAME_FIELD.code -> isValidLong(text,CodeField.NAME_FIELD.code,CodeLong.NAME_FIELD.code)
-                CodeField.PASSWORD_FIELD.code -> isValidLong(text,CodeField.PASSWORD_FIELD.code,CodeLong.PASSWORD_FIELD.code)
-                CodeField.PASSWORD_CONFIRM_FIELD.code -> arePasswordsEqual(text,"")
+                CodeField.EMAIL_FIELD.code -> {
+                    userAccount.value!!.email = text.toString()
+                    userAccount.value!!.id = text.toString()
+                    isValidEmail(text)
+                }
+                CodeField.NAME_FIELD.code -> {
+                    userAccount.value!!.name = text.toString()
+                    isValidLong(text,CodeField.NAME_FIELD.code,CodeLong.NAME_FIELD.code)
+                }
+                CodeField.PASSWORD_FIELD.code -> {
+                    userAccount.value!!.password = text.toString()
+                    isValidLong(text,CodeField.PASSWORD_FIELD.code,CodeLong.PASSWORD_FIELD.code)
+                }
+                CodeField.PASSWORD_CONFIRM_FIELD.code -> arePasswordsEqual(text,userAccount.value!!.password)
             }
         }
     }
@@ -122,6 +139,19 @@ class SignUpViewModel : ViewModel() {
     fun navigateToLogIn() {
         navigateToLogIn.value = true
     }
+
+    fun showPassword(field: Int){
+        when (field) {
+            CodeField.PASSWORD_FIELD.code -> {
+                passwordCounter.value = passwordCounter.value!! + 1
+                //isNumberPair(passwordCounter.value)
+            }
+            CodeField.PASSWORD_CONFIRM_FIELD.code -> {
+
+            }
+        }
+    }
+
 }
 
 

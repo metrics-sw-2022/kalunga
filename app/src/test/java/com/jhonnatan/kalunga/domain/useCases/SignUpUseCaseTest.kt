@@ -134,6 +134,12 @@ class SignUpUseCaseTest() {
     }
 
     @Test
+    fun `Caso 11`() {
+        val result = signUpUseCase.isNumberPair(1)
+        assertEquals(false, result)
+    }
+
+    @Test
     fun `Caso 24`() {
         val result = signUpUseCase.changeEnableButton(faker.animal.name(),"",faker.animal.name(),"",ResponseErrorField.DEFAULT.value,faker.animal.name(),faker.animal.name(),faker.animal.name())
         assertEquals(false, result)
