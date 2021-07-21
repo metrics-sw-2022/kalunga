@@ -2,7 +2,6 @@ package com.jhonnatan.kalunga.presentation.core.session.views
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -19,7 +18,6 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var viewModel: SignUpViewModel
     private lateinit var binding: ActivitySignUpBinding
-    private val TAG = "SignUp"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,13 +92,13 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun goToConfiguration() {
         val intent = Intent(this@SignUpActivity, ConfigurationActivity::class.java)
-        intent.putExtra("ACCOUNT", binding.editTextEmail.text.toString())
-        intent.putExtra("PASSWORD_USER", binding.editTextPassword.text.toString())
+        intent.putExtra("ACCOUNT", viewModel.userAccount.value!!.email)
+        intent.putExtra("PASSWORD_USER", viewModel.userAccount.value!!.password)
         intent.putExtra("STATUS_USER", CodeUserData.UNVALIDATED_USER.value)
         intent.putExtra("SESSION_STATE", CodeUserData.FINISHED.value)
         intent.putExtra("TYPE_USER", CodeUserData.STANDART.value)
-        intent.putExtra("EMAIL", binding.editTextEmail.text.toString())
-        intent.putExtra("FULL_NAME", binding.editTextName.text.toString())
+        intent.putExtra("EMAIL", viewModel.userAccount.value!!.email)
+        intent.putExtra("FULL_NAME", viewModel.userAccount.value!!.name)
         startActivity(intent)
         overridePendingTransition(R.anim.left_in, R.anim.left_out)
         finish()

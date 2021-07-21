@@ -12,5 +12,6 @@ data class UserAccountData(
     var id: String,
     var name: String,
     var email: String,
-    var password: String
+    var password: String,
+    var passwordConfirm: String
 )
