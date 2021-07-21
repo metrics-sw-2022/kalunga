@@ -31,7 +31,7 @@ class SignUpUseCase {
     fun changeEnableButton(email: Int, name: Int, password: Int, confirmPassword: Int,
     ): Boolean? {
         if (email == 1 && name == 1 && password == 1 && confirmPassword == 1) {
-            return null
+            return true
         } else {
             return false
         }
