@@ -42,6 +42,9 @@ class SignUpUseCase {
     }
 
     fun isNumberPair(number: Int) :Boolean? {
+        if(number % 2!=0){
+            return false
+        }
         return null
     }
 
