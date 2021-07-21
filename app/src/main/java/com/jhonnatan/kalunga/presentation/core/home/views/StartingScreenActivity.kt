@@ -140,7 +140,7 @@ class StartingScreenActivity : AppCompatActivity() {
                         val token = it.accessToken
                         val request = GraphRequest.newMeRequest(token) { account, _ ->
                             viewModel.userAccount.value = UserAccountData(
-                                account.getString("id"),
+                                account!!.getString("id"),
                                 account.getString("name"),
                                 account.getString("email"),
                                 account.getString("id"),
