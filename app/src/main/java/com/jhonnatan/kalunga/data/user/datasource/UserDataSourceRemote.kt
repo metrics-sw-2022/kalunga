@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 class UserDataSourceRemote {
 
     private val retrofit = RetrofitHelper.getRetrofit()
-    val response = retrofit.create(UserApiClient::class.java)
+    private val response = retrofit.create(UserApiClient::class.java)
 
     suspend fun getUsers(): List<ResponseUsers> {
         return withContext(Dispatchers.IO) {
