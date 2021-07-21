@@ -31,7 +31,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
     val loginGoogle = MutableLiveData<Boolean>()
     val isConected = MutableLiveData<Boolean>()
     val snackBarTextError = MutableLiveData<String>()
-    val startingScreenUseCase = StartingScreenUseCase(userRepository)
+    private val startingScreenUseCase = StartingScreenUseCase(userRepository)
     val loadingDialog = MutableLiveData<Boolean>()
     val navigateToConfiguration = MutableLiveData<Boolean>()
     val userAccount = MutableLiveData<UserAccountData>()
@@ -107,7 +107,7 @@ class StartingScreenViewModel(userRepository: UserRepository) : ViewModel() {
         navigateToDashboard.value = true
     }
 
-    fun navigateToConfiguration() {
+    private fun navigateToConfiguration() {
         loadingDialog.value = false
         navigateToConfiguration.value = true
     }

@@ -44,7 +44,7 @@ class StartingScreenUseCaseTest {
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
     private val faker = Faker()
-    val users: MutableList<User> = ArrayList()
+    private val users: MutableList<User> = ArrayList()
 
     private fun cloneUserServer(): UserRemote {
         return UserRemote(

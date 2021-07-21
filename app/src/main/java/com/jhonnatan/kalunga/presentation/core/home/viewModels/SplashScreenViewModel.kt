@@ -24,7 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions
 class SplashScreenViewModel(versionRepository: VersionRepository) : ViewModel() {
 
     val version = MutableLiveData<String>()
-    val splashScreenUseCase = SplashScreenUseCase(versionRepository)
+    private val splashScreenUseCase = SplashScreenUseCase(versionRepository)
     val loading = MutableLiveData<Boolean>()
     val validatePermissions = MutableLiveData<Boolean>()
     val snackBarTextCloseApp = MutableLiveData<String>()
@@ -46,11 +46,11 @@ class SplashScreenViewModel(versionRepository: VersionRepository) : ViewModel() 
         }
     }
 
-    fun setVersion(v: String) {
+    private fun setVersion(v: String) {
         version.value = v
     }
 
-    fun getAppVersion() {
+    private fun getAppVersion() {
         viewModelScope.launch {
             setVersion(splashScreenUseCase.getAppVersion())
         }

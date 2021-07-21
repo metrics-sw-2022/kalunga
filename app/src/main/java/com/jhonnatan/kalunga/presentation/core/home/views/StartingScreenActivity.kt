@@ -38,8 +38,8 @@ class StartingScreenActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StartingScreenViewModel
     private lateinit var binding: ActivityStartingScreenBinding
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInOptions: GoogleSignInOptions
     private val callbackManager = CallbackManager.Factory.create()
     private val tag = "StartingScreen"
 

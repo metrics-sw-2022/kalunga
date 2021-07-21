@@ -148,7 +148,7 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun changeEnableButton() {
+    private fun changeEnableButton() {
         if (signUpUseCase.changeEnableButton(
                 validEmail.value!!,
                 validName.value!!,
