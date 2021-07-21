@@ -37,7 +37,7 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 @Suppress("NonAsciiCharacters")
 @ExperimentalCoroutinesApi
-class SplashScreenUseCaseTest() {
+class SplashScreenUseCaseTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()

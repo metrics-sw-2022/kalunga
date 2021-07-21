@@ -10,7 +10,6 @@ import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
 import com.jhonnatan.kalunga.data.user.entities.User
-import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
@@ -35,7 +34,7 @@ import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
-class StartingScreenUseCaseTest() {
+class StartingScreenUseCaseTest {
 
     private lateinit var userDataSourceRemote: UserDataSourceRemote
     private lateinit var userDataSourceLocal: UserDataSourceLocal

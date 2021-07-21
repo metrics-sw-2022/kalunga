@@ -43,7 +43,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
     private lateinit var viewModel: SplashScreenViewModel
     private lateinit var binding: ActivitySplashScreenBinding
     private var appUpdateManager: AppUpdateManager? = null
-    private val TAG = "SplashScreen"
+    private val tag = "SplashScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Kalunga)
@@ -131,7 +131,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                 CodeActivityForResult.IMMEDIATE_APP_UPDATE_REQ_CODE.code
             )
         } catch (e: SendIntentException) {
-            Log.e(TAG, "updateAppError:" + e.printStackTrace())
+            Log.e(tag, "updateAppError:" + e.printStackTrace())
         }
     }
 
@@ -171,7 +171,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         Log.d(
-            TAG,
+            tag,
             getString(R.string.on_permissions_granted) + requestCode + getString(R.string.double_point) + perms.size
         )
         when (requestCode) {
@@ -185,7 +185,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         Log.d(
-            TAG,
+            tag,
             getString(R.string.permission_denied) + requestCode + getString(R.string.double_point) + perms.size
         )
         viewModel.loading.postValue(false)

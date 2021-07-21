@@ -4,8 +4,6 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import org.w3c.dom.DocumentType
-import java.util.*
 
 /****
  * Project: kalunga

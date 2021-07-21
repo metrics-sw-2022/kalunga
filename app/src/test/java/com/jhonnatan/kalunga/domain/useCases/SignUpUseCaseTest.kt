@@ -1,8 +1,5 @@
 package com.jhonnatan.kalunga.domain.useCases
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 import io.github.serpro69.kfaker.Faker
 import org.json.JSONArray
 import org.json.JSONObject
@@ -21,7 +18,7 @@ import java.io.InputStreamReader
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  */
-class SignUpUseCaseTest() {
+class SignUpUseCaseTest {
     private lateinit var signUpUseCase: SignUpUseCase
     private val faker = Faker()
     private val emails = mutableListOf<String>()

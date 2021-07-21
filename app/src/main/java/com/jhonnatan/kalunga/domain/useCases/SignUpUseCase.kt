@@ -1,7 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
 import com.jhonnatan.kalunga.domain.models.enumeration.CodePatterns
-import com.jhonnatan.kalunga.domain.models.enumeration.ResponseErrorField
 
 /**
  * Project: kalunga

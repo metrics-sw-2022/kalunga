@@ -41,7 +41,7 @@ class StartingScreenActivity : AppCompatActivity() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     private val callbackManager = CallbackManager.Factory.create()
-    private val TAG = "StartingScreen"
+    private val tag = "StartingScreen"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,7 +161,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: FacebookException?) {
-                    Log.e(TAG, "loginFacebookError:" + error)
+                    Log.e(tag, "loginFacebookError:" + error)
                     viewModel.loadingDialog.value = false
                     viewModel.snackBarTextError.postValue(getString(R.string.error_login_facebook))
                 }
@@ -211,7 +211,7 @@ class StartingScreenActivity : AppCompatActivity() {
             } else if (errorCode!!.contains("12501"))
                 viewModel.loadingDialog.value = false
             else {
-                Log.e(TAG, "loginGoogleError:" + task.exception.toString())
+                Log.e(tag, "loginGoogleError:" + task.exception.toString())
                 viewModel.loadingDialog.value = false
                 viewModel.snackBarTextError.postValue(getString(R.string.error_login_google))
             }

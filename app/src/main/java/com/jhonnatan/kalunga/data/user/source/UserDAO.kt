@@ -2,7 +2,6 @@ package com.jhonnatan.kalunga.data.user.source
 
 import androidx.room.*
 import com.jhonnatan.kalunga.data.user.entities.User
-import com.jhonnatan.kalunga.data.version.entities.Version
 
 /****
  * Project: kalunga
