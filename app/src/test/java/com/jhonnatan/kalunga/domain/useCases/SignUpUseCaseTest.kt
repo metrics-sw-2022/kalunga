@@ -172,5 +172,15 @@ class SignUpUseCaseTest() {
         }
     }
 
+    @Test
+    fun `Caso 14`() {
+        createDataPool("datapool_4",1)
+        for (id in 0 until item1.size){
+            val result = signUpUseCase.changeEnableButton(item1[id],item2[id],item3[id],item4[id])
+            assertEquals(true, result)
+        }
+    }
+
+
 
 }
