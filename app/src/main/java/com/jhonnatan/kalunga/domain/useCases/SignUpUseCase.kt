@@ -28,16 +28,13 @@ class SignUpUseCase {
         return password == confirmPassword
     }
 
-    fun changeEnableButton(email: Int, name: Int, password: Int, confirmPassword: Int,
-    ): Boolean? {
-        if (email == 1 && name == 1 && password == 1 && confirmPassword == 1) {
-            return true
-        } else {
-            return false
-        }
+    fun changeEnableButton(
+        email: Int, name: Int, password: Int, confirmPassword: Int,
+    ): Boolean {
+        return email == 1 && name == 1 && password == 1 && confirmPassword == 1
     }
 
-    fun isNumberPair(number: Int) :Boolean {
+    fun isNumberPair(number: Int): Boolean {
         return number % 2 == 0
     }
 

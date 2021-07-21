@@ -30,44 +30,46 @@ class SignUpUseCaseTest() {
     private val item3 = mutableListOf<Int>()
     private val item4 = mutableListOf<Int>()
 
-    private fun createDataPool(dataPool:String, type:Int){
+    private fun createDataPool(dataPool: String, type: Int) {
         val pathDataPool =
             "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/signUp/$dataPool.txt"
         val jsonString = getDataTXT(pathDataPool)
-        if (jsonString != null){
+        if (jsonString != null) {
             try {
                 val dataPools = JSONArray(JSONObject(jsonString).optString("data_pool"))
                 if (type == 0) {
                     generateData(dataPools)
-                } else if (type == 1){
+                } else if (type == 1) {
                     generateMultipleData(dataPools)
                 }
-            }catch (ignore: Exception){}
+            } catch (ignore: Exception) {
+            }
         }
     }
 
-    private fun getDataTXT(path: String) :String? {
+    private fun getDataTXT(path: String): String? {
         val txtFile = File(path)
-        var aux:String? = null
+        var aux: String? = null
         try {
             val bufferedReader = BufferedReader(InputStreamReader(FileInputStream(txtFile)))
             aux = bufferedReader.readLine()
             bufferedReader.close()
-        } catch(ignore:Exception){}
+        } catch (ignore: Exception) {
+        }
         return aux
     }
 
-    private fun generateData(dataPool: JSONArray){
-        var data:JSONObject
-        for (id in 0 until dataPool.length()){
+    private fun generateData(dataPool: JSONArray) {
+        var data: JSONObject
+        for (id in 0 until dataPool.length()) {
             data = dataPool.getJSONObject(id)
             emails.add(data["email"].toString())
         }
     }
 
-    private fun generateMultipleData(dataPool: JSONArray){
-        var data:JSONObject
-        for (id in 0 until dataPool.length()){
+    private fun generateMultipleData(dataPool: JSONArray) {
+        var data: JSONObject
+        for (id in 0 until dataPool.length()) {
             data = dataPool.getJSONObject(id)
             item1.add(data["item_1"] as Int)
             item2.add(data["item_2"] as Int)
@@ -75,6 +77,7 @@ class SignUpUseCaseTest() {
             item4.add(data["item_4"] as Int)
         }
     }
+
     @Before
     fun setup() {
         signUpUseCase = SignUpUseCase()
@@ -94,8 +97,8 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 03`() {
-        createDataPool("datapool_1",0)
-        for (id in 0 until emails.size){
+        createDataPool("datapool_1", 0)
+        for (id in 0 until emails.size) {
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(false, result)
         }
@@ -103,8 +106,8 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 04`() {
-        createDataPool("datapool_2",0)
-        for (id in 0 until emails.size){
+        createDataPool("datapool_2", 0)
+        for (id in 0 until emails.size) {
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(true, result)
         }
@@ -165,22 +168,23 @@ class SignUpUseCaseTest() {
 
     @Test
     fun `Caso 13`() {
-        createDataPool("datapool_3",1)
-        for (id in 0 until item1.size){
-            val result = signUpUseCase.changeEnableButton(item1[id],item2[id],item3[id],item4[id])
+        createDataPool("datapool_3", 1)
+        for (id in 0 until item1.size) {
+            val result =
+                signUpUseCase.changeEnableButton(item1[id], item2[id], item3[id], item4[id])
             assertEquals(false, result)
         }
     }
 
     @Test
     fun `Caso 14`() {
-        createDataPool("datapool_4",1)
-        for (id in 0 until item1.size){
-            val result = signUpUseCase.changeEnableButton(item1[id],item2[id],item3[id],item4[id])
+        createDataPool("datapool_4", 1)
+        for (id in 0 until item1.size) {
+            val result =
+                signUpUseCase.changeEnableButton(item1[id], item2[id], item3[id], item4[id])
             assertEquals(true, result)
         }
     }
-
 
 
 }
