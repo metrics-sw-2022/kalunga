@@ -1,7 +1,5 @@
 package com.jhonnatan.kalunga.data.json
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader

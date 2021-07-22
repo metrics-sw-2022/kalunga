@@ -1,7 +1,5 @@
 package com.jhonnatan.kalunga.data.typeDocument.repository
 
-import com.jhonnatan.kalunga.data.cities.datasource.CitiesDataSourceLocal
-import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.typeDocument.datasource.TypeDocumentDataSourceLocal
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 
