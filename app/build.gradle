@@ -75,6 +75,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation "com.facebook.android:facebook-android-sdk:$facebook_sdk_version"
     implementation "com.facebook.android:facebook-login:$facebook_login_version"
+    implementation "com.google.code.gson:gson:$gson_version"
     kapt "androidx.room:room-compiler:$room_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"

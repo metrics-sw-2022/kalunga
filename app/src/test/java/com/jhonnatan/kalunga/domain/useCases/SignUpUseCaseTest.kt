@@ -1,5 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSONInterface
 import io.github.serpro69.kfaker.Faker
 import org.json.JSONArray
 import org.json.JSONObject
@@ -182,6 +184,7 @@ class SignUpUseCaseTest {
             assertEquals(true, result)
         }
     }
+
 
 
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSONInterface
 import com.jhonnatan.kalunga.data.room.KalungaDB
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
@@ -40,6 +42,7 @@ class StartingScreenUseCaseTest {
     private lateinit var userDataSourceLocal: UserDataSourceLocal
     private lateinit var userRepository: UserRepository
     private lateinit var startingScreenUseCase: StartingScreenUseCase
+    private lateinit var citiesJSON: CitiesJSON
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
@@ -93,6 +96,7 @@ class StartingScreenUseCaseTest {
         userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
         userRepository = UserRepository.getInstance(userDataSourceRemote, userDataSourceLocal)
         startingScreenUseCase = StartingScreenUseCase(userRepository)
+        citiesJSON = CitiesJSON()
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
@@ -146,6 +150,17 @@ class StartingScreenUseCaseTest {
             createUsers(2)
             val result = startingScreenUseCase.getUserByAccountLocal(users[0].account)
             assertEquals(ResponseStartingUseCase(true, listOf(users[0])), result)
+        }
+    }
+
+
+    @Test
+    fun `Caso 15`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result =
+                citiesJSON.getDataCountries()
+            print("result " + result)
+            assertEquals(true, result)
         }
     }
 

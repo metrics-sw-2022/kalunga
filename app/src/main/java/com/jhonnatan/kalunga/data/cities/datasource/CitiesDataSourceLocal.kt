@@ -1,5 +1,8 @@
 package com.jhonnatan.kalunga.data.cities.datasource
 
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
+
 /**
  * Project: kalunga
  * From: com.jhonnatan.kalunga.data.cities.datasource
@@ -8,4 +11,11 @@ package com.jhonnatan.kalunga.data.cities.datasource
  * All rights reserved 2021.
  **/
 class CitiesDataSourceLocal {
+    fun getDataCountries(): List<ResponseCountries> {
+        return emptyList()
+    }
+
+    fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
+        return emptyList()
+    }
 }
