@@ -45,5 +45,6 @@
     <string name="numero_de_documento">Número de documento</string>
     <string name="numero_movil">Número móvil</string>
     <string name="ciudad">Ciudad</string>
-    <string name="al_registrarme_acepto_">Al registrarme, acepto que he leído las condiciones de uso y comprendo la declaración de privacidad para usuarios</string>
+    <string name="al_registrarme_acepto_">Al registrarme, acepto que he leído las <u><b>condiciones de uso</b></u> y comprendo la <u><b>declaración de privacidad</b></u> para usuarios</string>
+    <string name="configurando">Configurando…</string>
 </resources>

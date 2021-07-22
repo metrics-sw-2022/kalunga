@@ -79,7 +79,6 @@
                 android:layout_marginRight="30dp"
                 android:background="@drawable/ic_arrow_drop_down"
                 android:contentDescription="@string/ver_u_ocultar_contrase_a"
-                android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_FIELD.code)}"
                 app:layout_constraintBottom_toBottomOf="@+id/spinnerDocumentType"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/spinnerDocumentType" />
@@ -104,7 +103,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.NAME_FIELD.code)}"
                 android:autofillHints="name"
                 android:background="@drawable/input"
                 android:drawableStart="@drawable/ic_document"
@@ -174,7 +172,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_arrow_drop_down"
                     android:contentDescription="@string/ver_u_ocultar_contrase_a"
-                    android:onClick="@{() -> vModel.showPassword(codeField.PASSWORD_FIELD.code)}"
                     app:layout_constraintBottom_toBottomOf="@+id/spinnerCountry"
                     app:layout_constraintEnd_toEndOf="@+id/spinnerCountry"
                     app:layout_constraintTop_toTopOf="@+id/spinnerCountry" />
@@ -186,7 +183,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
-                    android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.NAME_FIELD.code)}"
                     android:autofillHints="phone"
                     android:background="@drawable/input"
                     android:drawablePadding="10dp"
@@ -228,7 +224,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PASSWORD_CONFIRM_FIELD.code)}"
                 android:autofillHints="confirm password"
                 android:background="@drawable/input"
                 android:drawableStart="@drawable/ic_location_city_"
@@ -289,7 +284,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/boton_oscuro_disabled"
                 android:fontFamily="@font/gill_sans_mt_bold"
-                android:onClick="@{() -> vModel.navigateToConfiguration()}"
                 android:text="@string/continuar"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -325,12 +319,48 @@
             android:layout_marginBottom="9dp"
             android:fontFamily="@font/gill_sans_mt_bold"
             android:gravity="center_horizontal"
-            android:onClick="@{() -> vModel.navigateToLogIn()}"
             android:text="@string/iniciar_sesi_n"
             android:textColor="@color/purple"
             android:textSize="23sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#D8000000"
+            android:elevation="12dp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar_cyclic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="40dp"
+                android:minHeight="40dp"
+                android:layout_marginBottom="20dp"
+                android:indeterminateTint="@color/yellow"
+                app:layout_constraintBottom_toTopOf="@+id/textViewProgress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center"
+                android:textColor="@color/yellow"
+                android:textSize="30sp"
+                android:text="@string/configurando"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
