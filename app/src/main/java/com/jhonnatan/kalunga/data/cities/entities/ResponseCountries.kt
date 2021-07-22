@@ -11,7 +11,7 @@ import com.jhonnatan.kalunga.data.user.entities.UserRemote
  * All rights reserved 2021.
  **/
 data class ResponseCountries(
-    @SerializedName("id") val status: String,
-    @SerializedName("cod_pais") val message: String,
-    @SerializedName("pais") val data: String
+    @SerializedName("id") val id: String,
+    @SerializedName("cod_pais") val codPais: String,
+    @SerializedName("pais") val pais: String
 )

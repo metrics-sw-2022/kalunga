@@ -11,6 +11,6 @@ import com.jhonnatan.kalunga.data.user.entities.UserRemote
  * All rights reserved 2021.
  **/
 data class ResponseCities(
-    @SerializedName("ciudades")
-    val data: List<String>
+    @SerializedName("ciudades") val data: List<String>,
+    @SerializedName("pais") val pais: String
 )

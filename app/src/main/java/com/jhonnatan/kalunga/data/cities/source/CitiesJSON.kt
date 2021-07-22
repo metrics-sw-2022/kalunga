@@ -1,16 +1,10 @@
 package com.jhonnatan.kalunga.data.cities.source
-
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.json.JSONConverter
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
+import com.google.gson.Gson
 
 /**
  * Project: kalunga
@@ -24,21 +18,30 @@ class CitiesJSON : CitiesJSONInterface {
     lateinit var jsonConverter : JSONConverter
     lateinit var jsonArray : JSONArray
 
-
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    override suspend fun getDataCountries(): Any {
+    override suspend fun getDataCountries(): List<ResponseCountries> {
+        val countriesList: ArrayList<ResponseCountries> = ArrayList()
         jsonConverter = JSONConverter()
         jsonArray = jsonConverter.getData(path)
         var data: JSONObject
         for (id in 0 until jsonArray.length()) {
             data = jsonArray.getJSONObject(id)
-            bu
+            countriesList.add(Gson().fromJson(data.toString(),ResponseCountries::class.java))
         }
-        return jsonArray.length()
+        return countriesList
     }
 
     override suspend fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
-        TODO("Not yet implemented")
+        val citiesList: ArrayList<ResponseCities> = ArrayList()
+        jsonConverter = JSONConverter()
+        jsonArray = jsonConverter.getData(path)
+        var data: JSONObject
+        for (id in 0 until jsonArray.length()) {
+            data = jsonArray.getJSONObject(id)
+            if (data["pais"]==country) {
+                citiesList.add(Gson().fromJson(data.toString(), ResponseCities::class.java))
+            }
+        }
+        return citiesList
     }
 
 }

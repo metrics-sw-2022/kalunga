@@ -158,7 +158,7 @@ class StartingScreenUseCaseTest {
     fun `Caso 15`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result =
-                citiesJSON.getDataCountries()
+                citiesJSON.getDataCitiesByCodeCountry("Colombia")
             print("result " + result)
             assertEquals(true, result)
         }
