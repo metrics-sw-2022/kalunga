@@ -11,6 +11,7 @@
     <color name="error">#944145</color>
     <color name="info">#006E9A</color>
     <color name="warning">#F0AD4E</color>
+    <color name="success">#016501</color>
     <color name="purple_light">#A0A1B1</color>
     <color name="purple_disabled">#585B76</color>
     <color name="mid_white">#E0E3E8</color>

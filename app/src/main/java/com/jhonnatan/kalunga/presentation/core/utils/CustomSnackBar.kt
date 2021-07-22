@@ -49,6 +49,13 @@ class CustomSnackBar {
                 else
                     Color.RED
             }
+            TypeSnackBar.SUCCESS.code -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    buildSnackBar(layoutContain, message, context.getString(R.string.cerrar), false,
+                        context.getColor(R.color.success))
+                else
+                    Color.RED
+            }
         }
     }
 

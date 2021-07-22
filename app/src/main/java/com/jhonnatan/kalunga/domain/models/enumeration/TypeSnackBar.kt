@@ -12,5 +12,6 @@ enum class TypeSnackBar (val code: Int) {
     CLOSE_APP(0x1),
     ERROR(0X2),
     INFO(0x3),
-    WARNING(0X4)
+    WARNING(0X4),
+    SUCCESS(0X5)
 }
