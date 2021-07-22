@@ -12,7 +12,7 @@ import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
  **/
 interface CitiesJSONInterface {
 
-    suspend fun getDataCountries() : Any
+    suspend fun getDataCountries() : List<ResponseCountries>
 
     suspend fun getDataCitiesByCodeCountry(country: String) : List<ResponseCities>
 

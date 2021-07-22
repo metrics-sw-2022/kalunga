@@ -1,7 +1,6 @@
 package com.jhonnatan.kalunga.data.cities.entities
 
 import com.google.gson.annotations.SerializedName
-import com.jhonnatan.kalunga.data.user.entities.UserRemote
 
 /**
  * Project: kalunga
