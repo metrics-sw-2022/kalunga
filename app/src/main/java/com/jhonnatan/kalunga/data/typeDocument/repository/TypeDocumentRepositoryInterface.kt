@@ -1,5 +1,7 @@
 package com.jhonnatan.kalunga.data.typeDocument.repository
 
+import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
+
 /**
  * Project: kalunga
  * From: com.jhonnatan.kalunga.data.typeDocument.repository
@@ -8,4 +10,7 @@ package com.jhonnatan.kalunga.data.typeDocument.repository
  * All rights reserved 2021.
  **/
 interface TypeDocumentRepositoryInterface {
+
+    suspend fun getDataTypeDocument():List<ResponseDocumentType>
+
 }
