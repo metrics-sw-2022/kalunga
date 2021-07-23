@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>
+    <data>
         <variable
             name="vModel"
-            type="com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurarionViewModel" />
-    </data>-->
+            type="com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -333,16 +333,17 @@
             android:background="#D8000000"
             android:elevation="12dp"
             android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="lollipop">
 
             <ProgressBar
                 android:id="@+id/progressBar_cyclic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="40dp"
-                android:minHeight="40dp"
                 android:layout_marginBottom="20dp"
                 android:indeterminateTint="@color/yellow"
+                android:minWidth="40dp"
+                android:minHeight="40dp"
                 app:layout_constraintBottom_toTopOf="@+id/textViewProgress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
