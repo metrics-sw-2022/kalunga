@@ -13,12 +13,12 @@ import com.google.gson.Gson
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class CitiesJSON : CitiesJSONInterface {
-    val path: String = "src/main/java/com/jhonnatan/kalunga/data/cities/source/json_cities.txt"
+class CitiesJSON {
+    val path: String = "app/src/main/java/com/jhonnatan/kalunga/data/cities/source/prueba.txt"
     lateinit var jsonConverter : JSONConverter
     lateinit var jsonArray : JSONArray
 
-    override suspend fun getDataCountries(): List<ResponseCountries> {
+    fun getDataCountries(): List<ResponseCountries> {
         val countriesList: ArrayList<ResponseCountries> = ArrayList()
         jsonConverter = JSONConverter()
         jsonArray = jsonConverter.getData(path)
@@ -30,7 +30,7 @@ class CitiesJSON : CitiesJSONInterface {
         return countriesList
     }
 
-    override suspend fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
+    fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
         val citiesList: ArrayList<ResponseCities> = ArrayList()
         jsonConverter = JSONConverter()
         jsonArray = jsonConverter.getData(path)

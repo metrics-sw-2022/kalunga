@@ -16,7 +16,7 @@ import java.io.InputStreamReader
  **/
 class JSONConverter {
 
-    lateinit var jsonArray : JSONArray
+    var jsonArray : JSONArray = JSONArray()
     fun getData(path: String) : JSONArray {
         val jsonString = getDataTXT(path)
         if (jsonString != null) {
@@ -36,6 +36,7 @@ class JSONConverter {
             aux = bufferedReader.readLine()
             bufferedReader.close()
         } catch (ignore: Exception) {
+            println("ignore "+ignore)
         }
         return aux
     }

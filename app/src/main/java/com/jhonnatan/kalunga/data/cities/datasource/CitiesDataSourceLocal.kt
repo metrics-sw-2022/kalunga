@@ -2,7 +2,7 @@ package com.jhonnatan.kalunga.data.cities.datasource
 
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
-import com.jhonnatan.kalunga.data.cities.source.CitiesJSONInterface
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
 
 /**
  * Project: kalunga
@@ -11,19 +11,20 @@ import com.jhonnatan.kalunga.data.cities.source.CitiesJSONInterface
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class CitiesDataSourceLocal private constructor(private val citiesJSONInterface: CitiesJSONInterface) {
+class CitiesDataSourceLocal(private val citiesJSON: CitiesJSON){
 
     companion object {
         private var INSTANCE: CitiesDataSourceLocal? = null
-        fun getInstance(citiesJSONInterface: CitiesJSONInterface): CitiesDataSourceLocal =
-            INSTANCE ?: CitiesDataSourceLocal(citiesJSONInterface)
+        fun getInstance(citiesJSON: CitiesJSON): CitiesDataSourceLocal =
+            INSTANCE ?: CitiesDataSourceLocal(citiesJSON)
     }
 
-    suspend fun getDataCountries(): List<ResponseCountries> {
-        return citiesJSONInterface.getDataCountries()
+
+    fun getDataCountries(): List<ResponseCountries> {
+        return citiesJSON.getDataCountries()
     }
 
-    suspend fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
-        return citiesJSONInterface.getDataCitiesByCodeCountry(country)
+    fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
+        return citiesJSON.getDataCitiesByCodeCountry(country)
     }
 }

@@ -10,13 +10,9 @@ import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSONInterface
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class TypeDocumentDataSourceLocal private constructor(private val typeDocumentJSONInterface: TypeDocumentJSONInterface)  {
+class TypeDocumentDataSourceLocal {
 
-    companion object {
-        private var INSTANCE: TypeDocumentDataSourceLocal? = null
-        fun getInstance(typeDocumentJSONInterface: TypeDocumentJSONInterface): TypeDocumentDataSourceLocal =
-            INSTANCE ?: TypeDocumentDataSourceLocal(typeDocumentJSONInterface)
-    }
+    lateinit var typeDocumentJSONInterface: TypeDocumentJSONInterface
 
     suspend fun getDataTypeDocument(): List<ResponseDocumentType> {
         return typeDocumentJSONInterface.getDataTypeDocument()

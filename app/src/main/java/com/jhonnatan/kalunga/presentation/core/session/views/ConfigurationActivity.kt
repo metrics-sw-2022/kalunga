@@ -22,28 +22,21 @@ class ConfigurationActivity : AppCompatActivity() {
     @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModelFactory = ConfigurationViewModelFactory.getInstance()
+        val viewModelFactory = ConfigurationViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[ConfigurationViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_configuration)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
 
-        val spinnerArray: MutableList<String> = ArrayList()
-        spinnerArray.add("item1")
-        spinnerArray.add("item2")
-
-        val adapter = ArrayAdapter(
-            this, android.R.layout.simple_spinner_item, spinnerArray
-        )
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        val sItems = binding.spinnerDocumentType
-        sItems.adapter = adapter
-
-
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
         }
+
+        val adapter = ArrayAdapter(
+            this, android.R.layout.simple_spinner_item, viewModel.countriesSpinnerArray
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerDocumentType.adapter = adapter
 
         fun onBackPressed() {
             val intent = Intent(
