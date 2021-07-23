@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.data.typeDocument.source
 
+import android.content.Context
 import com.google.gson.Gson
 import com.jhonnatan.kalunga.data.json.JSONConverter
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
@@ -13,15 +14,15 @@ import org.json.JSONObject
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class TypeDocumentJSON: TypeDocumentJSONInterface {
-    val path: String = "src/main/java/com/jhonnatan/kalunga/data/typeDocument/source/json_type_document.txt"
+class TypeDocumentJSON(private val context: Context){
+    val path: String = "json_type_document.txt"
     lateinit var jsonConverter : JSONConverter
     lateinit var jsonArray : JSONArray
 
-    override suspend fun getDataTypeDocument(): List<ResponseDocumentType> {
+    fun getDataTypeDocument(): List<ResponseDocumentType> {
         val documentTypeList: ArrayList<ResponseDocumentType> = ArrayList()
         jsonConverter = JSONConverter()
-        jsonArray = jsonConverter.getData(path)
+        jsonArray = jsonConverter.getData(path,context)
         var data: JSONObject
         for (id in 0 until jsonArray.length()) {
             data = jsonArray.getJSONObject(id)

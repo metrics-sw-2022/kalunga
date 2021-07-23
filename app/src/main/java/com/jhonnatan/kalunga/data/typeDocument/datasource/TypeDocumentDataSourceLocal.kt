@@ -1,7 +1,9 @@
 package com.jhonnatan.kalunga.data.typeDocument.datasource
 
+import com.jhonnatan.kalunga.data.cities.datasource.CitiesDataSourceLocal
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
-import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSONInterface
+import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSON
 
 /**
  * Project: kalunga
@@ -10,12 +12,16 @@ import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSONInterface
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class TypeDocumentDataSourceLocal {
+class TypeDocumentDataSourceLocal(private val typeDocumentJSON: TypeDocumentJSON) {
 
-    lateinit var typeDocumentJSONInterface: TypeDocumentJSONInterface
+    companion object {
+        private var INSTANCE: TypeDocumentDataSourceLocal? = null
+        fun getInstance(typeDocumentJSON: TypeDocumentJSON): TypeDocumentDataSourceLocal =
+            INSTANCE ?: TypeDocumentDataSourceLocal(typeDocumentJSON)
+    }
 
-    suspend fun getDataTypeDocument(): List<ResponseDocumentType> {
-        return typeDocumentJSONInterface.getDataTypeDocument()
+    fun getDataTypeDocument(): List<ResponseDocumentType> {
+        return typeDocumentJSON.getDataTypeDocument()
     }
 
 }

@@ -1,4 +1,5 @@
 package com.jhonnatan.kalunga.data.cities.source
+import android.content.Context
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.json.JSONConverter
@@ -13,15 +14,15 @@ import com.google.gson.Gson
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class CitiesJSON {
-    val path: String = "app/src/main/java/com/jhonnatan/kalunga/data/cities/source/prueba.txt"
+class CitiesJSON(private val context: Context){
+    val path: String = "json_cities.txt"
     lateinit var jsonConverter : JSONConverter
     lateinit var jsonArray : JSONArray
 
     fun getDataCountries(): List<ResponseCountries> {
         val countriesList: ArrayList<ResponseCountries> = ArrayList()
         jsonConverter = JSONConverter()
-        jsonArray = jsonConverter.getData(path)
+        jsonArray = jsonConverter.getData(path,context)
         var data: JSONObject
         for (id in 0 until jsonArray.length()) {
             data = jsonArray.getJSONObject(id)
@@ -33,7 +34,7 @@ class CitiesJSON {
     fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
         val citiesList: ArrayList<ResponseCities> = ArrayList()
         jsonConverter = JSONConverter()
-        jsonArray = jsonConverter.getData(path)
+        jsonArray = jsonConverter.getData(path,context)
         var data: JSONObject
         for (id in 0 until jsonArray.length()) {
             data = jsonArray.getJSONObject(id)

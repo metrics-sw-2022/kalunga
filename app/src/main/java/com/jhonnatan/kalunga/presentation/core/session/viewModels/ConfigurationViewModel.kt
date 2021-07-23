@@ -25,17 +25,22 @@ import kotlinx.coroutines.runBlocking
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
-class ConfigurationViewModel(userRepository: UserRepository, citiesRepository: CitiesRepository, typeDocumentRepository: TypeDocumentRepository) : ViewModel()  {
+class ConfigurationViewModel(
+    userRepository: UserRepository,
+    citiesRepository: CitiesRepository,
+    typeDocumentRepository: TypeDocumentRepository
+) : ViewModel() {
 
-    lateinit var countriesList : List<ResponseCountries>
+    lateinit var countriesList: List<ResponseCountries>
     val countriesSpinnerArray: MutableList<String> = ArrayList()
-    private val configurationUseCase = ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
+    private val configurationUseCase =
+        ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
 
     init {
         fillCountriesSpinner()
     }
 
-    private fun fillCountriesSpinner(){
+    private fun fillCountriesSpinner() {
         viewModelScope.launch {
             countriesList = configurationUseCase.getDataCountries()
             println("countriesList $countriesList")
@@ -48,7 +53,11 @@ class ConfigurationViewModel(userRepository: UserRepository, citiesRepository: C
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class ConfigurationViewModelFactory(private val userRepository: UserRepository, private val citiesRepository: CitiesRepository, private val typeDocumentRepository: TypeDocumentRepository) : ViewModelProvider.NewInstanceFactory() {
+class ConfigurationViewModelFactory(
+    private val userRepository: UserRepository,
+    private val citiesRepository: CitiesRepository,
+    private val typeDocumentRepository: TypeDocumentRepository
+) : ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
@@ -56,7 +65,9 @@ class ConfigurationViewModelFactory(private val userRepository: UserRepository, 
         fun getInstance(context: Context): ConfigurationViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ConfigurationViewModelFactory(
-                    Injection.providerConfigurationUserRepository(context), Injection.providerConfigurationCitiesRepository(), Injection.providerConfigurationTypeDocumentRepository()
+                    Injection.providerConfigurationUserRepository(context),
+                    Injection.providerConfigurationCitiesRepository(context),
+                    Injection.providerConfigurationTypeDocumentRepository(context)
                 )
             }
     }

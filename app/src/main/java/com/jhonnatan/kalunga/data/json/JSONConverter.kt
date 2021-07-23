@@ -1,5 +1,8 @@
 package com.jhonnatan.kalunga.data.json
 
+import android.content.Context
+import android.net.Uri
+import com.facebook.FacebookSdk.getApplicationContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -17,8 +20,8 @@ import java.io.InputStreamReader
 class JSONConverter {
 
     var jsonArray : JSONArray = JSONArray()
-    fun getData(path: String) : JSONArray {
-        val jsonString = getDataTXT(path)
+    fun getData(path: String, context: Context) : JSONArray {
+        val jsonString = getDataTXT(path, context)
         if (jsonString != null) {
             try {
                 jsonArray = JSONArray(JSONObject(jsonString).optString("data"))
@@ -28,16 +31,13 @@ class JSONConverter {
         return jsonArray
     }
 
-    fun getDataTXT(path: String): String? {
-        val txtFile = File(path)
+    fun getDataTXT(path: String,context: Context): String? {
         var aux: String? = null
         try {
-            val bufferedReader = BufferedReader(InputStreamReader(FileInputStream(txtFile)))
+            val bufferedReader = BufferedReader(InputStreamReader(context.assets.open(path)))
             aux = bufferedReader.readLine()
             bufferedReader.close()
-        } catch (ignore: Exception) {
-            println("ignore "+ignore)
-        }
+        } catch (ignore: Exception) { }
         return aux
     }
 }
