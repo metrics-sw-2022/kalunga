@@ -2,6 +2,7 @@ package com.jhonnatan.kalunga.domain.useCases
 
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
+import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 
@@ -16,6 +17,14 @@ class ConfigurationUseCase (private val userRepository: UserRepository, private 
 
     suspend fun getDataCountries(): List<ResponseCountries>{
         return citiesRepository.getDataCountries()
+    }
+
+    suspend fun getDataTypeDocument(): List<ResponseDocumentType>{
+        return typeDocumentRepository.getDataTypeDocument()
+    }
+
+    fun areFieldsEmpty(text: String): Boolean? {
+        return null
     }
 
 }

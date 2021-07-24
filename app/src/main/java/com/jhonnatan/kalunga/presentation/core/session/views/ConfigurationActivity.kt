@@ -1,10 +1,12 @@
 package com.jhonnatan.kalunga.presentation.core.session.views
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +14,7 @@ import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
+import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 
@@ -32,11 +35,22 @@ class ConfigurationActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val adapter = ArrayAdapter(
+        viewModel.numberFormat.observe(this, {
+            binding.editTextPhone.setText(it)
+        })
+        val adapterCountries = ArrayAdapter(
             this, android.R.layout.simple_spinner_item, viewModel.countriesSpinnerArray
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerDocumentType.adapter = adapter
+
+        val adapterTypeDocument = ArrayAdapter(
+            this, android.R.layout.simple_spinner_item, viewModel.typeDocumentsSpinnerArray
+        )
+
+        adapterCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCountry.adapter = adapterCountries
+
+        adapterTypeDocument.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerDocumentType.adapter = adapterTypeDocument
 
         fun onBackPressed() {
             val intent = Intent(

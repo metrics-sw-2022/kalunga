@@ -1,7 +1,9 @@
 package com.jhonnatan.kalunga.presentation.core.utils
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.jhonnatan.kalunga.R
 
@@ -14,12 +16,16 @@ import com.jhonnatan.kalunga.R
  * All rights reserved 2021.
  ****/
 
-class LoadingDialog (val context: Context) {
+class LoadingDialog (val context: Context, val text: String) {
     private var dialog: AlertDialog? = null
 
     fun startLoadingDialog() {
         val builder = AlertDialog.Builder(context,R.style.CustomDialog)
-        builder.setView(View.inflate(context, R.layout.loading_dialog,null))
+        val factory = LayoutInflater.from(context)
+        val loadingDialogView : View = factory.inflate(R.layout.loading_dialog, null)
+        val textViewLoadingDialog = loadingDialogView.findViewById<TextView>(R.id.textViewLoadingDialog)
+        textViewLoadingDialog.setText(text)
+        builder.setView(loadingDialogView)
         builder.setCancelable(false)
         dialog = builder.create()
         dialog!!.show()

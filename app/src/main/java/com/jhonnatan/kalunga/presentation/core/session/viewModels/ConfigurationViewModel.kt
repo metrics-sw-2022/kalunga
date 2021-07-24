@@ -1,13 +1,16 @@
 package com.jhonnatan.kalunga.presentation.core.session.viewModels
 
 import android.content.Context
+import android.text.Editable
 import android.widget.ArrayAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
+import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
@@ -17,6 +20,12 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.security.spec.MGF1ParameterSpec
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
+import javax.crypto.spec.OAEPParameterSpec
+import javax.crypto.spec.PSource
 
 /**
  * Project: kalunga
@@ -32,12 +41,17 @@ class ConfigurationViewModel(
 ) : ViewModel() {
 
     lateinit var countriesList: List<ResponseCountries>
+    lateinit var typeDocumentsList: List<ResponseDocumentType>
     val countriesSpinnerArray: MutableList<String> = ArrayList()
+    val typeDocumentsSpinnerArray: MutableList<String> = ArrayList()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
 
+    val numberFormat = MutableLiveData<String>()
+
     init {
         fillCountriesSpinner()
+        fillDocumentTypeSpinner()
     }
 
     private fun fillCountriesSpinner() {
@@ -48,6 +62,33 @@ class ConfigurationViewModel(
                 countriesSpinnerArray.add(element.pais)
             }
         }
+    }
+
+    private fun fillDocumentTypeSpinner() {
+        viewModelScope.launch {
+            typeDocumentsList = configurationUseCase.getDataTypeDocument()
+            println("typeDocumentsList $typeDocumentsList")
+            for (element in typeDocumentsList) {
+                typeDocumentsSpinnerArray.add(element.description)
+            }
+        }
+    }
+
+    fun formatPhone(text: Editable){
+
+    }
+
+    fun encryptInfo(password_user: String, document_number:String, phone_number:String){
+        val plaintext: ByteArray = byteArrayOf(password_user.toByte(),document_number.toByte(),phone_number.toByte())
+        val keygen = KeyGenerator.getInstance("AES")
+        keygen.init(16)
+        val key: SecretKey = keygen.generateKey()
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
+        cipher.init(Cipher.ENCRYPT_MODE, key,
+            OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT)
+        )
+        val ciphertext: ByteArray = cipher.doFinal(plaintext)
+        val iv: ByteArray = cipher.iv
     }
 }
 
