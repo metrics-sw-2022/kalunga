@@ -48,4 +48,6 @@
     <string name="al_registrarme_acepto_">Al registrarme, acepto que he leído las <u><b>condiciones de uso</b></u> y comprendo la <u><b>declaración de privacidad</b></u> para usuarios</string>
     <string name="configurando">Configurando…</string>
     <string name="registrate">Regístrate</string>
+    <string name="icono">icono</string>
+    <string name="país">SELECCIONE EL PAÍS</string>
 </resources>

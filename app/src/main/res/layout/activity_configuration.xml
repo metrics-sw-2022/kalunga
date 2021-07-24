@@ -129,32 +129,22 @@
                 app:layout_constraintStart_toStartOf="@+id/textViewTitle"
                 app:layout_constraintTop_toBottomOf="@+id/editTextDocument">
 
-                <Spinner
+                <Button
                     android:id="@+id/spinnerCountry"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
                     android:background="@drawable/input"
                     android:fontFamily="@font/gill_sans_mt_medium"
-                    android:hint="@string/numero_de_documento"
                     android:paddingLeft="15dp"
                     android:paddingTop="10dp"
-                    android:paddingRight="15dp"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:drawableRight="@drawable/ic_arrow_drop_down"
+                    android:paddingRight="5dp"
                     android:paddingBottom="10dp"
                     android:textColor="#AA000000"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/showSpinnerCountry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="-35dp"
-                    android:layout_marginLeft="-35dp"
-                    android:background="@drawable/ic_arrow_drop_down"
-                    android:contentDescription="@string/ver_u_ocultar_contrase_a"
-                    app:layout_constraintBottom_toBottomOf="@+id/spinnerCountry"
-                    app:layout_constraintEnd_toEndOf="@+id/spinnerCountry"
-                    app:layout_constraintTop_toTopOf="@+id/spinnerCountry" />
+                    android:textSize="18sp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="5dp" />
 
                 <!--suppress AndroidUnknownAttribute -->
                 <EditText

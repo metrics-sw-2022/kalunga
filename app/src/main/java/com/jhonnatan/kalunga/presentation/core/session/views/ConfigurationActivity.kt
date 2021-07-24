@@ -13,8 +13,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
+import com.jhonnatan.kalunga.presentation.core.session.adapters.CountriesSpinnerAdapter
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
+import com.jhonnatan.kalunga.presentation.core.utils.ListDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @DelicateCoroutinesApi
@@ -35,6 +37,36 @@ class ConfigurationActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        binding.spinnerCountry.setOnClickListener {
+            val dialog = ListDialog(
+                viewModel.countriesList,
+                object : CountriesSpinnerAdapter.CustomActionSpinner {
+                    override fun onItemSelected(position: Int) {
+                        viewModel.countrySelectedPosition.value = position
+                    }
+                })
+            dialog.show(this.supportFragmentManager, resources.getString(R.string.país))
+        }
+
+/*
+        binding.spnObservation.setOnClickListener {
+            val dialog = ListObservationDialog(observations, object : ObservationsSpinnerAdapter.ObservationActionSpinner {
+                override fun onObservationSelected(position: Int) {
+                    viewModel.observacionSelectedPosition.value = position
+                    if (viewModel.requirePhoto(position)) {
+                        capturePhoto()
+                    }
+                }
+            })
+            dialog.show(requireActivity().supportFragmentManager, "Selecciona observación")
+        }
+
+        viewModel.observacionSelectedPosition.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                viewModel.validate()
+                binding.spnObservation.text = requireContext().getString(R.string.observation_description_spinner, observations[it].codObservacion, observations[it].descripcion)
+            }
+        })*/
 
         viewModel.numberFormat.observe(this, {
             binding.editTextPhone.setText(it)

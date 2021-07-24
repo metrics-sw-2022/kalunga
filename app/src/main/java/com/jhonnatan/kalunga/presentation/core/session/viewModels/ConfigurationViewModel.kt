@@ -42,37 +42,27 @@ class ConfigurationViewModel(
 
     lateinit var countriesList: List<ResponseCountries>
     lateinit var typeDocumentsList: List<ResponseDocumentType>
-    val countriesSpinnerArray: MutableList<String> = ArrayList()
-    val typeDocumentsSpinnerArray: MutableList<String> = ArrayList()
-
+    val countrySelectedPosition = MutableLiveData<Int>()
     val numberFormat = MutableLiveData<String>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
 
-
-
     init {
-        fillCountriesSpinner()
-        fillDocumentTypeSpinner()
+        getCountriesSpinner()
+        getDocumentTypeSpinner()
     }
 
-    private fun fillCountriesSpinner() {
+    private fun getCountriesSpinner() {
         viewModelScope.launch {
             countriesList = configurationUseCase.getDataCountries()
             println("countriesList $countriesList")
-            for (element in countriesList) {
-                countriesSpinnerArray.add(element.pais)
-            }
         }
     }
 
-    private fun fillDocumentTypeSpinner() {
+    private fun getDocumentTypeSpinner() {
         viewModelScope.launch {
             typeDocumentsList = configurationUseCase.getDataTypeDocument()
             println("typeDocumentsList $typeDocumentsList")
-            for (element in typeDocumentsList) {
-                typeDocumentsSpinnerArray.add(element.description)
-            }
         }
     }
 
