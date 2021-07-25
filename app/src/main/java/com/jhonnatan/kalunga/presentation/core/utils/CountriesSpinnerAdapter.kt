@@ -1,20 +1,16 @@
-package com.jhonnatan.kalunga.presentation.core.session.adapters
+package com.jhonnatan.kalunga.presentation.core.utils
 
 import android.annotation.SuppressLint
-import android.graphics.Color.parseColor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.R.color.colorAccent
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
-import io.github.serpro69.kfaker.provider.Color
 
 /****
  * Project: kalunga

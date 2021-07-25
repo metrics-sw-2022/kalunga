@@ -4,12 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
-import com.jhonnatan.kalunga.presentation.core.session.adapters.CountriesSpinnerAdapter
+import com.jhonnatan.kalunga.presentation.core.utils.CountriesSpinnerAdapter
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.ListDialog
@@ -33,7 +32,7 @@ class ConfigurationActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        binding.spinnerCountry.setOnClickListener {
+        binding.buttonCountry.setOnClickListener {
             val dialog = ListDialog(
                 viewModel.countriesList,
                 object : CountriesSpinnerAdapter.CustomActionSpinner {
@@ -46,7 +45,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
         viewModel.countrySelectedPosition.observe(this, {
             if (it != null) {
-                binding.spinnerCountry.setCompoundDrawablesWithIntrinsicBounds(
+                binding.buttonCountry.setCompoundDrawablesWithIntrinsicBounds(
                     UtilsCountry().getIdFlag(viewModel.countriesList[it].pais),
                     0,
                     R.drawable.ic_arrow_drop_down,

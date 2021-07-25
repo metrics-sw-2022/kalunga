@@ -2,21 +2,17 @@ package com.jhonnatan.kalunga.presentation.core.utils
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.databinding.DialogListBinding
-import com.jhonnatan.kalunga.presentation.core.session.adapters.CountriesSpinnerAdapter
 
 /****
  * Project: kalunga

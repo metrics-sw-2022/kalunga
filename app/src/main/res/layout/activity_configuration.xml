@@ -48,37 +48,28 @@
                 android:textSize="40sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spinnerDocumentType"
+            <Button
+                android:id="@+id/buttonDocumentType"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
                 android:background="@drawable/input"
                 android:fontFamily="@font/gill_sans_mt_medium"
                 android:paddingLeft="15dp"
                 android:paddingTop="10dp"
-                android:paddingRight="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableRight="@drawable/ic_arrow_drop_down"
+                android:paddingRight="5dp"
                 android:paddingBottom="10dp"
                 android:textColor="#AA000000"
                 android:textSize="18sp"
+                android:paddingStart="15dp"
+                android:paddingEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
-                tools:ignore="RtlSymmetry" />
-
-            <ImageView
-                android:id="@+id/showSpinnerTypeDocument"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/ic_arrow_drop_down"
-                android:contentDescription="@string/ver_u_ocultar_contrase_a"
-                app:layout_constraintBottom_toBottomOf="@+id/spinnerDocumentType"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/spinnerDocumentType" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"/>
 
             <EditText
                 android:id="@+id/editTextDocument"
@@ -103,7 +94,7 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerDocumentType"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDocumentType"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
@@ -130,7 +121,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextDocument">
 
                 <Button
-                    android:id="@+id/spinnerCountry"
+                    android:id="@+id/buttonCountry"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
                     android:background="@drawable/input"
