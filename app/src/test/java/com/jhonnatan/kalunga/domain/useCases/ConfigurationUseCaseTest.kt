@@ -145,4 +145,10 @@ class ConfigurationUseCaseTest {
         val result1 = configurationUseCase.getTypeDocumentPosition(faker.name.name(), getListTypeDocument())
         Assert.assertEquals(0, result1)
     }
+
+    @Test
+    fun `Caso 06`() {
+        val result = configurationUseCase.getTypeDocumentPosition("CC", getListTypeDocument())
+        Assert.assertEquals(0, result)
+    }
 }
