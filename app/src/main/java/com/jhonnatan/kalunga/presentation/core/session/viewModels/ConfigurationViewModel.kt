@@ -13,6 +13,7 @@ import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeCountries
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeDocument
 import com.jhonnatan.kalunga.domain.useCases.ConfigurationUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -48,6 +49,7 @@ class ConfigurationViewModel(
         getCountriesSpinner()
         countrySelectedPosition.value = configurationUseCase.getCountryPosition(CodeCountries.COLOMBIA.value,countriesList)
         getDocumentTypeSpinner()
+        typeDocumentSelectedPosition.value = configurationUseCase.getTypeDocumentPosition(CodeTypeDocument.CEDULA_DE_CIUDADANIA.value,typeDocumentsList)
     }
 
     private fun getCountriesSpinner() {

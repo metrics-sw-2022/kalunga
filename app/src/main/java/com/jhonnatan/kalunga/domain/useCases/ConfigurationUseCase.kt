@@ -34,4 +34,8 @@ class ConfigurationUseCase(
     suspend fun getDataTypeDocument(): List<ResponseDocumentType> {
         return typeDocumentRepository.getDataTypeDocument().sortedBy { myObject -> myObject.abbreviate }
     }
+
+    fun getTypeDocumentPosition(typeDocument: String, typeDocumentsList: List<ResponseDocumentType>): Int? {
+        return null
+    }
 }
