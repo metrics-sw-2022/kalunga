@@ -36,6 +36,19 @@ class ConfigurationUseCase(
     }
 
     fun getTypeDocumentPosition(typeDocument: String, typeDocumentsList: List<ResponseDocumentType>): Int? {
+        var aux =  0
+        if (typeDocument.isEmpty())
+            return 0
+        else {
+            for (x in typeDocumentsList.indices) {
+                if (typeDocumentsList[x].abbreviate == typeDocument){
+                    aux = 1
+                }
+            }
+        }
+        if (aux!=1){
+            return 0
+        }
         return null
     }
 }
