@@ -14,6 +14,7 @@ import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeCountries
 import com.jhonnatan.kalunga.domain.useCases.ConfigurationUseCase
 import com.jhonnatan.kalunga.domain.useCases.StartingScreenUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -49,13 +50,13 @@ class ConfigurationViewModel(
 
     init {
         getCountriesSpinner()
+        countrySelectedPosition.value = configurationUseCase.getCountryPosition(CodeCountries.COLOMBIA.value)
         getDocumentTypeSpinner()
     }
 
     private fun getCountriesSpinner() {
         viewModelScope.launch {
             countriesList = configurationUseCase.getDataCountries()
-            countrySelectedPosition.value = 0
         }
     }
 

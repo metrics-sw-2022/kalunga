@@ -49,7 +49,7 @@ class ConfigurationUseCaseTest {
     private lateinit var database: KalungaDB
     private lateinit var citiesJSON: CitiesJSON
     private lateinit var typeDocumentJSON: TypeDocumentJSON
-
+    private val faker = Faker()
 
     @Before
     fun setup() {
@@ -115,5 +115,13 @@ class ConfigurationUseCaseTest {
                 ), result
             )
         }
+    }
+
+    @Test
+    fun `Caso 03`() {
+        val result = configurationUseCase.getCountryPosition("")
+        Assert.assertEquals(0, result)
+        val result1 = configurationUseCase.getCountryPosition(faker.name.name())
+        Assert.assertEquals(0, result1)
     }
 }

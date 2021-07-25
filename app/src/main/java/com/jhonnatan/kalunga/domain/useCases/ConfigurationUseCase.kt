@@ -23,7 +23,7 @@ class ConfigurationUseCase (private val userRepository: UserRepository, private 
         return typeDocumentRepository.getDataTypeDocument()
     }
 
-    fun areFieldsEmpty(text: String): Boolean? {
+    fun getCountryPosition(country: String): Int? {
         return null
     }
 
