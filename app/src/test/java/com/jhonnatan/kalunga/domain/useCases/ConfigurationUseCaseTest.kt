@@ -92,7 +92,26 @@ class ConfigurationUseCaseTest {
                     ResponseCountries("5", "+1", "Estados Unidos"),
                     ResponseCountries("6", "+56", "Chile"),
                     ResponseCountries("7", "+593", "Ecuador"),
+                    ResponseCountries("8", "+51", "Perú")
+                ), result
+            )
+        }
+    }
+
+    @Test
+    fun `Caso 02`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = configurationUseCase.getDataCountries()
+            Assert.assertEquals(
+                listOf(
+                    ResponseCountries("5", "+1", "Estados Unidos"),
+                    ResponseCountries("3", "+34", "España"),
+                    ResponseCountries("4", "+39", "Italia"),
                     ResponseCountries("8", "+51", "Perú"),
+                    ResponseCountries("6", "+56", "Chile"),
+                    ResponseCountries("1", "+57", "Colombia"),
+                    ResponseCountries("2", "+58", "Venezuela"),
+                    ResponseCountries("7", "+593", "Ecuador")
                 ), result
             )
         }
