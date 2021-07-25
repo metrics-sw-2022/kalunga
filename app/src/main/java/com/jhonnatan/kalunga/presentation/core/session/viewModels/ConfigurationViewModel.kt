@@ -39,6 +39,7 @@ class ConfigurationViewModel(
     lateinit var countriesList: List<ResponseCountries>
     lateinit var typeDocumentsList: List<ResponseDocumentType>
     val countrySelectedPosition = MutableLiveData<Int>()
+    val typeDocumentSelectedPosition = MutableLiveData<Int>()
     val numberFormat = MutableLiveData<String>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)

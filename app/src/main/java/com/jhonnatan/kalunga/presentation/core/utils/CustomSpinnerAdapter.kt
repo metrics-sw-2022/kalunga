@@ -20,7 +20,7 @@ import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
  * All rights reserved 2021.
  ****/
 
-class CountriesSpinnerAdapter (private val data: List<ResponseCountries>) : RecyclerView.Adapter<CountriesSpinnerAdapter.CustomViewHolder>() {
+class CustomSpinnerAdapter (private val data: List<ResponseCountries>) : RecyclerView.Adapter<CustomSpinnerAdapter.CustomViewHolder>() {
 
     var customActionsSpinner: CustomActionSpinner? = null
 

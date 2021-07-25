@@ -22,7 +22,7 @@ import com.jhonnatan.kalunga.databinding.DialogListBinding
  * All rights reserved 2021.
  ****/
 
-class ListDialog (private val data: List<Any>, var customActionSpinner: CountriesSpinnerAdapter.CustomActionSpinner): DialogFragment() {
+class ListDialog (private val data: List<Any>, var customActionSpinner: CustomSpinnerAdapter.CustomActionSpinner): DialogFragment() {
     private var mBinding: DialogListBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,11 +38,11 @@ class ListDialog (private val data: List<Any>, var customActionSpinner: Countrie
         alertDialog.setTitle(R.string.país)
         val dialog = alertDialog.create()
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        val adapter = CountriesSpinnerAdapter(data as List<ResponseCountries>)
+        val adapter = CustomSpinnerAdapter(data as List<ResponseCountries>)
         val layoutManager = LinearLayoutManager(context)
-        mBinding?.rvObservations?.layoutManager = layoutManager
-        mBinding?.rvObservations?.adapter = adapter
-        adapter.customActionsSpinner = object : CountriesSpinnerAdapter.CustomActionSpinner {
+        mBinding?.rvItems?.layoutManager = layoutManager
+        mBinding?.rvItems?.adapter = adapter
+        adapter.customActionsSpinner = object : CustomSpinnerAdapter.CustomActionSpinner {
             override fun onItemSelected(position: Int) {
                 customActionSpinner.onItemSelected(position)
                 dismiss()

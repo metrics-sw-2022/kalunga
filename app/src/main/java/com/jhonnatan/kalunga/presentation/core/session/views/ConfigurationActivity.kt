@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
-import com.jhonnatan.kalunga.presentation.core.utils.CountriesSpinnerAdapter
+import com.jhonnatan.kalunga.presentation.core.utils.CustomSpinnerAdapter
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.ListDialog
@@ -18,7 +20,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 class ConfigurationActivity : AppCompatActivity() {
     private lateinit var viewModel: ConfigurationViewModel
     private lateinit var binding: ActivityConfigurationBinding
-
+    private val tag = "Configuration"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +35,7 @@ class ConfigurationActivity : AppCompatActivity() {
         }
 
         binding.buttonCountry.setOnClickListener {
-            val dialog = ListDialog(
-                viewModel.countriesList,
-                object : CountriesSpinnerAdapter.CustomActionSpinner {
-                    override fun onItemSelected(position: Int) {
-                        viewModel.countrySelectedPosition.value = position
-                    }
-                })
-            dialog.show(this.supportFragmentManager, resources.getString(R.string.país))
+            createDialogSpinner(viewModel.countriesList,CodeTypeSpinner.COUNTRIES.code)
         }
 
         viewModel.countrySelectedPosition.observe(this, {
@@ -58,6 +53,20 @@ class ConfigurationActivity : AppCompatActivity() {
             binding.editTextPhone.setText(it)
         })
 
+    }
+
+    private fun createDialogSpinner(dataList: List<Any>, code: Int) {
+        val dialog = ListDialog(
+            dataList,
+            object : CustomSpinnerAdapter.CustomActionSpinner {
+                override fun onItemSelected(position: Int) {
+                    when (code) {
+                        CodeTypeSpinner.COUNTRIES.code -> viewModel.countrySelectedPosition.value = position
+                        CodeTypeSpinner.TYPE_DOCUMENT.code -> viewModel.typeDocumentSelectedPosition.value = position
+                    }
+                }
+            })
+        dialog.show(this.supportFragmentManager, tag)
     }
 
     override fun onBackPressed() {
