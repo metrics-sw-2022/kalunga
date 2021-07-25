@@ -8,6 +8,10 @@
         <variable
             name="vModel"
             type="com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel" />
+
+        <variable
+            name="utilsCountry"
+            type="com.jhonnatan.kalunga.domain.models.utils.UtilsCountry" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,24 +56,29 @@
                 android:id="@+id/buttonDocumentType"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/input"
-                android:fontFamily="@font/gill_sans_mt_medium"
-                android:paddingLeft="15dp"
-                android:paddingTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
+                android:background="@drawable/input"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
                 android:drawableRight="@drawable/ic_arrow_drop_down"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="start|center_vertical"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="10dp"
-                android:textColor="#AA000000"
+                android:textAllCaps="false"
+                android:textColor="#fff"
                 android:textSize="18sp"
-                android:paddingStart="15dp"
-                android:paddingEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"/>
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
             <EditText
                 android:id="@+id/editTextDocument"
@@ -88,8 +97,8 @@
                 android:hint="@string/numero_de_documento"
                 android:inputType="text"
                 android:maxLines="30"
-                android:paddingLeft="15dp"
                 android:paddingStart="15dp"
+                android:paddingLeft="15dp"
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -125,23 +134,25 @@
                     android:layout_width="80dp"
                     android:layout_height="55dp"
                     android:background="@drawable/input"
-                    android:fontFamily="@font/gill_sans_mt_medium"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="10dp"
                     android:drawableEnd="@drawable/ic_arrow_drop_down"
                     android:drawableRight="@drawable/ic_arrow_drop_down"
+                    android:fontFamily="@font/gill_sans_mt_medium"
+                    android:paddingStart="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="5dp"
                     android:paddingRight="5dp"
                     android:paddingBottom="10dp"
-                    android:textColor="#AA000000"
-                    android:textSize="18sp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="5dp" />
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
 
                 <!--suppress AndroidUnknownAttribute -->
                 <EditText
                     android:id="@+id/editTextPhone"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:afterTextChanged="@{(editable)->vModel.formatPhone(editable)}"
                     android:autofillHints="phone"
                     android:background="@drawable/input"
@@ -153,8 +164,6 @@
                     android:maxLines="30"
                     android:paddingStart="20dp"
                     android:paddingLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     tools:ignore="RtlSymmetry,TextFields" />
@@ -219,9 +228,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/gill_sans_mt_medium"
                 android:gravity="center_horizontal"
                 android:text="@string/al_registrarme_acepto_"
