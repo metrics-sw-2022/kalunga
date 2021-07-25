@@ -37,6 +37,10 @@ class ConfigurationActivity : AppCompatActivity() {
             createDialogSpinner(viewModel.countriesList,CodeTypeSpinner.COUNTRIES.code)
         }
 
+        binding.buttonDocumentType.setOnClickListener {
+            createDialogSpinner(viewModel.typeDocumentsList,CodeTypeSpinner.TYPE_DOCUMENT.code)
+        }
+
         viewModel.countrySelectedPosition.observe(this, {
             if (it != null) {
                 binding.buttonCountry.setCompoundDrawablesWithIntrinsicBounds(

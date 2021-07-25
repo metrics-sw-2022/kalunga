@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
+import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 
@@ -52,6 +53,10 @@ class CustomSpinnerAdapter(private val data: List<Any>, private val code: Int) :
                 data as ResponseCountries
                 holder.description.text = data.codPais + " " + data.pais
                 holder.icon.setImageResource(UtilsCountry().getIdFlag(data.pais))
+            }
+            CodeTypeSpinner.TYPE_DOCUMENT.code -> {
+                data as ResponseDocumentType
+                holder.description.text = data.abbreviate + " - " + data.description
             }
         }
     }

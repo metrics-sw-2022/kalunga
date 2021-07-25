@@ -15,7 +15,7 @@ class UtilsDialog {
     fun getIdTitle(code: Int): Int {
         when (code) {
             CodeTypeSpinner.COUNTRIES.code -> return R.string.país
-            CodeTypeSpinner.TYPE_DOCUMENT.code -> return R.string.país
+            CodeTypeSpinner.TYPE_DOCUMENT.code -> return R.string.seleccion_tipo_documento
             else -> return 0
         }
     }
