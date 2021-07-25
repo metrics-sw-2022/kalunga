@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
-import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
@@ -58,6 +57,7 @@ class ConfigurationActivity : AppCompatActivity() {
     private fun createDialogSpinner(dataList: List<Any>, code: Int) {
         val dialog = ListDialog(
             dataList,
+            code,
             object : CustomSpinnerAdapter.CustomActionSpinner {
                 override fun onItemSelected(position: Int) {
                     when (code) {

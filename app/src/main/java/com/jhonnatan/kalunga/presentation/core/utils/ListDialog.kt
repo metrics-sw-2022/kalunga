@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.databinding.DialogListBinding
+import com.jhonnatan.kalunga.domain.models.utils.UtilsDialog
 
 /****
  * Project: kalunga
@@ -22,7 +23,11 @@ import com.jhonnatan.kalunga.databinding.DialogListBinding
  * All rights reserved 2021.
  ****/
 
-class ListDialog (private val data: List<Any>, var customActionSpinner: CustomSpinnerAdapter.CustomActionSpinner): DialogFragment() {
+class ListDialog(
+    private val data: List<Any>,
+    private val code: Int,
+    private var customActionSpinner: CustomSpinnerAdapter.CustomActionSpinner
+): DialogFragment() {
     private var mBinding: DialogListBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +40,7 @@ class ListDialog (private val data: List<Any>, var customActionSpinner: CustomSp
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_list, null, false)
         val alertDialog = AlertDialog.Builder(activity,R.style.CustomDialogTheme)
         alertDialog.setView(mBinding?.root)
-        alertDialog.setTitle(R.string.país)
+        alertDialog.setTitle(UtilsDialog().getIdTitle(code))
         val dialog = alertDialog.create()
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         val adapter = CustomSpinnerAdapter(data as List<ResponseCountries>)

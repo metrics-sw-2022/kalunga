@@ -12,17 +12,16 @@ import com.jhonnatan.kalunga.R
 
 class UtilsCountry {
     fun getIdFlag(country: String): Int {
-        var flag = 0
         when (country) {
-            "Colombia" -> flag = R.mipmap.colombia
-            "Venezuela" -> flag = R.mipmap.venezuela
-            "España" -> flag = R.mipmap.espana
-            "Italia" -> flag = R.mipmap.italia
-            "Estados Unidos" -> flag = R.mipmap.estados_unidos
-            "Chile" -> flag = R.mipmap.chile
-            "Perú" -> flag = R.mipmap.peru
-            "Ecuador" -> flag = R.mipmap.ecuador
+            "Colombia" -> return R.mipmap.colombia
+            "Venezuela" -> return R.mipmap.venezuela
+            "España" -> return R.mipmap.espana
+            "Italia" -> return R.mipmap.italia
+            "Estados Unidos" -> return R.mipmap.estados_unidos
+            "Chile" -> return R.mipmap.chile
+            "Perú" -> return R.mipmap.peru
+            "Ecuador" -> return R.mipmap.ecuador
+            else -> return 0
         }
-        return flag
     }
 }
