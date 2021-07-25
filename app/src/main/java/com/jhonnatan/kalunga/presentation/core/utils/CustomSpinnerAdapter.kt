@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 
 /****
@@ -20,12 +21,14 @@ import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
  * All rights reserved 2021.
  ****/
 
-class CustomSpinnerAdapter (private val data: List<ResponseCountries>) : RecyclerView.Adapter<CustomSpinnerAdapter.CustomViewHolder>() {
+class CustomSpinnerAdapter(private val data: List<Any>, private val code: Int) :
+    RecyclerView.Adapter<CustomSpinnerAdapter.CustomViewHolder>() {
 
     var customActionsSpinner: CustomActionSpinner? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.spinner_items, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.spinner_items, parent, false)
         return CustomViewHolder(view)
     }
 
@@ -33,20 +36,32 @@ class CustomSpinnerAdapter (private val data: List<ResponseCountries>) : Recycle
         return data.size
     }
 
-    @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val data = data[position]
-        if (position % 2 == 0){
+        createStyleDialog(position, holder)
+        setDataSpinner(data, holder)
+        holder.container.setOnClickListener {
+            customActionsSpinner?.onItemSelected(position)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setDataSpinner(data: Any, holder: CustomViewHolder) {
+        when (code) {
+            CodeTypeSpinner.COUNTRIES.code -> {
+                data as ResponseCountries
+                holder.description.text = data.codPais + " " + data.pais
+                holder.icon.setImageResource(UtilsCountry().getIdFlag(data.pais))
+            }
+        }
+    }
+
+    private fun createStyleDialog(position: Int, holder: CustomViewHolder) {
+        if (position % 2 == 0) {
             holder.container.setBackgroundResource(R.drawable.background_item_1)
             holder.description.setTextColor(-0x1)
         } else
             holder.container.setBackgroundResource(R.drawable.background_item_2)
-        holder.description.text = data.codPais + " " + data.pais
-        holder.icon.setImageResource(UtilsCountry().getIdFlag(data.pais))
-        holder.container.setOnClickListener {
-            customActionsSpinner?.onItemSelected(position)
-        }
-
     }
 
     class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

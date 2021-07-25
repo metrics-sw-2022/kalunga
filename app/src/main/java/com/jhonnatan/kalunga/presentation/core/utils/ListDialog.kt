@@ -43,7 +43,7 @@ class ListDialog(
         alertDialog.setTitle(UtilsDialog().getIdTitle(code))
         val dialog = alertDialog.create()
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        val adapter = CustomSpinnerAdapter(data as List<ResponseCountries>)
+        val adapter = CustomSpinnerAdapter(data as List<ResponseCountries>,code)
         val layoutManager = LinearLayoutManager(context)
         mBinding?.rvItems?.layoutManager = layoutManager
         mBinding?.rvItems?.adapter = adapter
