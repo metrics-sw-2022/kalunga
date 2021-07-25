@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.data.cities.datasource.CitiesDataSourceLocal
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
 import com.jhonnatan.kalunga.data.room.KalungaDB
@@ -14,10 +15,9 @@ import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSON
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
 import io.github.serpro69.kfaker.Faker
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -80,7 +80,21 @@ class ConfigurationUseCaseTest {
     }
 
     @Test
-    fun `Caso 01`() {
-
+    fun `Caso 01`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = configurationUseCase.getDataCountries()
+            Assert.assertEquals(
+                listOf(
+                    ResponseCountries("1", "+57", "Colombia"),
+                    ResponseCountries("2", "+58", "Venezuela"),
+                    ResponseCountries("3", "+34", "España"),
+                    ResponseCountries("4", "+39", "Italia"),
+                    ResponseCountries("5", "+1", "Estados Unidos"),
+                    ResponseCountries("6", "+56", "Chile"),
+                    ResponseCountries("7", "+593", "Ecuador"),
+                    ResponseCountries("8", "+51", "Perú"),
+                ), result
+            )
+        }
     }
 }
