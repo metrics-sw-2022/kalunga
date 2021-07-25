@@ -31,14 +31,7 @@
         <activity
             android:name=".presentation.core.session.views.ConfigurationActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" >
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".presentation.core.session.views.SignUpActivity"
             android:screenOrientation="portrait"
@@ -51,6 +44,11 @@
             android:name=".presentation.core.home.views.SplashScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
