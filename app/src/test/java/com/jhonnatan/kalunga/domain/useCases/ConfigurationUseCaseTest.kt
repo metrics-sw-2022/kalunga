@@ -106,4 +106,10 @@ class ConfigurationUseCaseTest {
         val result1 = configurationUseCase.getCountryPosition(faker.name.name(), getListCountries())
         Assert.assertEquals(0, result1)
     }
+
+    @Test
+    fun `Caso 03`() {
+        val result = configurationUseCase.getCountryPosition("Colombia", getListCountries())
+        Assert.assertEquals(5, result)
+    }
 }
