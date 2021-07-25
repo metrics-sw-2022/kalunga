@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.R.color.colorAccent
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
+import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 import io.github.serpro69.kfaker.provider.Color
 
 /****
@@ -39,27 +40,17 @@ class CountriesSpinnerAdapter (private val data: List<ResponseCountries>) : Recy
     @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val data = data[position]
-        var flag = 0
         if (position % 2 == 0){
             holder.container.setBackgroundResource(R.drawable.background_item_1)
             holder.description.setTextColor(-0x1)
-        } else{
+        } else
             holder.container.setBackgroundResource(R.drawable.background_item_2)
-        }
         holder.description.text = data.codPais + " " + data.pais
+        holder.icon.setImageResource(UtilsCountry().getIdFlag(data.pais))
         holder.container.setOnClickListener {
             customActionsSpinner?.onItemSelected(position)
         }
-        when(data.pais){
-            "Colombia" -> flag = R.mipmap.colombia
-            "Venezuela" -> flag = R.mipmap.venezuela
-            "España" -> flag = R.mipmap.espana
-            "Italia" -> flag = R.mipmap.italia
-            "Estados Unidos" -> flag = R.mipmap.estados_unidos
-            "Chile" -> flag = R.mipmap.chile
-            "Perú" -> flag = R.mipmap.peru
-        }
-        holder.icon.setImageResource(flag)
+
     }
 
     class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

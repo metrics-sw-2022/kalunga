@@ -1,15 +1,10 @@
 package com.jhonnatan.kalunga.presentation.core.session.views
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
@@ -48,25 +43,16 @@ class ConfigurationActivity : AppCompatActivity() {
             dialog.show(this.supportFragmentManager, resources.getString(R.string.país))
         }
 
-/*
-        binding.spnObservation.setOnClickListener {
-            val dialog = ListObservationDialog(observations, object : ObservationsSpinnerAdapter.ObservationActionSpinner {
-                override fun onObservationSelected(position: Int) {
-                    viewModel.observacionSelectedPosition.value = position
-                    if (viewModel.requirePhoto(position)) {
-                        capturePhoto()
-                    }
-                }
-            })
-            dialog.show(requireActivity().supportFragmentManager, "Selecciona observación")
-        }
-
-        viewModel.observacionSelectedPosition.observe(viewLifecycleOwner, Observer {
+        viewModel.countrySelectedPosition.observe(this, {
             if (it != null) {
-                viewModel.validate()
-                binding.spnObservation.text = requireContext().getString(R.string.observation_description_spinner, observations[it].codObservacion, observations[it].descripcion)
+                binding.spinnerCountry.setCompoundDrawablesWithIntrinsicBounds(
+                    R.mipmap.colombia,
+                    0,
+                    R.drawable.ic_arrow_drop_down,
+                    0
+                )
             }
-        })*/
+        })
 
         viewModel.numberFormat.observe(this, {
             binding.editTextPhone.setText(it)

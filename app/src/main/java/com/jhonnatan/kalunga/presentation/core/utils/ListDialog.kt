@@ -34,6 +34,7 @@ class ListDialog (private val data: List<Any>, var customActionSpinner: Countrie
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_list, null, false)
         val alertDialog = AlertDialog.Builder(activity,R.style.CustomDialogTheme)
