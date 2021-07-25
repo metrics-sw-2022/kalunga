@@ -5,7 +5,6 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.data.cities.datasource.CitiesDataSourceLocal
-import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
 import com.jhonnatan.kalunga.data.room.KalungaDB
@@ -15,7 +14,6 @@ import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSON
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
-import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
 import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
@@ -25,6 +23,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries as ResponseCountries1
 
 /**
  * Project: kalunga
@@ -50,6 +49,19 @@ class ConfigurationUseCaseTest {
     private lateinit var citiesJSON: CitiesJSON
     private lateinit var typeDocumentJSON: TypeDocumentJSON
     private val faker = Faker()
+
+    private fun getListCountries(): List<ResponseCountries1> {
+        return listOf(
+            ResponseCountries1("1", "+57", "Colombia"),
+            ResponseCountries1("2", "+58", "Venezuela"),
+            ResponseCountries1("3", "+34", "España"),
+            ResponseCountries1("4", "+39", "Italia"),
+            ResponseCountries1("5", "+1", "Estados Unidos"),
+            ResponseCountries1("6", "+56", "Chile"),
+            ResponseCountries1("7", "+593", "Ecuador"),
+            ResponseCountries1("8", "+51", "Perú")
+        ).sortedBy { myObject -> myObject.codPais }
+    }
 
     @Before
     fun setup() {
@@ -83,45 +95,15 @@ class ConfigurationUseCaseTest {
     fun `Caso 01`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = configurationUseCase.getDataCountries()
-            Assert.assertEquals(
-                listOf(
-                    ResponseCountries("1", "+57", "Colombia"),
-                    ResponseCountries("2", "+58", "Venezuela"),
-                    ResponseCountries("3", "+34", "España"),
-                    ResponseCountries("4", "+39", "Italia"),
-                    ResponseCountries("5", "+1", "Estados Unidos"),
-                    ResponseCountries("6", "+56", "Chile"),
-                    ResponseCountries("7", "+593", "Ecuador"),
-                    ResponseCountries("8", "+51", "Perú")
-                ), result
-            )
+            Assert.assertEquals(getListCountries(), result)
         }
     }
 
     @Test
-    fun `Caso 02`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val result = configurationUseCase.getDataCountries()
-            Assert.assertEquals(
-                listOf(
-                    ResponseCountries("5", "+1", "Estados Unidos"),
-                    ResponseCountries("3", "+34", "España"),
-                    ResponseCountries("4", "+39", "Italia"),
-                    ResponseCountries("8", "+51", "Perú"),
-                    ResponseCountries("6", "+56", "Chile"),
-                    ResponseCountries("1", "+57", "Colombia"),
-                    ResponseCountries("2", "+58", "Venezuela"),
-                    ResponseCountries("7", "+593", "Ecuador")
-                ), result
-            )
-        }
-    }
-
-    @Test
-    fun `Caso 03`() {
-        val result = configurationUseCase.getCountryPosition("")
+    fun `Caso 02`() {
+        val result = configurationUseCase.getCountryPosition("", getListCountries())
         Assert.assertEquals(0, result)
-        val result1 = configurationUseCase.getCountryPosition(faker.name.name())
+        val result1 = configurationUseCase.getCountryPosition(faker.name.name(), getListCountries())
         Assert.assertEquals(0, result1)
     }
 }

@@ -23,7 +23,18 @@ class ConfigurationUseCase (private val userRepository: UserRepository, private 
         return typeDocumentRepository.getDataTypeDocument()
     }
 
-    fun getCountryPosition(country: String): Int? {
+    fun getCountryPosition(country: String, countriesList: List<ResponseCountries>): Int? {
+        var aux = 0
+        if (country.isEmpty())
+            return 0
+        else
+            for (x in 0 until countriesList.size) {
+                if (countriesList[x].pais.equals(country)){
+                    aux =1
+                }
+            }
+        if (aux != 1)
+            return 0
         return null
     }
 
