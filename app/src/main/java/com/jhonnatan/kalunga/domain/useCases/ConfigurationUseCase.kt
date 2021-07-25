@@ -35,7 +35,7 @@ class ConfigurationUseCase(
         return typeDocumentRepository.getDataTypeDocument().sortedBy { myObject -> myObject.abbreviate }
     }
 
-    fun getTypeDocumentPosition(typeDocument: String, typeDocumentsList: List<ResponseDocumentType>): Int? {
+    fun getTypeDocumentPosition(typeDocument: String, typeDocumentsList: List<ResponseDocumentType>): Int {
         var aux =  0
         if (typeDocument.isEmpty())
             return 0
@@ -49,6 +49,6 @@ class ConfigurationUseCase(
         if (aux!=1){
             return 0
         }
-        return null
+        return 0
     }
 }
