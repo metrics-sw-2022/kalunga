@@ -30,7 +30,7 @@ class ConfigurationUseCase (private val userRepository: UserRepository, private 
         else
             for (x in 0 until countriesList.size) {
                 if (countriesList[x].pais.equals(country)){
-                    aux =1
+                    return x
                 }
             }
         if (aux != 1)
