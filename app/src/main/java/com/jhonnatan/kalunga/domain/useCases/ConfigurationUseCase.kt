@@ -15,8 +15,8 @@ import com.jhonnatan.kalunga.data.user.repository.UserRepository
  **/
 class ConfigurationUseCase (private val userRepository: UserRepository, private val citiesRepository: CitiesRepository, private val typeDocumentRepository: TypeDocumentRepository) {
 
-    suspend fun getDataCountries(): List<ResponseCountries> ?{
-        return null
+    suspend fun getDataCountries(): List<ResponseCountries> {
+        return citiesRepository.getDataCountries()
     }
 
     suspend fun getDataTypeDocument(): List<ResponseDocumentType>{

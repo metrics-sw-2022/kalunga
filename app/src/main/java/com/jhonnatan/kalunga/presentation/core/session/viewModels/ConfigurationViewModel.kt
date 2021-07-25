@@ -54,8 +54,8 @@ class ConfigurationViewModel(
 
     private fun getCountriesSpinner() {
         viewModelScope.launch {
-            //countriesList = configurationUseCase.getDataCountries()
-            //countrySelectedPosition.value = 0
+            countriesList = configurationUseCase.getDataCountries()
+            countrySelectedPosition.value = 0
         }
     }
 
