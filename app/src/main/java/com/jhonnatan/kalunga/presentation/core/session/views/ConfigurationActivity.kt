@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
+import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 import com.jhonnatan.kalunga.presentation.core.session.adapters.CountriesSpinnerAdapter
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
@@ -46,7 +47,7 @@ class ConfigurationActivity : AppCompatActivity() {
         viewModel.countrySelectedPosition.observe(this, {
             if (it != null) {
                 binding.spinnerCountry.setCompoundDrawablesWithIntrinsicBounds(
-                    R.mipmap.colombia,
+                    UtilsCountry().getIdFlag(viewModel.countriesList[it].pais),
                     0,
                     R.drawable.ic_arrow_drop_down,
                     0
