@@ -23,7 +23,8 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries as ResponseCountries1
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
+import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 
 /**
  * Project: kalunga
@@ -50,17 +51,33 @@ class ConfigurationUseCaseTest {
     private lateinit var typeDocumentJSON: TypeDocumentJSON
     private val faker = Faker()
 
-    private fun getListCountries(): List<ResponseCountries1> {
+    private fun getListCountries(): List<ResponseCountries> {
         return listOf(
-            ResponseCountries1("1", "+57", "Colombia"),
-            ResponseCountries1("2", "+58", "Venezuela"),
-            ResponseCountries1("3", "+34", "España"),
-            ResponseCountries1("4", "+39", "Italia"),
-            ResponseCountries1("5", "+1", "Estados Unidos"),
-            ResponseCountries1("6", "+56", "Chile"),
-            ResponseCountries1("7", "+593", "Ecuador"),
-            ResponseCountries1("8", "+51", "Perú")
+            ResponseCountries("1", "+57", "Colombia"),
+            ResponseCountries("2", "+58", "Venezuela"),
+            ResponseCountries("3", "+34", "España"),
+            ResponseCountries("4", "+39", "Italia"),
+            ResponseCountries("5", "+1", "Estados Unidos"),
+            ResponseCountries("6", "+56", "Chile"),
+            ResponseCountries("7", "+593", "Ecuador"),
+            ResponseCountries("8", "+51", "Perú")
         ).sortedBy { myObject -> myObject.codPais }
+    }
+
+    private fun getListTypeDocument(): List<ResponseDocumentType> {
+        return listOf(
+            ResponseDocumentType("1","Cédula de Ciudadanía","CC",0),
+            ResponseDocumentType("2","Cédula de Extranjería","CE",1),
+            ResponseDocumentType("3","Cédula de Identidad","CI",2),
+            ResponseDocumentType("4","Documento Nacional de Identidad","DNI",3),
+            ResponseDocumentType("5","Documento Único de Identidad","DUI",4),
+            ResponseDocumentType("6","Identificación Oficial","ID",5),
+            ResponseDocumentType("7","Pasaporte","PA",6),
+            ResponseDocumentType("8","Permiso de Residencia","PR",7),
+            ResponseDocumentType("9","Permiso Especial de Permanencia","PEP",8),
+            ResponseDocumentType("10","Registro Único de Migrantes Venezolanos","RUMV",9),
+            ResponseDocumentType("11","Tarjeta de Residente Permanente","TRP",10)
+        ).sortedBy { myObject -> myObject.abbreviate }
     }
 
     @Before
@@ -111,5 +128,13 @@ class ConfigurationUseCaseTest {
     fun `Caso 03`() {
         val result = configurationUseCase.getCountryPosition("Colombia", getListCountries())
         Assert.assertEquals(5, result)
+    }
+
+    @Test
+    fun `Caso 04`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = configurationUseCase.getDataTypeDocument()
+            Assert.assertEquals(getListTypeDocument(), result)
+        }
     }
 }

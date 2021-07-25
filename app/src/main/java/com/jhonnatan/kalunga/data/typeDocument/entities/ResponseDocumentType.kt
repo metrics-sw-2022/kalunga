@@ -13,5 +13,5 @@ data class ResponseDocumentType(
     @SerializedName("id") val id: String,
     @SerializedName("descripcion") val description: String,
     @SerializedName("abreviatura") val abbreviate: String,
-    @SerializedName("valor") val valor: String
+    @SerializedName("valor") val valor: Int
 )

@@ -59,7 +59,6 @@ class ConfigurationViewModel(
     private fun getDocumentTypeSpinner() {
         viewModelScope.launch {
             typeDocumentsList = configurationUseCase.getDataTypeDocument()
-            println("typeDocumentsList $typeDocumentsList")
         }
     }
 

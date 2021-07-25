@@ -23,10 +23,6 @@ class ConfigurationUseCase(
         return citiesRepository.getDataCountries().sortedBy { myObject -> myObject.codPais }
     }
 
-    suspend fun getDataTypeDocument(): List<ResponseDocumentType> {
-        return typeDocumentRepository.getDataTypeDocument()
-    }
-
     fun getCountryPosition(country: String, countriesList: List<ResponseCountries>): Int {
         var aux = 0
         for (x in countriesList.indices)
@@ -35,4 +31,7 @@ class ConfigurationUseCase(
         return aux
     }
 
+    suspend fun getDataTypeDocument(): List<ResponseDocumentType> {
+        return emptyList()
+    }
 }

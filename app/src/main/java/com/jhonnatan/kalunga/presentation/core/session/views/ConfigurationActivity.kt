@@ -58,8 +58,6 @@ class ConfigurationActivity : AppCompatActivity() {
             }
         })
 
-
-
         viewModel.typeDocumentSelectedPosition.observe(this, {
             if (it != null) {
                 binding.buttonDocumentType.text =
