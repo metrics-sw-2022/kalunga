@@ -3,7 +3,13 @@ package com.jhonnatan.kalunga.presentation.core.session.views
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.*
+import android.text.method.LinkMovementMethod
 import android.text.method.ScrollingMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +17,7 @@ import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
+import com.jhonnatan.kalunga.presentation.core.legal.views.TermsAndPrivacyActivity
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSpinnerAdapter
@@ -69,6 +76,14 @@ class ConfigurationActivity : AppCompatActivity() {
             binding.editTextPhone.setText(it)
         })
 
+        binding.textViewTerms.makeLinks(
+            Pair(getString(R.string.condiciones_de_uso), View.OnClickListener {
+                goToTermsAndPrivacy(getString(R.string.terms_of_use))
+            }),
+            Pair(getString(R.string.declaracion_de_privacidad), View.OnClickListener {
+                goToTermsAndPrivacy(getString(R.string.privacy_statement))
+            }))
+
     }
 
     private fun createDialogSpinner(dataList: List<Any>, code: Int) {
@@ -88,6 +103,34 @@ class ConfigurationActivity : AppCompatActivity() {
         dialog.show(this.supportFragmentManager, tag)
     }
 
+    private fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
+        val spannableString = SpannableString(this.text)
+        var startIndexOfLink = -1
+        for (link in links) {
+            val clickableSpan = object : ClickableSpan() {
+                @SuppressLint("ResourceAsColor")
+                override fun updateDrawState(textPaint: TextPaint) {
+                    textPaint.color = R.color.purple
+                    textPaint.isUnderlineText = true
+                }
+
+                override fun onClick(view: View) {
+                    Selection.setSelection((view as TextView).text as Spannable, 0)
+                    view.invalidate()
+                    link.second.onClick(view)
+                }
+            }
+            startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
+            spannableString.setSpan(
+                clickableSpan, startIndexOfLink, startIndexOfLink + link.first.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        this.movementMethod =
+            LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+        this.setText(spannableString, TextView.BufferType.SPANNABLE)
+    }
+
     override fun onBackPressed() {
         val intent = Intent(
             this@ConfigurationActivity,
@@ -95,6 +138,14 @@ class ConfigurationActivity : AppCompatActivity() {
         )
         startActivity(intent)
         overridePendingTransition(R.anim.right_in, R.anim.right_out)
+        finish()
+    }
+
+    private fun goToTermsAndPrivacy(type: String) {
+        val intent = Intent(this@ConfigurationActivity, TermsAndPrivacyActivity::class.java)
+        intent.putExtra("TYPE", type)
+        startActivity(intent)
+        overridePendingTransition(R.anim.up_in, R.anim.up_out)
         finish()
     }
 }
