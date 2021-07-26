@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="250dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/input"
                 android:drawableEnd="@drawable/ic_arrow_drop_down"
@@ -146,27 +146,57 @@
                     android:textColor="#fff"
                     android:textSize="18sp" />
 
-                <!--suppress AndroidUnknownAttribute -->
-                <EditText
-                    android:id="@+id/editTextPhone"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:afterTextChanged="@{(editable)->vModel.formatPhone(editable)}"
-                    android:autofillHints="phone"
-                    android:background="@drawable/input"
-                    android:drawablePadding="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <!--suppress AndroidUnknownAttribute -->
+
+                    <EditText
+                        android:id="@+id/editTextPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:afterTextChanged="@{(editable)->vModel.formatPhone(editable.toString(), '0')}"
+                        android:autofillHints="phone"
+                        android:background="@drawable/input"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/gill_sans_mt_medium"
+                        android:gravity="center_vertical"
+                        android:hint="@string/numero_movil"
+                        android:inputType="number"
+                        android:maxLines="30"
+                        android:paddingStart="70dp"
+                        android:paddingLeft="70dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="RtlSymmetry,TextFields" />
+
+                    <TextView
+                    android:id="@+id/textViewCountryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/gill_sans_mt_medium"
-                    android:gravity="center_vertical"
-                    android:hint="@string/numero_movil"
-                    android:inputType="number"
-                    android:maxLines="30"
-                    android:paddingStart="20dp"
-                    android:paddingLeft="20dp"
+                    android:gravity="center_horizontal"
                     android:textColor="@color/white"
                     android:textSize="22sp"
-                    tools:ignore="RtlSymmetry,TextFields" />
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextPhone"
+                    app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+                    app:layout_constraintTop_toTopOf="@+id/editTextPhone" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
             <TextView
@@ -182,14 +212,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayoutPhone" />
 
-            <EditText
-                android:id="@+id/editTextCity"
+            <AutoCompleteTextView
+                android:id="@+id/textViewCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:autofillHints="confirm password"
+                android:autofillHints="city"
                 android:background="@drawable/input"
                 android:drawableStart="@drawable/ic_location_city_"
                 android:drawableLeft="@drawable/ic_location_city_"
@@ -197,7 +227,6 @@
                 android:fontFamily="@font/gill_sans_mt_medium"
                 android:gravity="start"
                 android:hint="@string/ciudad"
-                android:inputType="textAutoComplete"
                 android:maxLines="30"
                 android:paddingLeft="15dp"
                 android:paddingTop="10dp"
@@ -207,7 +236,7 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutPhone" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
             <TextView
                 android:id="@+id/textViewCityError"
@@ -220,7 +249,7 @@
                 android:textColor="@color/text_red"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
 
             <TextView
                 android:id="@+id/textViewTerms"
@@ -238,7 +267,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCity" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
 
             <Button
                 android:id="@+id/buttonRegister"

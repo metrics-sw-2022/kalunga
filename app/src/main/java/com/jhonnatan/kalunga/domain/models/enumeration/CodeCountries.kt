@@ -9,5 +9,12 @@ package com.jhonnatan.kalunga.domain.models.enumeration
  ****/
 
 enum class CodeCountries (val value: String) {
-    COLOMBIA("Colombia")
+    COLOMBIA("Colombia"),
+    VENEZUELA("Venezuela"),
+    ITALIA("Italia"),
+    ESPANA("España"),
+    ESTADOS_UNIDOS("Estados Unidos"),
+    CHILE("Chile"),
+    ECUADOR("Ecuador"),
+    PERU("Perú")
 }

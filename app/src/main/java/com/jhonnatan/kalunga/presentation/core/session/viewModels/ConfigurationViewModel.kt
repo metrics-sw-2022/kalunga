@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
@@ -13,7 +14,9 @@ import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeCountries
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeField
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeDocument
+import com.jhonnatan.kalunga.domain.models.enumeration.EnumerationWhiteSpaces
 import com.jhonnatan.kalunga.domain.useCases.ConfigurationUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -42,6 +45,7 @@ class ConfigurationViewModel(
     val countrySelectedPosition = MutableLiveData<Int>()
     val typeDocumentSelectedPosition = MutableLiveData<Int>()
     val numberFormat = MutableLiveData<String>()
+    val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
 
@@ -64,8 +68,51 @@ class ConfigurationViewModel(
         }
     }
 
-    fun formatPhone(text: Editable) {
+    fun getDataCitiesByCodeCountry() {
+        viewModelScope.launch {
+            citiesList.value = ArrayList(configurationUseCase.getDataCitiesByCodeCountry(countriesList[countrySelectedPosition.value!!].pais))
+        }
+    }
 
+    fun formatPhone(text: String, type: Char) {
+        var whiteSpacesList: List<Int> = (listOf())
+        if (text.isNotEmpty()) {
+            if (!text.last().isWhitespace()) {
+                when (countriesList[countrySelectedPosition.value!!].pais) {
+                    CodeCountries.COLOMBIA.value -> whiteSpacesList =
+                        EnumerationWhiteSpaces.COLOMBIA.code
+                    CodeCountries.VENEZUELA.value -> whiteSpacesList =
+                        EnumerationWhiteSpaces.VENEZUELA.code
+                    CodeCountries.ITALIA.value -> whiteSpacesList =
+                        EnumerationWhiteSpaces.ITALIA.code
+                    CodeCountries.ESPANA.value -> whiteSpacesList =
+                        EnumerationWhiteSpaces.ESPANA.code
+                    CodeCountries.ESTADOS_UNIDOS.value -> whiteSpacesList =
+                        EnumerationWhiteSpaces.ESTADOS_UNIDOS.code
+                    CodeCountries.CHILE.value -> whiteSpacesList = EnumerationWhiteSpaces.CHILE.code
+                    CodeCountries.ECUADOR.value -> whiteSpacesList =
+                        EnumerationWhiteSpaces.ECUADOR.code
+                    CodeCountries.PERU.value -> whiteSpacesList = EnumerationWhiteSpaces.PERU.code
+                }
+                if (whiteSpacesList.isNotEmpty()) {
+                    var temporalNumber: String = text.replace(" ","")
+                    for (id in whiteSpacesList) {
+                        if (type=='0') {
+                            if (id == text.length) {
+                                numberFormat.value = "${text} "
+                            }
+                        } else {
+                            for (letter in text.indices) {
+                                if (letter == id){
+                                    temporalNumber = temporalNumber.substring(0,letter)+" "+temporalNumber.substring(letter,temporalNumber.length)
+                                }
+                            }
+                            numberFormat.value=temporalNumber
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun encryptInfo(password_user: String, document_number: String, phone_number: String) {

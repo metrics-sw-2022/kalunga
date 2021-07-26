@@ -8,6 +8,7 @@ import android.text.method.LinkMovementMethod
 import android.text.method.ScrollingMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,9 @@ class ConfigurationActivity : AppCompatActivity() {
                     0
                 )
             }
+            viewModel.getDataCitiesByCodeCountry()
+            binding.textViewCountryCode.text = viewModel.countriesList[it].codPais
+            viewModel.formatPhone(binding.editTextPhone.text.toString() , '1')
         })
 
         viewModel.typeDocumentSelectedPosition.observe(this, {
@@ -74,7 +78,14 @@ class ConfigurationActivity : AppCompatActivity() {
 
         viewModel.numberFormat.observe(this, {
             binding.editTextPhone.setText(it)
+            binding.editTextPhone.setSelection(binding.editTextPhone.length())
         })
+
+        viewModel.citiesList.observe(this, {
+            citiesList -> binding.textViewCity.setAdapter(ArrayAdapter(this@ConfigurationActivity, R.layout.support_simple_spinner_dropdown_item,citiesList))
+            println("citiesListActivity" +citiesList)
+        })
+
 
         binding.textViewTerms.makeLinks(
             Pair(getString(R.string.condiciones_de_uso), View.OnClickListener {
@@ -83,6 +94,8 @@ class ConfigurationActivity : AppCompatActivity() {
             Pair(getString(R.string.declaracion_de_privacidad), View.OnClickListener {
                 goToTermsAndPrivacy(getString(R.string.privacy_statement))
             }))
+
+
 
     }
 

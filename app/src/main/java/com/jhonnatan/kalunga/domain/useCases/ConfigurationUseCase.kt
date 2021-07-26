@@ -1,5 +1,6 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
@@ -41,5 +42,9 @@ class ConfigurationUseCase(
             if (typeDocumentsList[x].abbreviate == typeDocument)
                 aux = x
         return aux
+    }
+
+    suspend fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
+        return citiesRepository.getDataCitiesByCodeCountry(country).sortedBy { myObject -> myObject.pais }
     }
 }
