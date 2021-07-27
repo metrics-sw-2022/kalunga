@@ -12,6 +12,10 @@
         <variable
             name="utilsCountry"
             type="com.jhonnatan.kalunga.domain.models.utils.UtilsCountry" />
+
+        <variable
+            name="codeField"
+            type="com.jhonnatan.kalunga.domain.models.enumeration.CodeField" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,31 +84,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
+
             <EditText
                 android:id="@+id/editTextDocument"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:autofillHints="name"
+                android:autofillHints="phone"
                 android:background="@drawable/input"
-                android:drawableStart="@drawable/ic_document"
-                android:drawableLeft="@drawable/ic_document"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/gill_sans_mt_medium"
                 android:gravity="center_vertical"
-                android:hint="@string/numero_de_documento"
-                android:inputType="text"
+                android:hint="@string/numero_movil"
+                android:inputType="number"
                 android:maxLines="30"
-                android:paddingStart="15dp"
-                android:paddingLeft="15dp"
+                android:paddingStart="70dp"
+                android:paddingLeft="70dp"
                 android:textColor="@color/white"
                 android:textSize="22sp"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.IDENTIFICATION_FIELD.code)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonDocumentType"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry,TextFields" />
 
             <TextView
                 android:id="@+id/textViewDocumentError"
@@ -163,7 +164,6 @@
                         android:id="@+id/editTextPhone"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
-                        android:afterTextChanged="@{(editable)->vModel.formatPhone(editable.toString())}"
                         android:autofillHints="phone"
                         android:background="@drawable/input"
                         android:drawablePadding="10dp"
@@ -176,6 +176,7 @@
                         android:paddingLeft="70dp"
                         android:textColor="@color/white"
                         android:textSize="22sp"
+                        android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PHONE_FIELD.code)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -234,9 +235,11 @@
                 android:paddingBottom="10dp"
                 android:textColor="@color/white"
                 android:textSize="22sp"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.CITY_FIELD.code)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+                tools:ignore="RtlSymmetry,TextFields"/>
 
             <TextView
                 android:id="@+id/textViewCityError"

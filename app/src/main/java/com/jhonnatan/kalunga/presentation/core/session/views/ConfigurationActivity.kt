@@ -75,8 +75,10 @@ class ConfigurationActivity : AppCompatActivity() {
         })
 
         viewModel.numberPhone.observe(this, {
-            binding.editTextPhone.setText(it)
-            binding.editTextPhone.setSelection(binding.editTextPhone.length())
+            if (it.isNotEmpty()) {
+                binding.editTextPhone.setText(it)
+                binding.editTextPhone.setSelection(binding.editTextPhone.length())
+            }
         })
 
         viewModel.citiesList.observe(this, {
