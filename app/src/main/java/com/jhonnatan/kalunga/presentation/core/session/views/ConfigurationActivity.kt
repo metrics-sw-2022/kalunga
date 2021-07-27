@@ -95,6 +95,10 @@ class ConfigurationActivity : AppCompatActivity() {
                 goToTermsAndPrivacy(getString(R.string.privacy_statement))
             }))
 
+        viewModel.emailValue.value = intent.getStringExtra("ACCOUNT")
+        viewModel.nameValue.value = intent.getStringExtra("FULL_NAME")
+        viewModel.passwordValue.value = intent.getStringExtra("PASSWORD_USER")
+        viewModel.setInitialValues()
 
 
     }

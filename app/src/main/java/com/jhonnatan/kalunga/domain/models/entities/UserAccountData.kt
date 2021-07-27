@@ -13,5 +13,8 @@ data class UserAccountData(
     var name: String,
     var email: String,
     var password: String,
-    var passwordConfirm: String
+    var passwordConfirm: String,
+    var identification: String,
+    var phone: String,
+    var city: String
 )

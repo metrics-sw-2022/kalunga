@@ -1,6 +1,10 @@
 package com.jhonnatan.kalunga.presentation.core.session.viewModels
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.getIntent
+import android.content.Intent.getIntentOld
+import android.os.Bundle
 import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,10 +17,8 @@ import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeCountries
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeField
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeDocument
-import com.jhonnatan.kalunga.domain.models.enumeration.EnumerationWhiteSpaces
+import com.jhonnatan.kalunga.domain.models.entities.UserAccountData
+import com.jhonnatan.kalunga.domain.models.enumeration.*
 import com.jhonnatan.kalunga.domain.useCases.ConfigurationUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -48,12 +50,27 @@ class ConfigurationViewModel(
     val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
+    private var validIdentification = MutableLiveData<Boolean>()
+    private var validPhone = MutableLiveData<Boolean>()
+    private var validCity = MutableLiveData<Boolean>()
+    var userAccount = MutableLiveData<UserAccountData>()
+    var emailValue = MutableLiveData<String>()
+    var nameValue = MutableLiveData<String>()
+    var passwordValue = MutableLiveData<String>()
+    val errorIdentification = MutableLiveData<String>()
+    val errorCity = MutableLiveData<String>()
+    val errorPhone = MutableLiveData<String>()
 
     init {
         getCountriesSpinner()
         countrySelectedPosition.value = configurationUseCase.getCountryPosition(CodeCountries.COLOMBIA.value,countriesList)
         getDocumentTypeSpinner()
         typeDocumentSelectedPosition.value = configurationUseCase.getTypeDocumentPosition(CodeTypeDocument.CEDULA_DE_CIUDADANIA.value,typeDocumentsList)
+
+    }
+
+    fun setInitialValues(){
+        userAccount.value = UserAccountData(emailValue.value!!,nameValue.value!!,emailValue.value!!,passwordValue.value!!,passwordValue.value!!,"","","")
     }
 
     private fun getCountriesSpinner() {
@@ -112,6 +129,41 @@ class ConfigurationViewModel(
                     }
                 }
             }
+        }
+    }
+
+    fun areFieldsEmpty(text: Editable?, field: Int) {
+
+        if (configurationUseCase.areFieldsEmpty(text.toString())) {
+            setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
+            when (field) {
+                CodeField.IDENTIFICATION_FIELD.code -> validIdentification.value = false
+                CodeField.PHONE_FIELD.code -> validPhone.value = false
+                CodeField.CITY_FIELD.code -> validCity.value = false
+            }
+            //changeEnableButton()
+        } else {
+            setErrorText(field, ResponseErrorField.DEFAULT.value)
+            when (field) {
+                CodeField.IDENTIFICATION_FIELD.code -> {
+                    userAccount.value!!.identification = text.toString()
+                }
+                CodeField.PHONE_FIELD.code -> {
+                    userAccount.value!!.phone = text.toString()
+                }
+                CodeField.CITY_FIELD.code -> {
+                    userAccount.value!!.city = text.toString()
+                    //isValidCity(text.toString())
+                }
+            }
+        }
+    }
+
+    private fun setErrorText(field: Int, value: String) {
+        when (field) {
+            CodeField.IDENTIFICATION_FIELD.code -> errorIdentification.value = value
+            CodeField.PHONE_FIELD.code -> errorPhone.value = value
+            CodeField.CITY_FIELD.code -> errorCity.value = value
         }
     }
 

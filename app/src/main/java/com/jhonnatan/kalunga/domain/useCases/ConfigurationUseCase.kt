@@ -47,4 +47,8 @@ class ConfigurationUseCase(
     suspend fun getDataCitiesByCodeCountry(country: String): List<ResponseCities> {
         return citiesRepository.getDataCitiesByCodeCountry(country).sortedBy { myObject -> myObject.pais }
     }
+
+    fun areFieldsEmpty(text: String): Boolean {
+        return text.isEmpty()
+    }
 }
