@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.data.cities.datasource.CitiesDataSourceLocal
+import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
 import com.jhonnatan.kalunga.data.room.KalungaDB
@@ -26,6 +27,7 @@ import org.junit.runner.RunWith
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
+import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 
 /**
  * Project: kalunga
@@ -45,6 +47,7 @@ class ConfigurationUseCaseTest {
     private lateinit var citiesRepository: CitiesRepository
     private lateinit var typeDocumentRepository: TypeDocumentRepository
     private lateinit var configurationUseCase: ConfigurationUseCase
+    private lateinit var configurationViewModel: ConfigurationViewModel
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
@@ -67,17 +70,17 @@ class ConfigurationUseCaseTest {
 
     private fun getListTypeDocument(): List<ResponseDocumentType> {
         return listOf(
-            ResponseDocumentType("1","Cédula de Ciudadanía","CC",0),
-            ResponseDocumentType("2","Cédula de Extranjería","CE",1),
-            ResponseDocumentType("3","Cédula de Identidad","CI",2),
-            ResponseDocumentType("4","Documento Nacional de Identidad","DNI",3),
-            ResponseDocumentType("5","Documento Único de Identidad","DUI",4),
-            ResponseDocumentType("6","Identificación Oficial","ID",5),
-            ResponseDocumentType("7","Pasaporte","PA",6),
-            ResponseDocumentType("8","Permiso de Residencia","PR",7),
-            ResponseDocumentType("9","Permiso Especial de Permanencia","PEP",8),
-            ResponseDocumentType("10","Registro Único de Migrantes Venezolanos","RUMV",9),
-            ResponseDocumentType("11","Tarjeta de Residente Permanente","TRP",10)
+            ResponseDocumentType("1", "Cédula de Ciudadanía", "CC", 0),
+            ResponseDocumentType("2", "Cédula de Extranjería", "CE", 1),
+            ResponseDocumentType("3", "Cédula de Identidad", "CI", 2),
+            ResponseDocumentType("4", "Documento Nacional de Identidad", "DNI", 3),
+            ResponseDocumentType("5", "Documento Único de Identidad", "DUI", 4),
+            ResponseDocumentType("6", "Identificación Oficial", "ID", 5),
+            ResponseDocumentType("7", "Pasaporte", "PA", 6),
+            ResponseDocumentType("8", "Permiso de Residencia", "PR", 7),
+            ResponseDocumentType("9", "Permiso Especial de Permanencia", "PEP", 8),
+            ResponseDocumentType("10", "Registro Único de Migrantes Venezolanos", "RUMV", 9),
+            ResponseDocumentType("11", "Tarjeta de Residente Permanente", "TRP", 10)
         ).sortedBy { myObject -> myObject.abbreviate }
     }
 
@@ -143,7 +146,8 @@ class ConfigurationUseCaseTest {
     fun `Caso 05`() {
         val result = configurationUseCase.getTypeDocumentPosition("", getListTypeDocument())
         Assert.assertEquals(0, result)
-        val result1 = configurationUseCase.getTypeDocumentPosition(faker.name.name(), getListTypeDocument())
+        val result1 =
+            configurationUseCase.getTypeDocumentPosition(faker.name.name(), getListTypeDocument())
         Assert.assertEquals(0, result1)
         val result2 = configurationUseCase.getTypeDocumentPosition("CC", getListTypeDocument())
         Assert.assertEquals(0, result2)
@@ -152,14 +156,18 @@ class ConfigurationUseCaseTest {
 
     @Test
     fun `Caso 06`() {
-        val result = configurationUseCase.getFormatPhone("313", UtilsCountry().getWhiteSpaceList("Colombia"))
+        val result =
+            configurationUseCase.getFormatPhone("313", UtilsCountry().getWhiteSpaceList("Colombia"))
         Assert.assertEquals("313", result)
     }
 
 
     @Test
     fun `Caso 07`() {
-        val result = configurationUseCase.getFormatPhone("3133", UtilsCountry().getWhiteSpaceList("Colombia"))
+        val result = configurationUseCase.getFormatPhone(
+            "3133",
+            UtilsCountry().getWhiteSpaceList("Colombia")
+        )
         Assert.assertEquals("313 3", result)
     }
 
@@ -174,6 +182,13 @@ class ConfigurationUseCaseTest {
     @Test
     fun `Caso 09`() {
         val result = configurationUseCase.areFieldsEmpty(faker.animal.name())
+        Assert.assertEquals(false, result)
+    }
+
+
+    @Test
+    fun `Caso 10`() {
+        val result = configurationUseCase.isCityInList(faker.animal.name(), ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"),"Colombia"))))
         Assert.assertEquals(false, result)
     }
 }

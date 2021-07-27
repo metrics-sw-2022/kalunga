@@ -60,4 +60,15 @@ class ConfigurationUseCase(
         }
         return text
     }
+
+    fun isCityInList(text: String, citiesList: ArrayList<ResponseCities>): Boolean?{
+        var cityFounded = false
+        for(id in citiesList[0].data.indices){
+            if (citiesList[0].data[id] == text){
+                cityFounded = true
+                break
+            }
+        }
+        return null
+    }
 }

@@ -79,6 +79,7 @@ class ConfigurationViewModel(
     fun getDataCitiesByCodeCountry() {
         viewModelScope.launch {
             citiesList.value = ArrayList(configurationUseCase.getDataCitiesByCodeCountry(countriesList[countrySelectedPosition.value!!].pais))
+            println("CITIESLIST" +citiesList.value)
         }
     }
 
@@ -119,7 +120,7 @@ class ConfigurationViewModel(
                 }
                 CodeField.CITY_FIELD.code -> {
                     userAccount.value!!.city = text.toString()
-                    //isValidCity(text.toString())
+                    isValidCity(text.toString())
                 }
             }
         }
@@ -131,6 +132,12 @@ class ConfigurationViewModel(
             CodeField.PHONE_FIELD.code -> errorPhone.value = value
             CodeField.CITY_FIELD.code -> errorCity.value = value
         }
+    }
+
+    private fun isValidCity(city: String){
+        /*if (configurationUseCase.isCityInList(city,citiesList.value!!)){
+
+        }*/
     }
 }
 
