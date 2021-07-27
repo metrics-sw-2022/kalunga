@@ -83,6 +83,17 @@ class ConfigurationActivity : AppCompatActivity() {
             citiesList -> binding.textViewCity.setAdapter(ArrayAdapter(this@ConfigurationActivity, R.layout.support_simple_spinner_dropdown_item,citiesList[0].data))
         })
 
+        viewModel.errorIdentification.observe(this, {
+            binding.textViewDocumentError.text = it
+        })
+
+        viewModel.errorCity.observe(this, {
+            binding.textViewCityError.text = it
+        })
+
+        viewModel.errorPhone.observe(this, {
+            binding.textViewPhoneError.text = it
+        })
 
         binding.textViewTerms.makeLinks(
             Pair(getString(R.string.condiciones_de_uso), View.OnClickListener {

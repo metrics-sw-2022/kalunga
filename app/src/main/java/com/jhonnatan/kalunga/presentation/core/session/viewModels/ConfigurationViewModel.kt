@@ -99,7 +99,7 @@ class ConfigurationViewModel(
 
     fun areFieldsEmpty(text: Editable?, field: Int) {
 
-        if (configurationUseCase.areFieldsEmpty(text.toString())) {
+        /*if (configurationUseCase.areFieldsEmpty(text.toString())) {
             setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
             when (field) {
                 CodeField.IDENTIFICATION_FIELD.code -> validIdentification.value = false
@@ -121,7 +121,7 @@ class ConfigurationViewModel(
                     //isValidCity(text.toString())
                 }
             }
-        }
+        }*/
     }
 
     private fun setErrorText(field: Int, value: String) {

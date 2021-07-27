@@ -162,4 +162,11 @@ class ConfigurationUseCaseTest {
         val result = configurationUseCase.getFormatPhone("3133", UtilsCountry().getWhiteSpaceList("Colombia"))
         Assert.assertEquals("313 3", result)
     }
+
+
+    @Test
+    fun `Caso 08`() {
+        val result = configurationUseCase.areFieldsEmpty("")
+        Assert.assertEquals(true, result)
+    }
 }

@@ -48,8 +48,8 @@ class ConfigurationUseCase(
         return citiesRepository.getDataCitiesByCodeCountry(country).sortedBy { myObject -> myObject.pais }
     }
 
-    fun areFieldsEmpty(text: String): Boolean {
-        return text.isEmpty()
+    fun areFieldsEmpty(text: String): Boolean? {
+        return null
     }
 
     fun getFormatPhone(text: String, whiteSpacesList: List<Int>) : String{
