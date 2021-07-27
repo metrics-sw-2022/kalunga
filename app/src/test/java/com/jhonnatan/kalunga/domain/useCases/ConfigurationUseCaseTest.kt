@@ -191,4 +191,10 @@ class ConfigurationUseCaseTest {
         val result = configurationUseCase.isCityInList(faker.animal.name(), ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"),"Colombia"))))
         Assert.assertEquals(false, result)
     }
+
+    @Test
+    fun `Caso 11`() {
+        val result = configurationUseCase.isCityInList("Bogotá", ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"),"Colombia"))))
+        Assert.assertEquals(true, result)
+    }
 }
