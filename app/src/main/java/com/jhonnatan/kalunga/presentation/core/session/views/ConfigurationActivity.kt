@@ -82,8 +82,7 @@ class ConfigurationActivity : AppCompatActivity() {
         })
 
         viewModel.citiesList.observe(this, {
-            citiesList -> binding.textViewCity.setAdapter(ArrayAdapter(this@ConfigurationActivity, R.layout.support_simple_spinner_dropdown_item,citiesList))
-            println("citiesListActivity" +citiesList)
+            citiesList -> binding.textViewCity.setAdapter(ArrayAdapter(this@ConfigurationActivity, R.layout.support_simple_spinner_dropdown_item,citiesList[0].data))
         })
 
 

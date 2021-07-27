@@ -166,26 +166,6 @@ class ConfigurationViewModel(
             CodeField.CITY_FIELD.code -> errorCity.value = value
         }
     }
-
-    fun encryptInfo(password_user: String, document_number: String, phone_number: String) {
-        val plaintext: ByteArray =
-            byteArrayOf(password_user.toByte(), document_number.toByte(), phone_number.toByte())
-        val keygen = KeyGenerator.getInstance("AES")
-        keygen.init(16)
-        val key: SecretKey = keygen.generateKey()
-        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
-        cipher.init(
-            Cipher.ENCRYPT_MODE, key,
-            OAEPParameterSpec(
-                "SHA-256",
-                "MGF1",
-                MGF1ParameterSpec.SHA256,
-                PSource.PSpecified.DEFAULT
-            )
-        )
-        val ciphertext: ByteArray = cipher.doFinal(plaintext)
-        val iv: ByteArray = cipher.iv
-    }
 }
 
 @DelicateCoroutinesApi
