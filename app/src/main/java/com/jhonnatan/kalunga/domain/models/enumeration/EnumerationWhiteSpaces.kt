@@ -8,12 +8,12 @@ package com.jhonnatan.kalunga.domain.models.enumeration
  * All rights reserved 2021.
  **/
 enum class EnumerationWhiteSpaces(val code: List<Int>) {
-    COLOMBIA(mutableListOf(3)),
-    VENEZUELA(mutableListOf(3)),
-    ITALIA(mutableListOf(3,7)),
-    ESPANA(mutableListOf(3,6,9)),
-    ESTADOS_UNIDOS(mutableListOf(3,7)),
-    CHILE(mutableListOf(3,7)),
-    ECUADOR(mutableListOf(1)),
-    PERU(mutableListOf(3,7))
+    COLOMBIA(mutableListOf(4)),
+    VENEZUELA(mutableListOf(4)),
+    ITALIA(mutableListOf(4,8)),
+    ESPANA(mutableListOf(4,7,10)),
+    ESTADOS_UNIDOS(mutableListOf(4,8)),
+    CHILE(mutableListOf(4,8)),
+    ECUADOR(mutableListOf(2)),
+    PERU(mutableListOf(4,8))
 }

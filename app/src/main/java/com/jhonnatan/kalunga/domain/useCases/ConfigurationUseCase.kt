@@ -51,4 +51,13 @@ class ConfigurationUseCase(
     fun areFieldsEmpty(text: String): Boolean {
         return text.isEmpty()
     }
+
+    fun getFormatPhone(text: String, whiteSpacesList: List<Int>) : String{
+        for (id in whiteSpacesList) {
+            if (id == text.length) {
+                return "${text.substring(0,text.length-1)} ${text.last()}"
+            }
+        }
+        return text
+    }
 }

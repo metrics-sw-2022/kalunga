@@ -1,6 +1,8 @@
 package com.jhonnatan.kalunga.domain.models.utils
 
 import com.jhonnatan.kalunga.R
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeCountries
+import com.jhonnatan.kalunga.domain.models.enumeration.EnumerationWhiteSpaces
 
 /****
  * Project: kalunga
@@ -22,6 +24,20 @@ class UtilsCountry {
             "Perú" -> return R.mipmap.peru
             "Ecuador" -> return R.mipmap.ecuador
             else -> return 0
+        }
+    }
+
+    fun getWhiteSpaceList(country: String): List<Int> {
+        return when (country) {
+            CodeCountries.COLOMBIA.value -> EnumerationWhiteSpaces.COLOMBIA.code
+            CodeCountries.VENEZUELA.value -> EnumerationWhiteSpaces.VENEZUELA.code
+            CodeCountries.ITALIA.value -> EnumerationWhiteSpaces.ITALIA.code
+            CodeCountries.ESPANA.value -> EnumerationWhiteSpaces.ESPANA.code
+            CodeCountries.ESTADOS_UNIDOS.value -> EnumerationWhiteSpaces.ESTADOS_UNIDOS.code
+            CodeCountries.CHILE.value -> EnumerationWhiteSpaces.CHILE.code
+            CodeCountries.ECUADOR.value -> EnumerationWhiteSpaces.ECUADOR.code
+            CodeCountries.PERU.value -> EnumerationWhiteSpaces.PERU.code
+            else -> (listOf())
         }
     }
 }

@@ -1,10 +1,6 @@
 package com.jhonnatan.kalunga.presentation.core.session.viewModels
 
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.getIntent
-import android.content.Intent.getIntentOld
-import android.os.Bundle
 import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,15 +15,10 @@ import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.entities.UserAccountData
 import com.jhonnatan.kalunga.domain.models.enumeration.*
+import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 import com.jhonnatan.kalunga.domain.useCases.ConfigurationUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
-import java.security.spec.MGF1ParameterSpec
-import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
-import javax.crypto.spec.OAEPParameterSpec
-import javax.crypto.spec.PSource
 
 /**
  * Project: kalunga
@@ -46,7 +37,7 @@ class ConfigurationViewModel(
     lateinit var typeDocumentsList: List<ResponseDocumentType>
     val countrySelectedPosition = MutableLiveData<Int>()
     val typeDocumentSelectedPosition = MutableLiveData<Int>()
-    val numberFormat = MutableLiveData<String>()
+    val numberPhone = MutableLiveData<String>()
     val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
@@ -91,41 +82,15 @@ class ConfigurationViewModel(
         }
     }
 
-    fun formatPhone(text: String, type: Char) {
-        var whiteSpacesList: List<Int> = (listOf())
+    fun formatPhone(text: String) {
+        val whiteSpacesList: List<Int>
         if (text.isNotEmpty()) {
             if (!text.last().isWhitespace()) {
-                when (countriesList[countrySelectedPosition.value!!].pais) {
-                    CodeCountries.COLOMBIA.value -> whiteSpacesList =
-                        EnumerationWhiteSpaces.COLOMBIA.code
-                    CodeCountries.VENEZUELA.value -> whiteSpacesList =
-                        EnumerationWhiteSpaces.VENEZUELA.code
-                    CodeCountries.ITALIA.value -> whiteSpacesList =
-                        EnumerationWhiteSpaces.ITALIA.code
-                    CodeCountries.ESPANA.value -> whiteSpacesList =
-                        EnumerationWhiteSpaces.ESPANA.code
-                    CodeCountries.ESTADOS_UNIDOS.value -> whiteSpacesList =
-                        EnumerationWhiteSpaces.ESTADOS_UNIDOS.code
-                    CodeCountries.CHILE.value -> whiteSpacesList = EnumerationWhiteSpaces.CHILE.code
-                    CodeCountries.ECUADOR.value -> whiteSpacesList =
-                        EnumerationWhiteSpaces.ECUADOR.code
-                    CodeCountries.PERU.value -> whiteSpacesList = EnumerationWhiteSpaces.PERU.code
-                }
+                whiteSpacesList = UtilsCountry().getWhiteSpaceList(countriesList[countrySelectedPosition.value!!].pais)
                 if (whiteSpacesList.isNotEmpty()) {
-                    var temporalNumber: String = text.replace(" ","")
-                    for (id in whiteSpacesList) {
-                        if (type=='0') {
-                            if (id == text.length) {
-                                numberFormat.value = "${text} "
-                            }
-                        } else {
-                            for (letter in text.indices) {
-                                if (letter == id){
-                                    temporalNumber = temporalNumber.substring(0,letter)+" "+temporalNumber.substring(letter,temporalNumber.length)
-                                }
-                            }
-                            numberFormat.value=temporalNumber
-                        }
+                    val formatPhone = configurationUseCase.getFormatPhone(text,whiteSpacesList)
+                    if (formatPhone!==text){
+                        numberPhone.value = formatPhone
                     }
                 }
             }

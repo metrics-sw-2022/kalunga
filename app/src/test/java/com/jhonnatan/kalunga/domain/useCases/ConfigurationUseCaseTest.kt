@@ -25,6 +25,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
+import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 
 /**
  * Project: kalunga
@@ -146,5 +147,12 @@ class ConfigurationUseCaseTest {
         Assert.assertEquals(0, result1)
         val result2 = configurationUseCase.getTypeDocumentPosition("CC", getListTypeDocument())
         Assert.assertEquals(0, result2)
+    }
+
+
+    @Test
+    fun `Caso 06`() {
+        val result = configurationUseCase.getFormatPhone("313", UtilsCountry().getWhiteSpaceList("Colombia"))
+        Assert.assertEquals("313", result)
     }
 }

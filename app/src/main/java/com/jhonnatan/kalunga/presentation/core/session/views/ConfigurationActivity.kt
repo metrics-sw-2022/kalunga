@@ -5,12 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.*
 import android.text.method.LinkMovementMethod
-import android.text.method.ScrollingMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -66,7 +64,7 @@ class ConfigurationActivity : AppCompatActivity() {
             }
             viewModel.getDataCitiesByCodeCountry()
             binding.textViewCountryCode.text = viewModel.countriesList[it].codPais
-            viewModel.formatPhone(binding.editTextPhone.text.toString() , '1')
+            viewModel.numberPhone.value = ""
         })
 
         viewModel.typeDocumentSelectedPosition.observe(this, {
@@ -76,7 +74,7 @@ class ConfigurationActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.numberFormat.observe(this, {
+        viewModel.numberPhone.observe(this, {
             binding.editTextPhone.setText(it)
             binding.editTextPhone.setSelection(binding.editTextPhone.length())
         })
