@@ -169,4 +169,11 @@ class ConfigurationUseCaseTest {
         val result = configurationUseCase.areFieldsEmpty("")
         Assert.assertEquals(true, result)
     }
+
+
+    @Test
+    fun `Caso 09`() {
+        val result = configurationUseCase.areFieldsEmpty(faker.animal.name())
+        Assert.assertEquals(false, result)
+    }
 }
