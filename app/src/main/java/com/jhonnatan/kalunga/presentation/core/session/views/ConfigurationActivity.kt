@@ -124,7 +124,7 @@ class ConfigurationActivity : AppCompatActivity() {
             val clickableSpan = object : ClickableSpan() {
                 @SuppressLint("ResourceAsColor")
                 override fun updateDrawState(textPaint: TextPaint) {
-                    textPaint.color = R.color.purple
+                    textPaint.color = resources.getColor(R.color.purple)
                     textPaint.isUnderlineText = true
                 }
 

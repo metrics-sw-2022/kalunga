@@ -52,12 +52,12 @@ class ConfigurationUseCase(
         return text.isEmpty()
     }
 
-    fun getFormatPhone(text: String, whiteSpacesList: List<Int>) : String{
+    fun getFormatPhone(text: String, whiteSpacesList: List<Int>) : String?{
         for (id in whiteSpacesList) {
             if (id == text.length) {
-                return "${text.substring(0,text.length-1)} ${text.last()}"
+                return null
             }
         }
-        return text
+        return null
     }
 }
