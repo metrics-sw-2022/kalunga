@@ -61,7 +61,7 @@ class ConfigurationUseCase(
         return text
     }
 
-    fun isCityInList(text: String, citiesList: ArrayList<ResponseCities>): Boolean?{
+    fun isCityInList(text: String, citiesList: ArrayList<ResponseCities>): Boolean{
         var cityFounded = false
         for(id in citiesList[0].data.indices){
             if (citiesList[0].data[id] == text){
@@ -69,6 +69,6 @@ class ConfigurationUseCase(
                 break
             }
         }
-        return null
+        return cityFounded
     }
 }
