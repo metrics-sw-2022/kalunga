@@ -49,11 +49,7 @@ class ConfigurationUseCase(
     }
 
     fun areFieldsEmpty(text: String): Boolean {
-        if (text.isEmpty()){
-            return true
-        } else {
-            return false
-        }
+        return text.isEmpty()
     }
 
     fun getFormatPhone(text: String, whiteSpacesList: List<Int>) : String{
