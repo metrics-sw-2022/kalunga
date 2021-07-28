@@ -74,8 +74,8 @@ class ConfigurationUseCase(
 
     fun changeEnableButton(
         document: Int, phone: Int, city: Int
-    ): Boolean? {
-        return null
+    ): Boolean {
+        return document == 1 && phone == 1 && city == 1
     }
 
 }
