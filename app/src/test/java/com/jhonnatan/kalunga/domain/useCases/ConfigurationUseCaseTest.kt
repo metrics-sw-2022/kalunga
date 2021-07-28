@@ -257,4 +257,14 @@ class ConfigurationUseCaseTest {
             Assert.assertEquals(false, result)
         }
     }
+
+    @Test
+    fun `Caso 13`() {
+        createDataPool("datapool_2", 1)
+        for (id in 0 until item1.size) {
+            val result =
+                configurationUseCase.changeEnableButton(item1[id], item2[id], item3[id])
+            Assert.assertEquals(true, result)
+        }
+    }
 }
