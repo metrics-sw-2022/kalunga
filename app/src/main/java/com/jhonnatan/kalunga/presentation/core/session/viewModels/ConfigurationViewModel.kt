@@ -113,13 +113,14 @@ class ConfigurationViewModel(
             when (field) {
                 CodeField.IDENTIFICATION_FIELD.code -> {
                     userAccount.value!!.identification = text.toString()
+                    validIdentification.value = true
                 }
                 CodeField.PHONE_FIELD.code -> {
                     userAccount.value!!.phone = text.toString()
+                    validPhone.value = true
                     formatPhone(text.toString())
                 }
                 CodeField.CITY_FIELD.code -> {
-                    userAccount.value!!.city = text.toString()
                     isValidCity(text.toString())
                 }
             }
@@ -135,9 +136,14 @@ class ConfigurationViewModel(
     }
 
     private fun isValidCity(city: String){
-        /*if (configurationUseCase.isCityInList(city,citiesList.value!!)){
-
-        }*/
+        if (configurationUseCase.isCityInList(city,citiesList.value!!)){
+            validCity.value = true
+            userAccount.value!!.city = city
+            setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.DEFAULT.value)
+        } else {
+            validCity.value = false
+            setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.ERROR_INVALID_CITY.value)
+        }
     }
 }
 

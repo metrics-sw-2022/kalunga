@@ -28,6 +28,12 @@ import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 /**
  * Project: kalunga
@@ -54,6 +60,50 @@ class ConfigurationUseCaseTest {
     private lateinit var citiesJSON: CitiesJSON
     private lateinit var typeDocumentJSON: TypeDocumentJSON
     private val faker = Faker()
+    private val item1 = mutableListOf<Int>()
+    private val item2 = mutableListOf<Int>()
+    private val item3 = mutableListOf<Int>()
+
+
+    private fun createDataPool(dataPool: String, type: Int) {
+        val pathDataPool =
+            "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/configuration/$dataPool.txt"
+        val jsonString = getDataTXT(pathDataPool)
+        if (jsonString != null) {
+            try {
+                val dataPools = JSONArray(JSONObject(jsonString).optString("data_pool"))
+                if (type == 0) {
+                    generateMultipleData(dataPools)
+                } else if (type == 1) {
+                    generateMultipleData(dataPools)
+                }
+            } catch (ignore: Exception) {
+            }
+        }
+    }
+
+    private fun getDataTXT(path: String): String? {
+        val txtFile = File(path)
+        var aux: String? = null
+        try {
+            val bufferedReader = BufferedReader(InputStreamReader(FileInputStream(txtFile)))
+            aux = bufferedReader.readLine()
+            bufferedReader.close()
+        } catch (ignore: Exception) {
+        }
+        return aux
+    }
+
+    private fun generateMultipleData(dataPool: JSONArray) {
+        var data: JSONObject
+        for (id in 0 until dataPool.length()) {
+            data = dataPool.getJSONObject(id)
+            item1.add(data["item_1"] as Int)
+            item2.add(data["item_2"] as Int)
+            item3.add(data["item_3"] as Int)
+        }
+    }
+
 
     private fun getListCountries(): List<ResponseCountries> {
         return listOf(
@@ -196,5 +246,15 @@ class ConfigurationUseCaseTest {
     fun `Caso 11`() {
         val result = configurationUseCase.isCityInList("Bogotá", ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"),"Colombia"))))
         Assert.assertEquals(true, result)
+    }
+
+    @Test
+    fun `Caso 12`() {
+        createDataPool("datapool_1", 1)
+        for (id in 0 until item1.size) {
+            val result =
+                configurationUseCase.changeEnableButton(item1[id], item2[id], item3[id])
+            Assert.assertEquals(false, result)
+        }
     }
 }

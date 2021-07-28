@@ -71,4 +71,11 @@ class ConfigurationUseCase(
         }
         return cityFounded
     }
+
+    fun changeEnableButton(
+        document: Int, phone: Int, city: Int
+    ): Boolean? {
+        return null
+    }
+
 }
