@@ -97,6 +97,14 @@ class ConfigurationActivity : AppCompatActivity() {
             binding.textViewPhoneError.text = it
         })
 
+        viewModel.buttonRegisterDrawable.observe(this, {
+            binding.buttonRegister.setBackgroundResource(it)
+        })
+
+        viewModel.buttonRegisterEnable.observe(this, {
+            binding.buttonRegister.isEnabled = it
+        })
+
         binding.textViewTerms.makeLinks(
             Pair(getString(R.string.condiciones_de_uso), View.OnClickListener {
                 goToTermsAndPrivacy(getString(R.string.terms_of_use))

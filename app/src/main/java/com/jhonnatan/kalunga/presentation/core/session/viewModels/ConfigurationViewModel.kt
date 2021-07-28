@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCities
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
@@ -41,9 +42,9 @@ class ConfigurationViewModel(
     val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
-    private var validIdentification = MutableLiveData<Boolean>()
-    private var validPhone = MutableLiveData<Boolean>()
-    private var validCity = MutableLiveData<Boolean>()
+    private var validIdentification = MutableLiveData<Int>()
+    private var validPhone = MutableLiveData<Int>()
+    private var validCity = MutableLiveData<Int>()
     var userAccount = MutableLiveData<UserAccountData>()
     var emailValue = MutableLiveData<String>()
     var nameValue = MutableLiveData<String>()
@@ -51,13 +52,17 @@ class ConfigurationViewModel(
     val errorIdentification = MutableLiveData<String>()
     val errorCity = MutableLiveData<String>()
     val errorPhone = MutableLiveData<String>()
+    val buttonRegisterDrawable = MutableLiveData<Int>()
+    val buttonRegisterEnable = MutableLiveData<Boolean>()
 
     init {
         getCountriesSpinner()
         countrySelectedPosition.value = configurationUseCase.getCountryPosition(CodeCountries.COLOMBIA.value,countriesList)
         getDocumentTypeSpinner()
         typeDocumentSelectedPosition.value = configurationUseCase.getTypeDocumentPosition(CodeTypeDocument.CEDULA_DE_CIUDADANIA.value,typeDocumentsList)
-
+        validCity.value = 0
+        validIdentification.value = 0
+        validPhone.value = 0
     }
 
     fun setInitialValues(){
@@ -79,7 +84,6 @@ class ConfigurationViewModel(
     fun getDataCitiesByCodeCountry() {
         viewModelScope.launch {
             citiesList.value = ArrayList(configurationUseCase.getDataCitiesByCodeCountry(countriesList[countrySelectedPosition.value!!].pais))
-            println("CITIESLIST" +citiesList.value)
         }
     }
 
@@ -103,22 +107,24 @@ class ConfigurationViewModel(
         if (configurationUseCase.areFieldsEmpty(text.toString())) {
             setErrorText(field, ResponseErrorField.ERROR_EMPTY.value)
             when (field) {
-                CodeField.IDENTIFICATION_FIELD.code -> validIdentification.value = false
-                CodeField.PHONE_FIELD.code -> validPhone.value = false
-                CodeField.CITY_FIELD.code -> validCity.value = false
+                CodeField.IDENTIFICATION_FIELD.code -> validIdentification.value = 0
+                CodeField.PHONE_FIELD.code -> validPhone.value = 0
+                CodeField.CITY_FIELD.code -> validCity.value = 0
             }
-            //changeEnableButton()
+            changeEnableButton()
         } else {
             setErrorText(field, ResponseErrorField.DEFAULT.value)
             when (field) {
                 CodeField.IDENTIFICATION_FIELD.code -> {
                     userAccount.value!!.identification = text.toString()
-                    validIdentification.value = true
+                    validIdentification.value = 1
+                    changeEnableButton()
                 }
                 CodeField.PHONE_FIELD.code -> {
                     userAccount.value!!.phone = text.toString()
-                    validPhone.value = true
+                    validPhone.value = 1
                     formatPhone(text.toString())
+                    changeEnableButton()
                 }
                 CodeField.CITY_FIELD.code -> {
                     isValidCity(text.toString())
@@ -137,12 +143,28 @@ class ConfigurationViewModel(
 
     private fun isValidCity(city: String){
         if (configurationUseCase.isCityInList(city,citiesList.value!!)){
-            validCity.value = true
+            validCity.value = 1
             userAccount.value!!.city = city
             setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.DEFAULT.value)
         } else {
-            validCity.value = false
+            validCity.value = 0
             setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.ERROR_INVALID_CITY.value)
+        }
+        changeEnableButton()
+    }
+
+    private fun changeEnableButton() {
+        if (configurationUseCase.changeEnableButton(
+                validIdentification.value!!,
+                validPhone.value!!,
+                validCity.value!!
+            )
+        ) {
+            buttonRegisterDrawable.value = R.drawable.boton_oscuro
+            buttonRegisterEnable.value = true
+        } else {
+            buttonRegisterDrawable.value = R.drawable.boton_oscuro_disabled
+            buttonRegisterEnable.value = false
         }
     }
 }

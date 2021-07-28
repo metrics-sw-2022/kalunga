@@ -92,7 +92,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:autofillHints="name"
+                android:autofillHints="document"
                 android:background="@drawable/input"
                 android:drawableStart="@drawable/ic_document"
                 android:drawableLeft="@drawable/ic_document"
