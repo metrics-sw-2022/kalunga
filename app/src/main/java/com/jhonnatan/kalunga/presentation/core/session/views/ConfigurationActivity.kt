@@ -15,12 +15,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
+import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
+import com.jhonnatan.kalunga.presentation.core.home.views.StartingScreenActivity
 import com.jhonnatan.kalunga.presentation.core.legal.views.TermsAndPrivacyActivity
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModelFactory
+import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSpinnerAdapter
 import com.jhonnatan.kalunga.presentation.core.utils.ListDialog
+import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 
@@ -38,6 +42,7 @@ class ConfigurationActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_configuration)
         binding.lifecycleOwner = this
         binding.vModel = viewModel
+        val loadingDialog = LoadingDialog(this, getString(R.string.configurando))
 
         binding.imageViewBack.setOnClickListener {
             onBackPressed()
@@ -49,6 +54,15 @@ class ConfigurationActivity : AppCompatActivity() {
 
         binding.buttonDocumentType.setOnClickListener {
             createDialogSpinner(viewModel.typeDocumentsList, CodeTypeSpinner.TYPE_DOCUMENT.code)
+        }
+
+        binding.buttonRegister.setOnClickListener {
+            loadingDialog.startLoadingDialog()
+            if (viewModel.checkOnline(this))
+                viewModel.searchUser()
+            else {
+                viewModel.snackBarAction.value = 0
+            }
         }
 
         binding.buttonDocumentType.setSelected(true)
@@ -113,10 +127,72 @@ class ConfigurationActivity : AppCompatActivity() {
                 goToTermsAndPrivacy(getString(R.string.privacy_statement))
             }))
 
+        viewModel.snackBarAction.observe(this, {
+            loadingDialog.hideLoadingDialog()
+            when (it){
+                0 -> viewModel.snackBarTextWarning.postValue(getString(R.string.debe_tener_conecion_a_internet_para_continuar))
+                1 -> viewModel.snackBarTextInfo.postValue(getString(R.string.El_correo_ingresado_ya_tiene_una_cuenta_asociada_en_Kalunga))
+                2 -> viewModel.snackBarTextInfo.postValue(getString(R.string.El_correo_ingresado_no_ha_sido_validado_verifique_su_email))
+                3 -> viewModel.snackBarTextSuccess.postValue(getString(R.string.Hemos_enviado_un_correo_electrónico_valide_su_cuenta))
+                4 -> viewModel.snackBarTextError.postValue(getString(R.string.No_ha_sido_posible_enviarle_el_correo_electronico_contactese))
+                5 -> viewModel.snackBarTextError.postValue(getString(R.string.Error_en_el_servidor_por_favor_intente_mas_tarde))
+            }
+        })
+
+        viewModel.snackBarTextWarning.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.WARNING.code,
+                this
+            )
+        })
+
+
+        viewModel.snackBarTextError.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.ERROR.code,
+                this
+            )
+        })
+
+
+        viewModel.snackBarTextInfo.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.INFO.code,
+                this
+            )
+        })
+
+        viewModel.snackBarTextSuccess.observe(this, {
+            CustomSnackBar().showSnackBar(
+                it,
+                binding.constraintLayout,
+                TypeSnackBar.SUCCESS.code,
+                this
+            )
+        })
+
         viewModel.emailValue.value = intent.getStringExtra("ACCOUNT")
         viewModel.nameValue.value = intent.getStringExtra("FULL_NAME")
         viewModel.passwordValue.value = intent.getStringExtra("PASSWORD_USER")
+        viewModel.statusUser.value = intent.getIntExtra("STATUS_USER",0)
         viewModel.setInitialValues()
+
+
+        viewModel.navigateToLogIn.observe(this, {
+            if (it == true)
+                goToLogIn()
+        })
+
+        viewModel.navigateToStarting.observe(this, {
+            if (it == true)
+                onBackPressed()
+        })
 
 
     }
@@ -166,10 +242,11 @@ class ConfigurationActivity : AppCompatActivity() {
         this.setText(spannableString, TextView.BufferType.SPANNABLE)
     }
 
+
     override fun onBackPressed() {
         val intent = Intent(
             this@ConfigurationActivity,
-            SignUpActivity::class.java
+            StartingScreenActivity::class.java
         )
         startActivity(intent)
         overridePendingTransition(R.anim.right_in, R.anim.right_out)
@@ -181,6 +258,13 @@ class ConfigurationActivity : AppCompatActivity() {
         intent.putExtra("TYPE", type)
         startActivity(intent)
         overridePendingTransition(R.anim.up_in, R.anim.up_out)
+        finish()
+    }
+
+    private fun goToLogIn() {
+        val intent = Intent(this@ConfigurationActivity, LogInActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout)
         finish()
     }
 }

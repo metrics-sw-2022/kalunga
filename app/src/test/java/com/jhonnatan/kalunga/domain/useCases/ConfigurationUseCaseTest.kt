@@ -267,4 +267,10 @@ class ConfigurationUseCaseTest {
             Assert.assertEquals(true, result)
         }
     }
+
+    /*@Test
+    fun `Caso 14`() {
+        val result = configurationUseCase.processUser(faker.animal.name())
+        Assert.assertEquals("", result)
+    }*/
 }

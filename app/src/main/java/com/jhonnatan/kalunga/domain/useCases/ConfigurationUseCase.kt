@@ -5,7 +5,11 @@ import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
+import com.jhonnatan.kalunga.data.user.entities.RequestUsers
+import com.jhonnatan.kalunga.data.user.entities.ResponseUsers
+import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeStatusUser
 
 /**
  * Project: kalunga
@@ -78,4 +82,37 @@ class ConfigurationUseCase(
         return document == 1 && phone == 1 && city == 1
     }
 
+    suspend fun existsUser(user: String): Int{
+        val userExists = userRepository.getUserByAccountRemote(user)
+        if (userExists.first().message == "No existe el usuario en la base de datos"){
+            return 0
+        } else if (userExists.first().status == "succesful"){
+            return 1
+        } else if (userExists.first().status == "error"){
+            return 2
+        }
+        return 2
+    }
+
+
+    suspend fun createUser(user: RequestUsers, statusUser: Int): Int{
+        val resultUser = userRepository.insertUserRemote(user)
+        if (resultUser.first().message!! == "El usuario fue creado exitosamente"){
+            if (statusUser== CodeStatusUser.ENABLED_USER.code){
+                return 0
+            } else if (statusUser== CodeStatusUser.UNVALIDATED_USER.code){
+                return 3
+            }
+        } else if (resultUser.first().message!! == "Email erroneo...") {
+            return 4
+        } else if (resultUser.first().status == "error") {
+            return 5
+        }
+        return 5
+    }
+
+    suspend fun insertUserLocal(user: User){
+        val insertUser = userRepository.insertUserLocal(user)
+        return insertUser
+    }
 }

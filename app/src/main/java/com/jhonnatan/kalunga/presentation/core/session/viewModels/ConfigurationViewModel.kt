@@ -12,11 +12,15 @@ import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
+import com.jhonnatan.kalunga.data.user.entities.RequestUsers
+import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
 import com.jhonnatan.kalunga.domain.models.entities.UserAccountData
 import com.jhonnatan.kalunga.domain.models.enumeration.*
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
+import com.jhonnatan.kalunga.domain.models.utils.UtilsNetwork
+import com.jhonnatan.kalunga.domain.models.utils.UtilsSecurity
 import com.jhonnatan.kalunga.domain.useCases.ConfigurationUseCase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
@@ -37,9 +41,11 @@ class ConfigurationViewModel(
     lateinit var countriesList: List<ResponseCountries>
     lateinit var typeDocumentsList: List<ResponseDocumentType>
     val countrySelectedPosition = MutableLiveData<Int>()
+    val snackBarAction = MutableLiveData<Int>()
     val typeDocumentSelectedPosition = MutableLiveData<Int>()
     val numberPhone = MutableLiveData<String>()
-    val citiesList: MutableLiveData<ArrayList<ResponseCities>> = MutableLiveData<ArrayList<ResponseCities>>()
+    val citiesList: MutableLiveData<ArrayList<ResponseCities>> =
+        MutableLiveData<ArrayList<ResponseCities>>()
     private val configurationUseCase =
         ConfigurationUseCase(userRepository, citiesRepository, typeDocumentRepository)
     private var validIdentification = MutableLiveData<Int>()
@@ -49,24 +55,44 @@ class ConfigurationViewModel(
     var emailValue = MutableLiveData<String>()
     var nameValue = MutableLiveData<String>()
     var passwordValue = MutableLiveData<String>()
+    var statusUser = MutableLiveData<Int>()
     val errorIdentification = MutableLiveData<String>()
     val errorCity = MutableLiveData<String>()
     val errorPhone = MutableLiveData<String>()
     val buttonRegisterDrawable = MutableLiveData<Int>()
     val buttonRegisterEnable = MutableLiveData<Boolean>()
+    val snackBarTextWarning = MutableLiveData<String>()
+    val snackBarTextError = MutableLiveData<String>()
+    val snackBarTextInfo = MutableLiveData<String>()
+    val snackBarTextSuccess = MutableLiveData<String>()
+    val navigateToStarting = MutableLiveData<Boolean>()
+    val navigateToLogIn = MutableLiveData<Boolean>()
 
     init {
         getCountriesSpinner()
-        countrySelectedPosition.value = configurationUseCase.getCountryPosition(CodeCountries.COLOMBIA.value,countriesList)
+        countrySelectedPosition.value =
+            configurationUseCase.getCountryPosition(CodeCountries.COLOMBIA.value, countriesList)
         getDocumentTypeSpinner()
-        typeDocumentSelectedPosition.value = configurationUseCase.getTypeDocumentPosition(CodeTypeDocument.CEDULA_DE_CIUDADANIA.value,typeDocumentsList)
+        typeDocumentSelectedPosition.value = configurationUseCase.getTypeDocumentPosition(
+            CodeTypeDocument.CEDULA_DE_CIUDADANIA.value,
+            typeDocumentsList
+        )
         validCity.value = 0
         validIdentification.value = 0
         validPhone.value = 0
     }
 
-    fun setInitialValues(){
-        userAccount.value = UserAccountData(emailValue.value!!,nameValue.value!!,emailValue.value!!,passwordValue.value!!,passwordValue.value!!,"","","")
+    fun setInitialValues() {
+        userAccount.value = UserAccountData(
+            emailValue.value!!,
+            nameValue.value!!,
+            emailValue.value!!,
+            passwordValue.value!!,
+            passwordValue.value!!,
+            "",
+            "",
+            ""
+        )
     }
 
     private fun getCountriesSpinner() {
@@ -83,7 +109,8 @@ class ConfigurationViewModel(
 
     fun getDataCitiesByCodeCountry() {
         viewModelScope.launch {
-            citiesList.value = ArrayList(configurationUseCase.getDataCitiesByCodeCountry(countriesList[countrySelectedPosition.value!!].pais))
+            citiesList.value =
+                ArrayList(configurationUseCase.getDataCitiesByCodeCountry(countriesList[countrySelectedPosition.value!!].pais))
         }
     }
 
@@ -91,10 +118,11 @@ class ConfigurationViewModel(
         val whiteSpacesList: List<Int>
         if (text.isNotEmpty()) {
             if (!text.last().isWhitespace()) {
-                whiteSpacesList = UtilsCountry().getWhiteSpaceList(countriesList[countrySelectedPosition.value!!].pais)
+                whiteSpacesList =
+                    UtilsCountry().getWhiteSpaceList(countriesList[countrySelectedPosition.value!!].pais)
                 if (whiteSpacesList.isNotEmpty()) {
-                    val formatPhone = configurationUseCase.getFormatPhone(text,whiteSpacesList)
-                    if (formatPhone!==text){
+                    val formatPhone = configurationUseCase.getFormatPhone(text, whiteSpacesList)
+                    if (formatPhone !== text) {
                         numberPhone.value = formatPhone
                     }
                 }
@@ -141,8 +169,8 @@ class ConfigurationViewModel(
         }
     }
 
-    private fun isValidCity(city: String){
-        if (configurationUseCase.isCityInList(city,citiesList.value!!)){
+    private fun isValidCity(city: String) {
+        if (configurationUseCase.isCityInList(city, citiesList.value!!)) {
             validCity.value = 1
             userAccount.value!!.city = city
             setErrorText(CodeField.CITY_FIELD.code, ResponseErrorField.DEFAULT.value)
@@ -166,6 +194,75 @@ class ConfigurationViewModel(
             buttonRegisterDrawable.value = R.drawable.boton_oscuro_disabled
             buttonRegisterEnable.value = false
         }
+    }
+
+    fun searchUser() {
+        viewModelScope.launch {
+            processUser()
+        }
+    }
+
+    fun navigateToLogIn() {
+        navigateToLogIn.value = true
+    }
+
+    fun navigateToStarting() {
+        navigateToStarting.value = true
+    }
+
+    suspend fun processUser() {
+        val existsUser = configurationUseCase.existsUser(userAccount.value!!.id)
+        when (existsUser) {
+            0 -> createUser()
+            1 -> {
+                if (statusUser.value==CodeStatusUser.ENABLED_USER.code){
+                    snackBarAction.value=1
+                } else if (statusUser.value==CodeStatusUser.UNVALIDATED_USER.code){
+                    snackBarAction.value=2
+                }
+            }
+            2 -> snackBarAction.value=5
+        }
+    }
+
+    suspend fun createUser(){
+        val userInfo = RequestUsers(
+            userAccount.value!!.email,
+            UtilsSecurity().cipherData(userAccount.value!!.password)!!,
+            0,
+            true,
+            0,
+            userAccount.value!!.email,
+            userAccount.value!!.name,
+            typeDocumentsList[typeDocumentSelectedPosition.value!!].valor,
+            UtilsSecurity().cipherData(userAccount.value!!.identification)!!,
+            UtilsSecurity().cipherData(userAccount.value!!.phone.replace(" ",""))!!,
+            countriesList[countrySelectedPosition.value!!].pais,
+            userAccount.value!!.city
+        )
+        val resultUser = configurationUseCase.createUser(userInfo, statusUser.value!!)
+        if (resultUser == 0){
+            val userLocal = User(
+                0,
+                userAccount.value!!.email,
+                true,
+                0,
+                userAccount.value!!.email,
+                userAccount.value!!.name,
+                typeDocumentsList[typeDocumentSelectedPosition.value!!].valor,
+                userAccount.value!!.identification,
+                userAccount.value!!.phone.replace(" ",""),
+                countriesList[countrySelectedPosition.value!!].pais,
+                userAccount.value!!.city
+            )
+            configurationUseCase.insertUserLocal(userLocal)
+        } else {
+            snackBarAction.value=resultUser
+        }
+    }
+
+    fun checkOnline(context: Context): Boolean {
+        return UtilsNetwork().isOnline(context)
     }
 }
 
