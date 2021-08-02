@@ -85,7 +85,8 @@ class StartingScreenActivity : AppCompatActivity() {
                 it,
                 binding.layoutContain,
                 TypeSnackBar.WARNING.code,
-                this
+                this,
+                CodeSnackBarCloseAction.NONE.code
             )
         })
 
@@ -94,7 +95,8 @@ class StartingScreenActivity : AppCompatActivity() {
                 it,
                 binding.layoutContain,
                 TypeSnackBar.ERROR.code,
-                this
+                this,
+                CodeSnackBarCloseAction.NONE.code
             )
         })
 

@@ -65,8 +65,10 @@ class ConfigurationViewModel(
     val snackBarTextError = MutableLiveData<String>()
     val snackBarTextInfo = MutableLiveData<String>()
     val snackBarTextSuccess = MutableLiveData<String>()
+    val snackBarNavigate = MutableLiveData<Int>()
     val navigateToStarting = MutableLiveData<Boolean>()
     val navigateToLogIn = MutableLiveData<Boolean>()
+    val navigateToDashboard = MutableLiveData<Boolean>()
 
     init {
         getCountriesSpinner()
@@ -80,6 +82,7 @@ class ConfigurationViewModel(
         validCity.value = 0
         validIdentification.value = 0
         validPhone.value = 0
+        snackBarNavigate.value = CodeSnackBarCloseAction.NONE.code
     }
 
     fun setInitialValues() {
@@ -256,6 +259,7 @@ class ConfigurationViewModel(
                 userAccount.value!!.city
             )
             configurationUseCase.insertUserLocal(userLocal)
+            navigateToDashboard.value = true
         } else {
             snackBarAction.value=resultUser
         }

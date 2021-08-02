@@ -10,10 +10,12 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivityConfigurationBinding
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeSnackBarCloseAction
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeSpinner
 import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
@@ -25,6 +27,7 @@ import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSpinnerAdapter
 import com.jhonnatan.kalunga.presentation.core.utils.ListDialog
 import com.jhonnatan.kalunga.presentation.core.utils.LoadingDialog
+import com.jhonnatan.kalunga.presentation.features.dashboard.views.DashboardActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 
@@ -130,12 +133,30 @@ class ConfigurationActivity : AppCompatActivity() {
         viewModel.snackBarAction.observe(this, {
             loadingDialog.hideLoadingDialog()
             when (it){
-                0 -> viewModel.snackBarTextWarning.postValue(getString(R.string.debe_tener_conecion_a_internet_para_continuar))
-                1 -> viewModel.snackBarTextInfo.postValue(getString(R.string.El_correo_ingresado_ya_tiene_una_cuenta_asociada_en_Kalunga))
-                2 -> viewModel.snackBarTextInfo.postValue(getString(R.string.El_correo_ingresado_no_ha_sido_validado_verifique_su_email))
-                3 -> viewModel.snackBarTextSuccess.postValue(getString(R.string.Hemos_enviado_un_correo_electrónico_valide_su_cuenta))
-                4 -> viewModel.snackBarTextError.postValue(getString(R.string.No_ha_sido_posible_enviarle_el_correo_electronico_contactese))
-                5 -> viewModel.snackBarTextError.postValue(getString(R.string.Error_en_el_servidor_por_favor_intente_mas_tarde))
+                0 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.NONE.code)
+                    viewModel.snackBarTextWarning.postValue(getString(R.string.debe_tener_conecion_a_internet_para_continuar))
+                }
+                1 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.STARTING_ACTIVITY.code)
+                    viewModel.snackBarTextInfo.postValue(getString(R.string.El_correo_ingresado_ya_tiene_una_cuenta_asociada_en_Kalunga))
+                }
+                2 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.STARTING_ACTIVITY.code)
+                    viewModel.snackBarTextInfo.postValue(getString(R.string.El_correo_ingresado_no_ha_sido_validado_verifique_su_email))
+                }
+                3 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.STARTING_ACTIVITY.code)
+                    viewModel.snackBarTextSuccess.postValue(getString(R.string.Hemos_enviado_un_correo_electrónico_valide_su_cuenta))
+                }
+                4 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.STARTING_ACTIVITY.code)
+                    viewModel.snackBarTextError.postValue(getString(R.string.No_ha_sido_posible_enviarle_el_correo_electronico_contactese))
+                }
+                5 -> {
+                    viewModel.snackBarNavigate.postValue(CodeSnackBarCloseAction.NONE.code)
+                    viewModel.snackBarTextError.postValue(getString(R.string.Error_en_el_servidor_por_favor_intente_mas_tarde))
+                }
             }
         })
 
@@ -144,7 +165,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 it,
                 binding.constraintLayout,
                 TypeSnackBar.WARNING.code,
-                this
+                this,
+                viewModel.snackBarNavigate.value!!
             )
         })
 
@@ -154,7 +176,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 it,
                 binding.constraintLayout,
                 TypeSnackBar.ERROR.code,
-                this
+                this,
+                viewModel.snackBarNavigate.value!!
             )
         })
 
@@ -164,7 +187,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 it,
                 binding.constraintLayout,
                 TypeSnackBar.INFO.code,
-                this
+                this,
+                viewModel.snackBarNavigate.value!!
             )
         })
 
@@ -173,7 +197,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 it,
                 binding.constraintLayout,
                 TypeSnackBar.SUCCESS.code,
-                this
+                this,
+                viewModel.snackBarNavigate.value!!
             )
         })
 
@@ -192,6 +217,11 @@ class ConfigurationActivity : AppCompatActivity() {
         viewModel.navigateToStarting.observe(this, {
             if (it == true)
                 onBackPressed()
+        })
+
+        viewModel.navigateToDashboard.observe(this, {
+            if (it == true)
+                goToDashboard()
         })
 
 
@@ -221,7 +251,7 @@ class ConfigurationActivity : AppCompatActivity() {
             val clickableSpan = object : ClickableSpan() {
                 @SuppressLint("ResourceAsColor")
                 override fun updateDrawState(textPaint: TextPaint) {
-                    textPaint.color = resources.getColor(R.color.purple)
+                    textPaint.color = ContextCompat.getColor(this@ConfigurationActivity,R.color.purple)
                     textPaint.isUnderlineText = true
                 }
 
@@ -265,6 +295,13 @@ class ConfigurationActivity : AppCompatActivity() {
         val intent = Intent(this@ConfigurationActivity, LogInActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        finish()
+    }
+
+    private fun goToDashboard() {
+        val intent = Intent(this@ConfigurationActivity, DashboardActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.left_in, R.anim.left_out)
         finish()
     }
 }
