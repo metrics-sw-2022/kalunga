@@ -20,6 +20,7 @@ import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.databinding.ActivitySplashScreenBinding
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeActivityForResult
 import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeSnackBarCloseAction
 import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
@@ -80,7 +81,8 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                 it,
                 binding.layoutContain,
                 TypeSnackBar.CLOSE_APP.code,
-                this
+                this,
+                CodeSnackBarCloseAction.NONE.code
             )
         })
 

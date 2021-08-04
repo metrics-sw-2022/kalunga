@@ -148,5 +148,4 @@ class StartingScreenUseCaseTest {
             assertEquals(ResponseStartingUseCase(true, listOf(users[0])), result)
         }
     }
-
 }

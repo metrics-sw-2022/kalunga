@@ -46,7 +46,7 @@ class StartingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModelFactory = StartingScreenViewModelFactory.getInstance(this)
-        val loadingDialog = LoadingDialog(this)
+        val loadingDialog = LoadingDialog(this, getString(R.string.cargando_puntos))
         viewModel = ViewModelProvider(this, viewModelFactory)[StartingScreenViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_starting_screen)
         binding.lifecycleOwner = this
@@ -85,7 +85,8 @@ class StartingScreenActivity : AppCompatActivity() {
                 it,
                 binding.layoutContain,
                 TypeSnackBar.WARNING.code,
-                this
+                this,
+                CodeSnackBarCloseAction.NONE.code
             )
         })
 
@@ -94,7 +95,8 @@ class StartingScreenActivity : AppCompatActivity() {
                 it,
                 binding.layoutContain,
                 TypeSnackBar.ERROR.code,
-                this
+                this,
+                CodeSnackBarCloseAction.NONE.code
             )
         })
 
@@ -130,7 +132,8 @@ class StartingScreenActivity : AppCompatActivity() {
                                 account.getString("name"),
                                 account.getString("email"),
                                 account.getString("id"),
-                                account.getString("id")
+                                account.getString("id"),
+                                "","",""
                             )
                             viewModel.serverUserExist()
                         }
@@ -193,7 +196,7 @@ class StartingScreenActivity : AppCompatActivity() {
                 task.isSuccessful -> {
                     val acct: GoogleSignInAccount = task.result!!
                     viewModel.userAccount.value =
-                        UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!, acct.id!!)
+                        UserAccountData(acct.id!!, acct.displayName!!, acct.email!!, acct.id!!, acct.id!!,"","","")
                     viewModel.serverUserExist()
                 }
                 errorCode!!.contains("12501") -> viewModel.loadingDialog.value = false

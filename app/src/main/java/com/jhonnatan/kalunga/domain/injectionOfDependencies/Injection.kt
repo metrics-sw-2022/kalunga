@@ -1,12 +1,23 @@
 package com.jhonnatan.kalunga.domain.injectionOfDependencies
 
 import android.content.Context
-import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import android.net.Uri
+import com.jhonnatan.kalunga.data.cities.datasource.CitiesDataSourceLocal
+import com.jhonnatan.kalunga.data.cities.repository.CitiesRepository
+import com.jhonnatan.kalunga.data.cities.source.CitiesJSON
 import com.jhonnatan.kalunga.data.room.KalungaDB
+import com.jhonnatan.kalunga.data.typeDocument.datasource.TypeDocumentDataSourceLocal
+import com.jhonnatan.kalunga.data.typeDocument.repository.TypeDocumentRepository
+import com.jhonnatan.kalunga.data.typeDocument.source.TypeDocumentJSON
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
-import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.InputStream
+import java.io.InputStreamReader
 
 /****
  * Project: kalunga
@@ -29,6 +40,26 @@ object Injection {
         val userDataSourceRemote = UserDataSourceRemote()
         val userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
         return UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
+    }
+
+    fun providerConfigurationUserRepository(context: Context) : UserRepository{
+        val database = KalungaDB.getInstance(context)
+        val userDataSourceRemote = UserDataSourceRemote()
+        val userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
+        return UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
+    }
+
+
+    fun providerConfigurationCitiesRepository(context: Context) : CitiesRepository{
+        val citiesJSON = CitiesJSON(context)
+        val citiesDataSourceLocal = CitiesDataSourceLocal(citiesJSON)
+        return CitiesRepository.getInstance(citiesDataSourceLocal)
+    }
+
+    fun providerConfigurationTypeDocumentRepository(context: Context) : TypeDocumentRepository{
+        val typeDocumentJSON = TypeDocumentJSON(context)
+        val typeDocumentDataSourceLocal = TypeDocumentDataSourceLocal(typeDocumentJSON)
+        return TypeDocumentRepository.getInstance(typeDocumentDataSourceLocal)
     }
 
 }

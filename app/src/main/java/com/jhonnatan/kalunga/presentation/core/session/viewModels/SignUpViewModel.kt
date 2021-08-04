@@ -47,7 +47,7 @@ class SignUpViewModel : ViewModel() {
         errorName.value = ResponseErrorField.DEFAULT.value
         errorPassword.value = ResponseErrorField.DEFAULT.value
         errorPasswordConfirm.value = ResponseErrorField.DEFAULT.value
-        userAccount.value = UserAccountData("","","","", "")
+        userAccount.value = UserAccountData("","","","", "","","","")
         passwordCounter.value = 0
         passwordConfirmCounter.value = 0
         validEmail.value = 0

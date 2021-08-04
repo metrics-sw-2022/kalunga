@@ -41,4 +41,26 @@
     <string name="cono_atr_s">ícono atrás</string>
     <string name="ver_u_ocultar_confirmaci_n_de_contrase_a">ver u ocultar confirmación de contraseña</string>
     <string name="ver_u_ocultar_contrase_a">ver u ocultar contraseña</string>
+    <string name="datos_iniciales">Datos iniciales</string>
+    <string name="numero_de_documento">Número de documento</string>
+    <string name="numero_movil">Número móvil</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="al_registrarme_acepto_">Al registrarme, acepto que he leído las <u><b>condiciones de uso</b></u> y comprendo la <u><b>declaración de privacidad</b></u> para usuarios</string>
+    <string name="configurando">Configurando…</string>
+    <string name="registrate">Regístrate</string>
+    <string name="icono">icono</string>
+    <string name="país">SELECCIONE EL PAÍS</string>
+    <string name="seleccion_tipo_documento">TIPO DE DOCUMENTO</string>
+    <string name="separador">&#160;-&#160;</string>
+    <string name="privacy_statement">privacy statement</string>
+    <string name="terms_of_use">terms of use</string>
+    <string name="condiciones_de_uso">condiciones de uso</string>
+    <string name="declaracion_de_privacidad">declaración de privacidad</string>
+    <string name="terms_and_privacy">Terms and privacy</string>
+    <string name="debe_tener_conecion_a_internet_para_continuar">Debe tener conexión a internet para continuar</string>
+    <string name="El_correo_ingresado_ya_tiene_una_cuenta_asociada_en_Kalunga">El correo ingresado ya tiene una cuenta asociada en Kalunga</string>
+    <string name="El_correo_ingresado_no_ha_sido_validado_verifique_su_email">El correo ingresado no ha sido validado, verifique su email</string>
+    <string name="Hemos_enviado_un_correo_electrónico_valide_su_cuenta">Hemos enviado un correo electrónico, valide su cuenta</string>
+    <string name="No_ha_sido_posible_enviarle_el_correo_electronico_contactese">No ha sido posible enviarle el correo electrónico, contáctese con el administrador</string>
+    <string name="Error_en_el_servidor_por_favor_intente_mas_tarde">Error en el servidor, por favor intente más tarde</string>
 </resources>

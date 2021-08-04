@@ -23,4 +23,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/background_dialog</item>
+        <item name="fontFamily">@font/gill_sans_mt_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
