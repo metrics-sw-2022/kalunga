@@ -303,5 +303,13 @@ class ConfigurationUseCaseTest {
         }
     }
 
+    @Test
+    fun `Caso 16`() : Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = configurationUseCase.createUser(userInfo)
+            Assert.assertEquals(0, result)
+        }
+    }
+
 
 }
