@@ -295,5 +295,13 @@ class ConfigurationUseCaseTest {
         }
     }
 
+    @Test
+    fun `Caso 15`() : Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = configurationUseCase.existsUser("lsofia@outlook.com")
+            Assert.assertEquals(1, result)
+        }
+    }
+
 
 }
