@@ -82,10 +82,10 @@ class ConfigurationUseCase(
         return document == 1 && phone == 1 && city == 1
     }
 
-    suspend fun existsUser(user: String): Int?{
+    suspend fun existsUser(user: String): Int{
         val userExists = userRepository.getUserByAccountRemote(user)
         if (userExists.first().message == "No existe el usuario en la base de datos"){
-            return null
+            return 0
         } else if (userExists.first().status == "successful"){
             return 1
         } else if (userExists.first().status == "error"){
