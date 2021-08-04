@@ -311,5 +311,28 @@ class ConfigurationUseCaseTest {
         }
     }
 
+    @Test
+    fun `Caso 17`() : Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val userInfo = RequestUsers(
+                email,
+                UtilsSecurity().cipherData(faker.animal.name())!!,
+                CodeStatusUser.UNVALIDATED_USER.code,
+                true,
+                0,
+                email,
+                faker.animal.name(),
+                0,
+                UtilsSecurity().cipherData(faker.animal.name())!!,
+                UtilsSecurity().cipherData(faker.animal.name())!!,
+                "Colombia",
+                "Bogotá"
+            )
+            val result = configurationUseCase.createUser(userInfo)
+            Assert.assertEquals(3, result)
+        }
+    }
+
+
 
 }

@@ -95,18 +95,16 @@ class ConfigurationUseCase(
     }
 
 
-    suspend fun createUser(user: RequestUsers): Int{
+    suspend fun createUser(user: RequestUsers): Int?{
         val resultUser = userRepository.insertUserRemote(user)
         if (resultUser.first().message!! == "El usuario fue creado exitosamente"){
             if (user.statusUser== CodeStatusUser.ENABLED_USER.code){
                 return 0
             } else if (user.statusUser== CodeStatusUser.UNVALIDATED_USER.code){
-                return 3
+                return null
             }
         } else if (resultUser.first().message!! == "Email erroneo...") {
             return 4
-        } else if (resultUser.first().status == "error") {
-            return 5
         }
         return 5
     }
