@@ -82,11 +82,11 @@ class ConfigurationUseCase(
         return document == 1 && phone == 1 && city == 1
     }
 
-    suspend fun existsUser(user: String): Int{
+    suspend fun existsUser(user: String): Int?{
         val userExists = userRepository.getUserByAccountRemote(user)
         if (userExists.first().message == "No existe el usuario en la base de datos"){
-            return 0
-        } else if (userExists.first().status == "succesful"){
+            return null
+        } else if (userExists.first().status == "successful"){
             return 1
         } else if (userExists.first().status == "error"){
             return 2
@@ -95,12 +95,12 @@ class ConfigurationUseCase(
     }
 
 
-    suspend fun createUser(user: RequestUsers, statusUser: Int): Int{
+    suspend fun createUser(user: RequestUsers): Int{
         val resultUser = userRepository.insertUserRemote(user)
         if (resultUser.first().message!! == "El usuario fue creado exitosamente"){
-            if (statusUser== CodeStatusUser.ENABLED_USER.code){
+            if (user.statusUser== CodeStatusUser.ENABLED_USER.code){
                 return 0
-            } else if (statusUser== CodeStatusUser.UNVALIDATED_USER.code){
+            } else if (user.statusUser== CodeStatusUser.UNVALIDATED_USER.code){
                 return 3
             }
         } else if (resultUser.first().message!! == "Email erroneo...") {

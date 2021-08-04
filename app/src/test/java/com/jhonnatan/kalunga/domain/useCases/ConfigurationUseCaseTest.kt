@@ -26,10 +26,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
+import com.jhonnatan.kalunga.data.user.entities.RequestUsers
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeStatusUser
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
+import com.jhonnatan.kalunga.domain.models.utils.UtilsSecurity
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import org.mockito.kotlin.anyArray
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -63,6 +67,21 @@ class ConfigurationUseCaseTest {
     private val item1 = mutableListOf<Int>()
     private val item2 = mutableListOf<Int>()
     private val item3 = mutableListOf<Int>()
+    private val email = faker.animal.name()+"@"+faker.animal.name()+".com"
+    private val userInfo = RequestUsers(
+    email,
+    UtilsSecurity().cipherData(faker.animal.name())!!,
+    CodeStatusUser.ENABLED_USER.code,
+    true,
+    0,
+    email,
+    faker.animal.name(),
+    0,
+    UtilsSecurity().cipherData(faker.animal.name())!!,
+    UtilsSecurity().cipherData(faker.animal.name())!!,
+    "Colombia",
+    "Bogotá"
+    )
 
 
     private fun createDataPool(dataPool: String, type: Int) {
@@ -268,9 +287,13 @@ class ConfigurationUseCaseTest {
         }
     }
 
-    /*@Test
-    fun `Caso 14`() {
-        val result = configurationUseCase.processUser(faker.animal.name())
-        Assert.assertEquals("", result)
-    }*/
+    @Test
+    fun `Caso 14`() : Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = configurationUseCase.existsUser(faker.animal.name())
+            Assert.assertEquals(0, result)
+        }
+    }
+
+
 }

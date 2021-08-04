@@ -206,6 +206,8 @@ class ConfigurationActivity : AppCompatActivity() {
         viewModel.nameValue.value = intent.getStringExtra("FULL_NAME")
         viewModel.passwordValue.value = intent.getStringExtra("PASSWORD_USER")
         viewModel.statusUser.value = intent.getIntExtra("STATUS_USER",0)
+        viewModel.sessionState.value = intent.getBooleanExtra("SESSION_STATE",false)
+        viewModel.typeUser.value = intent.getIntExtra("TYPE_USER",0)
         viewModel.setInitialValues()
 
 

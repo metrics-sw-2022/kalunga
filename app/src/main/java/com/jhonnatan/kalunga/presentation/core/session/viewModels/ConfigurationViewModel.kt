@@ -56,6 +56,8 @@ class ConfigurationViewModel(
     var nameValue = MutableLiveData<String>()
     var passwordValue = MutableLiveData<String>()
     var statusUser = MutableLiveData<Int>()
+    var sessionState = MutableLiveData<Boolean>()
+    var typeUser = MutableLiveData<Int>()
     val errorIdentification = MutableLiveData<String>()
     val errorCity = MutableLiveData<String>()
     val errorPhone = MutableLiveData<String>()
@@ -232,9 +234,9 @@ class ConfigurationViewModel(
         val userInfo = RequestUsers(
             userAccount.value!!.email,
             UtilsSecurity().cipherData(userAccount.value!!.password)!!,
-            0,
-            true,
-            0,
+            statusUser.value!!,
+            sessionState.value!!,
+            typeUser.value!!,
             userAccount.value!!.email,
             userAccount.value!!.name,
             typeDocumentsList[typeDocumentSelectedPosition.value!!].valor,
@@ -243,7 +245,7 @@ class ConfigurationViewModel(
             countriesList[countrySelectedPosition.value!!].pais,
             userAccount.value!!.city
         )
-        val resultUser = configurationUseCase.createUser(userInfo, statusUser.value!!)
+        val resultUser = configurationUseCase.createUser(userInfo)
         if (resultUser == 0){
             val userLocal = User(
                 0,
