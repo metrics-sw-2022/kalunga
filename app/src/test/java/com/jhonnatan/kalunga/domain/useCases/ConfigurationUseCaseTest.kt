@@ -27,7 +27,10 @@ import org.junit.runner.RunWith
 import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
 import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
 import com.jhonnatan.kalunga.data.user.entities.RequestUsers
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeSessionState
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeStatusUser
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeDocument
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
 import com.jhonnatan.kalunga.domain.models.utils.UtilsSecurity
 import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
@@ -57,7 +60,6 @@ class ConfigurationUseCaseTest {
     private lateinit var citiesRepository: CitiesRepository
     private lateinit var typeDocumentRepository: TypeDocumentRepository
     private lateinit var configurationUseCase: ConfigurationUseCase
-    private lateinit var configurationViewModel: ConfigurationViewModel
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
@@ -67,20 +69,20 @@ class ConfigurationUseCaseTest {
     private val item1 = mutableListOf<Int>()
     private val item2 = mutableListOf<Int>()
     private val item3 = mutableListOf<Int>()
-    private val email = faker.animal.name()+"@"+faker.animal.name()+".com"
+    private val email = faker.internet.email()
     private val userInfo = RequestUsers(
     email,
     UtilsSecurity().cipherData(faker.animal.name())!!,
     CodeStatusUser.ENABLED_USER.code,
-    true,
-    0,
+    CodeSessionState.STARTED.code,
+    CodeTypeUser.STANDART.code,
     email,
-    faker.animal.name(),
+    faker.name.name(),
     0,
-    UtilsSecurity().cipherData(faker.animal.name())!!,
-    UtilsSecurity().cipherData(faker.animal.name())!!,
-    "Colombia",
-    "Bogotá"
+    UtilsSecurity().cipherData(faker.chiquito.expressions())!!,
+    UtilsSecurity().cipherData(faker.phoneNumber.cellPhone())!!,
+    faker.address.country(),
+    faker.address.city()
     )
 
 
