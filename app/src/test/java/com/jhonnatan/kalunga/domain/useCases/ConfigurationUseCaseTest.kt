@@ -310,6 +310,7 @@ class ConfigurationUseCaseTest {
         launch(Dispatchers.Main) {
             val result = configurationUseCase.createUser(userInfo)
             Assert.assertEquals(0, result)
+            userDataSourceRemote.deleteUser(userInfo.account)
         }
     }
 
