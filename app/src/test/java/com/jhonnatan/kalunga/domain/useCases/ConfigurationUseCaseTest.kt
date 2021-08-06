@@ -332,7 +332,4 @@ class ConfigurationUseCaseTest {
             Assert.assertEquals(3, result)
         }
     }
-
-
-
 }
