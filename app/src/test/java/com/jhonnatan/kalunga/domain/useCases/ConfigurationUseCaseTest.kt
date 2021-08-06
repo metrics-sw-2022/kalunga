@@ -321,18 +321,19 @@ class ConfigurationUseCaseTest {
                 email,
                 UtilsSecurity().cipherData(faker.animal.name())!!,
                 CodeStatusUser.UNVALIDATED_USER.code,
-                true,
-                0,
+                CodeSessionState.STARTED.code,
+                CodeTypeUser.STANDART.code,
                 email,
-                faker.animal.name(),
+                faker.name.name(),
                 0,
-                UtilsSecurity().cipherData(faker.animal.name())!!,
-                UtilsSecurity().cipherData(faker.animal.name())!!,
-                "Colombia",
-                "Bogotá"
+                UtilsSecurity().cipherData(faker.chiquito.expressions())!!,
+                UtilsSecurity().cipherData(faker.phoneNumber.cellPhone())!!,
+                faker.address.country(),
+                faker.address.city()
             )
             val result = configurationUseCase.createUser(userInfo)
             Assert.assertEquals(3, result)
+            userDataSourceRemote.deleteUser(userInfo.account)
         }
     }
 }
