@@ -298,7 +298,7 @@ class ConfigurationUseCaseTest {
     @Test
     fun `Caso 15`() : Unit = runBlocking {
         launch(Dispatchers.Main) {
-            val result = configurationUseCase.existsUser("lsofia@outlook.com")
+            val result = configurationUseCase.existsUser("unitTesting@kalunga.com")
             Assert.assertEquals(1, result)
         }
     }
