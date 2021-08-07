@@ -25,6 +25,7 @@ import com.jhonnatan.kalunga.domain.models.enumeration.TypeSnackBar
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModel
 import com.jhonnatan.kalunga.presentation.core.home.viewModels.SplashScreenViewModelFactory
 import com.jhonnatan.kalunga.presentation.core.utils.CustomSnackBar
+import com.jhonnatan.kalunga.presentation.features.dashboard.views.DashboardActivity
 import kotlinx.coroutines.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -96,7 +97,8 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                         )
                     }
                 else
-                    goToStartingScreen()
+                    validateUserSession()
+                viewModel.validateUserSession()
             } else {
                 viewModel.loading.postValue(false)
                 viewModel.snackBarTextCloseApp.postValue(getString(R.string.sin_conexion))
@@ -107,22 +109,30 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
             if (it.equals(true))
                 starUpdateFlow()
             else
-                goToStartingScreen()
+                viewModel.validateUserSession()
         })
     }
 
-    private fun goToStartingScreen() {
-        lifecycleScope.launch{
-            withContext(Dispatchers.IO){
+    private fun validateUserSession() {
+        if (viewModel.validateUserSession())
+            gotoActivity(Intent(this@SplashScreenActivity, DashboardActivity::class.java))
+        else
+            gotoActivity(Intent(this@SplashScreenActivity, StartingScreenActivity::class.java))
+    }
+
+    private fun gotoActivity(activity: Intent) {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
                 delay(500)
                 viewModel.loading.postValue(false)
-                val intent = Intent(this@SplashScreenActivity, StartingScreenActivity::class.java)
+                val intent = activity
                 startActivity(intent)
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout)
                 finish()
             }
         }
     }
+
 
     private fun starUpdateFlow() {
         try {
@@ -142,15 +152,27 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
         if (requestCode == CodeActivityForResult.IMMEDIATE_APP_UPDATE_REQ_CODE.code) {
             when (resultCode) {
                 RESULT_CANCELED -> {
-                    Toast.makeText(this, getString(R.string.actualizacion_cancelada), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.actualizacion_cancelada),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
                 RESULT_OK -> {
-                    Toast.makeText(this, getString(R.string.actualizacion_exitosa), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.actualizacion_exitosa),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
                 else -> {
-                    Toast.makeText(this, getString(R.string.actualizacion_fallida), Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.actualizacion_fallida),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                     viewModel.checkOnline(this)
                 }

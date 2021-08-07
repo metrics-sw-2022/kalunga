@@ -80,6 +80,10 @@ class SplashScreenViewModel(versionRepository: VersionRepository) : ViewModel() 
         appUpdateInfoPlayStore.value = appUpdateInfo
         startUpdateFlow.postValue(splashScreenUseCase.shouldBeUpdated(appUpdateInfo))
     }
+
+    fun validateUserSession():Boolean {
+        return false
+    }
 }
 
 @DelicateCoroutinesApi
