@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import androidx.lifecycle.*
 import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
 import com.jhonnatan.kalunga.domain.models.utils.UtilsNetwork
 import com.jhonnatan.kalunga.domain.injectionOfDependencies.Injection
@@ -21,10 +22,11 @@ import pub.devrel.easypermissions.EasyPermissions
  ****/
 
 @DelicateCoroutinesApi
-class SplashScreenViewModel(versionRepository: VersionRepository) : ViewModel() {
+class SplashScreenViewModel(versionRepository: VersionRepository, userRepository: UserRepository) :
+    ViewModel() {
 
     val version = MutableLiveData<String>()
-    private val splashScreenUseCase = SplashScreenUseCase(versionRepository)
+    private val splashScreenUseCase = SplashScreenUseCase(versionRepository, userRepository)
     val loading = MutableLiveData<Boolean>()
     val validatePermissions = MutableLiveData<Boolean>()
     val snackBarTextCloseApp = MutableLiveData<String>()
@@ -81,14 +83,18 @@ class SplashScreenViewModel(versionRepository: VersionRepository) : ViewModel() 
         startUpdateFlow.postValue(splashScreenUseCase.shouldBeUpdated(appUpdateInfo))
     }
 
-    fun validateUserSession():Boolean {
+    fun validateUserSession(): Boolean {
+        splashScreenUseCase.getUserExist()
         return false
     }
 }
 
 @DelicateCoroutinesApi
 @Suppress("UNCHECKED_CAST")
-class SplashScreenViewModelFactory(private val versionRepository: VersionRepository) :
+class SplashScreenViewModelFactory(
+    private val versionRepository: VersionRepository,
+    private val userRepository: UserRepository
+) :
     ViewModelProvider.NewInstanceFactory() {
 
     companion object {
@@ -97,13 +103,14 @@ class SplashScreenViewModelFactory(private val versionRepository: VersionReposit
         fun getInstance(context: Context): SplashScreenViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: SplashScreenViewModelFactory(
-                    Injection.providerSplashScreenRepository(context)
+                    Injection.providerVersionRepository(context),
+                    Injection.providerUserRepository(context)
                 )
             }
     }
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SplashScreenViewModel(versionRepository) as T
+        return SplashScreenViewModel(versionRepository, userRepository) as T
     }
 }
 

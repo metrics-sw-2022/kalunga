@@ -7,6 +7,7 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
 import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
@@ -20,15 +21,19 @@ import java.util.*
  * All rights reserved 2021.
  ****/
 
-class SplashScreenUseCase(private val versionRepository: VersionRepository) {
+class SplashScreenUseCase(
+    val versionRepository: VersionRepository,
+    val userRepository: UserRepository
+) {
 
     suspend fun getAppVersion(): String {
         val versionName: String
         val versionQuery = versionRepository.queryLastVersionLocal()
-        versionName = if (versionQuery.size == 1 && versionQuery[0].versionName == BuildConfig.VERSION_NAME)
-            versionQuery[0].versionName
-        else
-            insertAppVersionDatabase()
+        versionName =
+            if (versionQuery.size == 1 && versionQuery[0].versionName == BuildConfig.VERSION_NAME)
+                versionQuery[0].versionName
+            else
+                insertAppVersionDatabase()
         return "Versión $versionName"
     }
 
@@ -60,6 +65,10 @@ class SplashScreenUseCase(private val versionRepository: VersionRepository) {
         return (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) &&
                 appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) ||
                 (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
+    }
+
+    fun getUserExist(): Boolean? {
+        return null
     }
 
 }

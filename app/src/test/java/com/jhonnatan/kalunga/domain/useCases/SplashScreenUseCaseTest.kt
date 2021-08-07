@@ -11,6 +11,9 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.jhonnatan.kalunga.BuildConfig
 import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.room.KalungaDB
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
+import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
 import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
@@ -43,7 +46,10 @@ class SplashScreenUseCaseTest {
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
     private lateinit var versionDataSourceLocal: VersionDataSourceLocal
-    private lateinit var splashScreenRepository: VersionRepository
+    private lateinit var userDataSourceLocal: UserDataSourceLocal
+    private lateinit var userDataSourceRemote: UserDataSourceRemote
+    private lateinit var versionRepository: VersionRepository
+    private lateinit var userRepository: UserRepository
     private lateinit var splashScreenUseCase: SplashScreenUseCase
     private val permissionWriteStorge = Manifest.permission.WRITE_EXTERNAL_STORAGE
     private val permissionCamera = Manifest.permission.CAMERA
@@ -52,7 +58,7 @@ class SplashScreenUseCaseTest {
 
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {
-            splashScreenRepository.insertVersionLocal(
+            versionRepository.insertVersionLocal(
                 Version(
                     0,
                     x,
@@ -70,8 +76,11 @@ class SplashScreenUseCaseTest {
             KalungaDB::class.java
         ).allowMainThreadQueries().build()
         versionDataSourceLocal = VersionDataSourceLocal.getInstance(database.versionDAO())
-        splashScreenRepository = VersionRepository.getInstance(versionDataSourceLocal)
-        splashScreenUseCase = SplashScreenUseCase(splashScreenRepository)
+        versionRepository = VersionRepository.getInstance(versionDataSourceLocal)
+        userDataSourceRemote = UserDataSourceRemote()
+        userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
+        userRepository = UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
+        splashScreenUseCase = SplashScreenUseCase(versionRepository, userRepository)
         Dispatchers.setMain(mainThreadSurrogate)
     }
 
