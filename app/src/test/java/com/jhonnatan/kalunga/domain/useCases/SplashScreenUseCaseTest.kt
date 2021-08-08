@@ -13,11 +13,13 @@ import com.jhonnatan.kalunga.R
 import com.jhonnatan.kalunga.data.room.KalungaDB
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
+import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
 import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
 import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
+import com.jhonnatan.kalunga.domain.useCases.utils.Users
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -55,6 +57,7 @@ class SplashScreenUseCaseTest {
     private val permissionCamera = Manifest.permission.CAMERA
     private val permissionInternet = Manifest.permission.INTERNET
     private val fakeAppUpdateManager by lazy { Mockito.spy(FakeAppUpdateManager(context)) }
+    private var users: MutableList<User> = ArrayList()
 
     private suspend fun createVersions(i: Int) {
         for (x in 1..i) {
@@ -169,6 +172,15 @@ class SplashScreenUseCaseTest {
         launch(Dispatchers.Main) {
             val result = splashScreenUseCase.getUserExist()
             assertEquals(false, result)
+        }
+    }
+
+    @Test
+    fun `Caso 12`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            users = Users().create(1,userRepository)
+            val result = splashScreenUseCase.getUserExist()
+            assertEquals(true, result)
         }
     }
 
