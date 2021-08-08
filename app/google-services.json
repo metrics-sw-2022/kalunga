@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "22921026009",
+    "project_id": "kalunga-6bbd4",
+    "storage_bucket": "kalunga-6bbd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22921026009:android:4ee3c52052ca0e41dfa1c8",
+        "android_client_info": {
+          "package_name": "com.jhonnatan.kalunga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22921026009-9g8n618dft45gd0sj8v8kcihrohc8b4a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jhonnatan.kalunga",
+            "certificate_hash": "dca414d6372fde6a33a2e715aca315ee2611aac2"
+          }
+        },
+        {
+          "client_id": "22921026009-ft1k2u6mvdtncudtvhvuigt7v8olh7h7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiwmunGMzQ52bg18fBtfkXCN-Fk9uvcWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22921026009-ft1k2u6mvdtncudtvhvuigt7v8olh7h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

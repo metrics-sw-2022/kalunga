@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vModel"
+            type="com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel" />
+
+        <variable
+            name="utilsCountry"
+            type="com.jhonnatan.kalunga.domain.models.utils.UtilsCountry" />
+
+        <variable
+            name="codeField"
+            type="com.jhonnatan.kalunga.domain.models.enumeration.CodeField" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/fondo_pantalla_sesion"
+        tools:context=".presentation.core.session.views.SignUpActivity">
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_back_button"
+            android:contentDescription="@string/cono_atr_s"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gill_sans_mt_bold"
+                android:gravity="center_horizontal"
+                android:text="@string/datos_iniciales"
+                android:textColor="@color/purple"
+                android:textSize="40sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/buttonDocumentType"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/input"
+                android:drawableEnd="@drawable/ic_arrow_drop_down"
+                android:drawableRight="@drawable/ic_arrow_drop_down"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="start|center_vertical"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="10dp"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+
+            <!--suppress AndroidUnknownAttribute -->
+            <EditText
+                android:id="@+id/editTextDocument"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="document"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_document"
+                android:drawableLeft="@drawable/ic_document"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_vertical"
+                android:hint="@string/numero_de_documento"
+                android:inputType="text"
+                android:maxLines="30"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.IDENTIFICATION_FIELD.code)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonDocumentType"
+                tools:ignore="RtlSymmetry,TextFields" />
+
+            <TextView
+                android:id="@+id/textViewDocumentError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDocument" />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDocument">
+
+                <Button
+                    android:id="@+id/buttonCountry"
+                    android:layout_width="80dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/input"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:drawableRight="@drawable/ic_arrow_drop_down"
+                    android:fontFamily="@font/gill_sans_mt_medium"
+                    android:paddingStart="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <!--suppress AndroidUnknownAttribute -->
+
+                    <EditText
+                        android:id="@+id/editTextPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:autofillHints="phone"
+                        android:background="@drawable/input"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="@font/gill_sans_mt_medium"
+                        android:gravity="center_vertical"
+                        android:hint="@string/numero_movil"
+                        android:inputType="number"
+                        android:maxLines="30"
+                        android:paddingStart="70dp"
+                        android:paddingLeft="70dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.PHONE_FIELD.code)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="RtlSymmetry,TextFields" />
+
+                    <TextView
+                    android:id="@+id/textViewCountryCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/gill_sans_mt_medium"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextPhone"
+                    app:layout_constraintStart_toStartOf="@+id/editTextPhone"
+                    app:layout_constraintTop_toTopOf="@+id/editTextPhone" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewPhoneError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutPhone" />
+
+            <!--suppress AndroidUnknownAttribute -->
+            <AutoCompleteTextView
+                android:id="@+id/textViewCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="city"
+                android:background="@drawable/input"
+                android:drawableStart="@drawable/ic_location_city_"
+                android:drawableLeft="@drawable/ic_location_city_"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="start"
+                android:hint="@string/ciudad"
+                android:maxLines="30"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:afterTextChanged="@{(editable)->vModel.areFieldsEmpty(editable, codeField.CITY_FIELD.code)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutPhone"
+                tools:ignore="RtlSymmetry,TextFields"/>
+
+            <TextView
+                android:id="@+id/textViewCityError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_red"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
+
+            <TextView
+                android:id="@+id/textViewTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:fontFamily="@font/gill_sans_mt_medium"
+                android:gravity="center_horizontal"
+                android:text="@string/al_registrarme_acepto_"
+                android:textColor="@color/purple_light"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCity" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/boton_oscuro_disabled"
+                android:fontFamily="@font/gill_sans_mt_bold"
+                android:text="@string/registrate"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTerms" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.7"
+            android:fontFamily="@font/gill_sans_mt_bold"
+            android:gravity="center_horizontal"
+            android:text="@string/ya_tienes_cuenta"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="9dp"
+            android:fontFamily="@font/gill_sans_mt_bold"
+            android:gravity="center_horizontal"
+            android:text="@string/iniciar_sesi_n"
+            android:textColor="@color/purple"
+            android:textSize="23sp"
+            android:onClick="@{() -> vModel.navigateToLogIn()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
