@@ -20,6 +20,7 @@ import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
 import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
 import com.jhonnatan.kalunga.domain.useCases.utils.Users
+import com.jhonnatan.kalunga.domain.useCases.utils.Versions
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -59,19 +60,6 @@ class SplashScreenUseCaseTest {
     private val fakeAppUpdateManager by lazy { Mockito.spy(FakeAppUpdateManager(context)) }
     private var users: MutableList<User> = ArrayList()
 
-    private suspend fun createVersions(i: Int) {
-        for (x in 1..i) {
-            versionRepository.insertVersionLocal(
-                Version(
-                    0,
-                    x,
-                    "1.0.$x",
-                    Calendar.getInstance().time
-                )
-            )
-        }
-    }
-
     @Before
     fun setup() {
         database = Room.inMemoryDatabaseBuilder(
@@ -105,7 +93,7 @@ class SplashScreenUseCaseTest {
     @Test
     fun `Caso 02`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            createVersions(4)
+            Versions().create(4,versionRepository)
             val result = splashScreenUseCase.getAppVersion()
             assertEquals("Versión 1.0.1", result)
         }
@@ -114,7 +102,7 @@ class SplashScreenUseCaseTest {
     @Test
     fun `Caso 03`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            createVersions(1)
+            Versions().create(1,versionRepository)
             val result = splashScreenUseCase.getAppVersion()
             assertEquals("Versión " + BuildConfig.VERSION_NAME, result)
         }
