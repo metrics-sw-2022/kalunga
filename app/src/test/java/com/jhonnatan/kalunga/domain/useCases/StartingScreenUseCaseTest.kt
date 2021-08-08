@@ -7,12 +7,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jhonnatan.kalunga.data.room.KalungaDB
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceLocal
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
-import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
 import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
+import com.jhonnatan.kalunga.domain.useCases.utils.Users
 import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
@@ -43,45 +42,7 @@ class StartingScreenUseCaseTest {
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     private var context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var database: KalungaDB
-    private val faker = Faker()
-    private val users: MutableList<User> = ArrayList()
-
-    private fun cloneUserServer(): UserRemote {
-        return UserRemote(
-            "unitTesting@kalunga.com",
-            0,
-            3,
-            3,
-            "unitTesting@kalunga.com",
-            "Jhonnatan E Zamudio P",
-            0,
-            "1016055000",
-            "+57 311 2949556",
-            "Colombia",
-            "Bogotá"
-        )
-    }
-
-    private suspend fun createUsers(i: Int) {
-        for (x in 0 until i) {
-            users.add(
-                User(
-                    x+1,
-                    (x+1).toString(),
-                    false,
-                    CodeTypeUser.STANDART.code,
-                    faker.internet.email(),
-                    faker.name.name(),
-                    0,
-                    faker.code.asin(),
-                    faker.phoneNumber.cellPhone(),
-                    faker.address.country(),
-                    faker.address.city()
-                )
-            )
-            userRepository.insertUserLocal(users[x])
-        }
-    }
+    private var users: MutableList<User> = ArrayList()
 
     @Before
     fun setup() {
@@ -114,7 +75,7 @@ class StartingScreenUseCaseTest {
 
     @Test
     fun `Caso 02`(): Unit = runBlocking {
-        val user = cloneUserServer()
+        val user = Users().cloneServer()
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountRemote(user.account)
             assertEquals(ResponseStartingUseCase(true, listOf(user)), result)
@@ -143,7 +104,7 @@ class StartingScreenUseCaseTest {
     @Test
     fun `Caso 05`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            createUsers(2)
+            users = Users().create(2,userRepository)
             val result = startingScreenUseCase.getUserByAccountLocal(users[0].account)
             assertEquals(ResponseStartingUseCase(true, listOf(users[0])), result)
         }

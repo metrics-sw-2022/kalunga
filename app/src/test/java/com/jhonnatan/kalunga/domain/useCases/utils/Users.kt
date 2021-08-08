@@ -1,6 +1,7 @@
 package com.jhonnatan.kalunga.domain.useCases.utils
 
 import com.jhonnatan.kalunga.data.user.entities.User
+import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import io.github.serpro69.kfaker.Faker
@@ -39,6 +40,22 @@ class Users {
             userRepository.insertUserLocal(users[x])
         }
         return users
+    }
+
+    fun cloneServer(): UserRemote {
+        return UserRemote(
+            "unitTesting@kalunga.com",
+            0,
+            3,
+            3,
+            "unitTesting@kalunga.com",
+            "Jhonnatan E Zamudio P",
+            0,
+            "1016055000",
+            "+57 311 2949556",
+            "Colombia",
+            "Bogotá"
+        )
     }
 
 }
