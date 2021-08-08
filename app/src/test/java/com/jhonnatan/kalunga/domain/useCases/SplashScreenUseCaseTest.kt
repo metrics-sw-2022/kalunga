@@ -164,4 +164,12 @@ class SplashScreenUseCaseTest {
         assertEquals(true,result)
     }
 
+    @Test
+    fun `Caso 11`(): Unit = runBlocking {
+        launch(Dispatchers.Main) {
+            val result = splashScreenUseCase.getUserExist()
+            assertEquals(false, result)
+        }
+    }
+
 }
