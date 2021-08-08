@@ -37,6 +37,7 @@ class SplashScreenViewModel(versionRepository: VersionRepository, userRepository
     val requestPermission = MutableLiveData<Boolean>()
     val startUpdateFlow = MutableLiveData<Boolean>()
     val appUpdateInfoPlayStore = MutableLiveData<AppUpdateInfo>()
+    val userExist = MutableLiveData<Boolean>()
 
     init {
         GlobalScope.launch {
@@ -83,11 +84,10 @@ class SplashScreenViewModel(versionRepository: VersionRepository, userRepository
         startUpdateFlow.postValue(splashScreenUseCase.shouldBeUpdated(appUpdateInfo))
     }
 
-    fun validateUserSession(): Boolean {
+    fun validateUserSession() {
         viewModelScope.launch {
-            splashScreenUseCase.getUserExist()
+            userExist.value = splashScreenUseCase.getUserExist()
         }
-        return false
     }
 }
 

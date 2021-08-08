@@ -97,8 +97,7 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
                         )
                     }
                 else
-                    validateUserSession()
-                viewModel.validateUserSession()
+                    viewModel.validateUserSession()
             } else {
                 viewModel.loading.postValue(false)
                 viewModel.snackBarTextCloseApp.postValue(getString(R.string.sin_conexion))
@@ -111,13 +110,13 @@ class SplashScreenActivity : AppCompatActivity(), EasyPermissions.PermissionCall
             else
                 viewModel.validateUserSession()
         })
-    }
 
-    private fun validateUserSession() {
-        if (viewModel.validateUserSession())
-            gotoActivity(Intent(this@SplashScreenActivity, DashboardActivity::class.java))
-        else
-            gotoActivity(Intent(this@SplashScreenActivity, StartingScreenActivity::class.java))
+        viewModel.userExist.observe(this, {
+            if (it==true)
+                gotoActivity(Intent(this@SplashScreenActivity, DashboardActivity::class.java))
+            else
+                gotoActivity(Intent(this@SplashScreenActivity, StartingScreenActivity::class.java))
+        })
     }
 
     private fun gotoActivity(activity: Intent) {
