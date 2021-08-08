@@ -6,7 +6,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.util.ArrayList
 
 /****
  * Project: kalunga
@@ -24,9 +23,9 @@ class DataPools {
     private val item3 = mutableListOf<Int>()
     private val item4 = mutableListOf<Int>()
 
-    fun createData(dataPool: String, type: Int): Any? {
+    fun createData(dataPool: String, type: Int, countItems: Int): Any? {
         val pathDataPool =
-            "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/signUp/$dataPool.txt"
+            "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/$dataPool.txt"
         val jsonString = getDataTXT(pathDataPool)
         if (jsonString != null) {
             try {
@@ -34,7 +33,7 @@ class DataPools {
                 if (type == 0) {
                     return generateData(dataPools)
                 } else if (type == 1) {
-                     return generateMultipleData(dataPools)
+                     return generateMultipleData(dataPools,countItems)
                 }
             } catch (ignore: Exception) {
             }
@@ -63,16 +62,21 @@ class DataPools {
         return emails
     }
 
-    private fun generateMultipleData(dataPool: JSONArray): Array<List<Int>> {
+    private fun generateMultipleData(dataPool: JSONArray, countItems: Int): Array<List<Int>> {
         var data: JSONObject
+        val result: Array<List<Int>>
         for (id in 0 until dataPool.length()) {
             data = dataPool.getJSONObject(id)
-            item1.add(data["item_1"] as Int)
-            item2.add(data["item_2"] as Int)
-            item3.add(data["item_3"] as Int)
-            item4.add(data["item_4"] as Int)
+            if (countItems > 0) item1.add(data["item_1"] as Int) else emptyList<Int>()
+            if (countItems > 1) item2.add(data["item_2"] as Int) else emptyList<Int>()
+            if (countItems > 2) item3.add(data["item_3"] as Int) else emptyList<Int>()
+            if (countItems > 3) item4.add(data["item_4"] as Int) else emptyList<Int>()
         }
-        val result: Array<List<Int>> = arrayOf(item1,item2,item3,item4)
+        when (countItems) {
+            3 -> result = arrayOf(item1,item2,item3)
+            4 -> result = arrayOf(item1,item2,item3,item4)
+            else -> result = arrayOf(emptyList())
+        }
         return result
     }
 

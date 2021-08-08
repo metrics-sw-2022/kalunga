@@ -24,23 +24,12 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.jhonnatan.kalunga.data.cities.entities.ResponseCountries
-import com.jhonnatan.kalunga.data.typeDocument.entities.ResponseDocumentType
-import com.jhonnatan.kalunga.data.user.entities.RequestUsers
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeSessionState
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeStatusUser
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeDocument
-import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
 import com.jhonnatan.kalunga.domain.models.utils.UtilsCountry
-import com.jhonnatan.kalunga.domain.models.utils.UtilsSecurity
-import com.jhonnatan.kalunga.presentation.core.session.viewModels.ConfigurationViewModel
-import org.json.JSONArray
-import org.json.JSONObject
-import org.mockito.kotlin.anyArray
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
+import com.jhonnatan.kalunga.domain.useCases.utils.Countries
+import com.jhonnatan.kalunga.domain.useCases.utils.DataPools
+import com.jhonnatan.kalunga.domain.useCases.utils.TypesDocument
+import com.jhonnatan.kalunga.domain.useCases.utils.Users
 
 /**
  * Project: kalunga
@@ -49,8 +38,10 @@ import java.io.InputStreamReader
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  **/
+
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
+@Suppress("UNCHECKED_CAST")
 class ConfigurationUseCaseTest {
     private lateinit var userDataSourceRemote: UserDataSourceRemote
     private lateinit var userDataSourceLocal: UserDataSourceLocal
@@ -66,94 +57,6 @@ class ConfigurationUseCaseTest {
     private lateinit var citiesJSON: CitiesJSON
     private lateinit var typeDocumentJSON: TypeDocumentJSON
     private val faker = Faker()
-    private val item1 = mutableListOf<Int>()
-    private val item2 = mutableListOf<Int>()
-    private val item3 = mutableListOf<Int>()
-    private val email = faker.internet.email()
-    private val userInfo = RequestUsers(
-    email,
-    UtilsSecurity().cipherData(faker.animal.name())!!,
-    CodeStatusUser.ENABLED_USER.code,
-    CodeSessionState.STARTED.code,
-    CodeTypeUser.STANDART.code,
-    email,
-    faker.name.name(),
-    0,
-    UtilsSecurity().cipherData(faker.chiquito.expressions())!!,
-    UtilsSecurity().cipherData(faker.phoneNumber.cellPhone())!!,
-    faker.address.country(),
-    faker.address.city()
-    )
-
-
-    private fun createDataPool(dataPool: String, type: Int) {
-        val pathDataPool =
-            "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/configuration/$dataPool.txt"
-        val jsonString = getDataTXT(pathDataPool)
-        if (jsonString != null) {
-            try {
-                val dataPools = JSONArray(JSONObject(jsonString).optString("data_pool"))
-                if (type == 0) {
-                    generateMultipleData(dataPools)
-                } else if (type == 1) {
-                    generateMultipleData(dataPools)
-                }
-            } catch (ignore: Exception) {
-            }
-        }
-    }
-
-    private fun getDataTXT(path: String): String? {
-        val txtFile = File(path)
-        var aux: String? = null
-        try {
-            val bufferedReader = BufferedReader(InputStreamReader(FileInputStream(txtFile)))
-            aux = bufferedReader.readLine()
-            bufferedReader.close()
-        } catch (ignore: Exception) {
-        }
-        return aux
-    }
-
-    private fun generateMultipleData(dataPool: JSONArray) {
-        var data: JSONObject
-        for (id in 0 until dataPool.length()) {
-            data = dataPool.getJSONObject(id)
-            item1.add(data["item_1"] as Int)
-            item2.add(data["item_2"] as Int)
-            item3.add(data["item_3"] as Int)
-        }
-    }
-
-
-    private fun getListCountries(): List<ResponseCountries> {
-        return listOf(
-            ResponseCountries("1", "+57", "Colombia"),
-            ResponseCountries("2", "+58", "Venezuela"),
-            ResponseCountries("3", "+34", "España"),
-            ResponseCountries("4", "+39", "Italia"),
-            ResponseCountries("5", "+1", "Estados Unidos"),
-            ResponseCountries("6", "+56", "Chile"),
-            ResponseCountries("7", "+593", "Ecuador"),
-            ResponseCountries("8", "+51", "Perú")
-        ).sortedBy { myObject -> myObject.codPais }
-    }
-
-    private fun getListTypeDocument(): List<ResponseDocumentType> {
-        return listOf(
-            ResponseDocumentType("1", "Cédula de Ciudadanía", "CC", 0),
-            ResponseDocumentType("2", "Cédula de Extranjería", "CE", 1),
-            ResponseDocumentType("3", "Cédula de Identidad", "CI", 2),
-            ResponseDocumentType("4", "Documento Nacional de Identidad", "DNI", 3),
-            ResponseDocumentType("5", "Documento Único de Identidad", "DUI", 4),
-            ResponseDocumentType("6", "Identificación Oficial", "ID", 5),
-            ResponseDocumentType("7", "Pasaporte", "PA", 6),
-            ResponseDocumentType("8", "Permiso de Residencia", "PR", 7),
-            ResponseDocumentType("9", "Permiso Especial de Permanencia", "PEP", 8),
-            ResponseDocumentType("10", "Registro Único de Migrantes Venezolanos", "RUMV", 9),
-            ResponseDocumentType("11", "Tarjeta de Residente Permanente", "TRP", 10)
-        ).sortedBy { myObject -> myObject.abbreviate }
-    }
 
     @Before
     fun setup() {
@@ -187,21 +90,22 @@ class ConfigurationUseCaseTest {
     fun `Caso 01`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = configurationUseCase.getDataCountries()
-            Assert.assertEquals(getListCountries(), result)
+            Assert.assertEquals(Countries().getList(), result)
         }
     }
 
     @Test
     fun `Caso 02`() {
-        val result = configurationUseCase.getCountryPosition("", getListCountries())
+        val result = configurationUseCase.getCountryPosition("", Countries().getList())
         Assert.assertEquals(0, result)
-        val result1 = configurationUseCase.getCountryPosition(faker.name.name(), getListCountries())
+        val result1 =
+            configurationUseCase.getCountryPosition(faker.name.name(), Countries().getList())
         Assert.assertEquals(0, result1)
     }
 
     @Test
     fun `Caso 03`() {
-        val result = configurationUseCase.getCountryPosition("Colombia", getListCountries())
+        val result = configurationUseCase.getCountryPosition("Colombia", Countries().getList())
         Assert.assertEquals(5, result)
     }
 
@@ -209,18 +113,21 @@ class ConfigurationUseCaseTest {
     fun `Caso 04`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = configurationUseCase.getDataTypeDocument()
-            Assert.assertEquals(getListTypeDocument(), result)
+            Assert.assertEquals(TypesDocument().getList(), result)
         }
     }
 
     @Test
     fun `Caso 05`() {
-        val result = configurationUseCase.getTypeDocumentPosition("", getListTypeDocument())
+        val result = configurationUseCase.getTypeDocumentPosition("", TypesDocument().getList())
         Assert.assertEquals(0, result)
         val result1 =
-            configurationUseCase.getTypeDocumentPosition(faker.name.name(), getListTypeDocument())
+            configurationUseCase.getTypeDocumentPosition(
+                faker.name.name(),
+                TypesDocument().getList()
+            )
         Assert.assertEquals(0, result1)
-        val result2 = configurationUseCase.getTypeDocumentPosition("CC", getListTypeDocument())
+        val result2 = configurationUseCase.getTypeDocumentPosition("CC", TypesDocument().getList())
         Assert.assertEquals(0, result2)
     }
 
@@ -242,13 +149,11 @@ class ConfigurationUseCaseTest {
         Assert.assertEquals("313 3", result)
     }
 
-
     @Test
     fun `Caso 08`() {
         val result = configurationUseCase.areFieldsEmpty("")
         Assert.assertEquals(true, result)
     }
-
 
     @Test
     fun `Caso 09`() {
@@ -256,41 +161,48 @@ class ConfigurationUseCaseTest {
         Assert.assertEquals(false, result)
     }
 
-
     @Test
     fun `Caso 10`() {
-        val result = configurationUseCase.isCityInList(faker.animal.name(), ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"),"Colombia"))))
+        val result = configurationUseCase.isCityInList(
+            faker.animal.name(),
+            ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"), "Colombia")))
+        )
         Assert.assertEquals(false, result)
     }
 
     @Test
     fun `Caso 11`() {
-        val result = configurationUseCase.isCityInList("Bogotá", ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"),"Colombia"))))
+        val result = configurationUseCase.isCityInList(
+            "Bogotá",
+            ArrayList(listOf(ResponseCities(listOf("Bogotá", "Medellin", "Cali"), "Colombia")))
+        )
         Assert.assertEquals(true, result)
     }
 
     @Test
     fun `Caso 12`() {
-        createDataPool("datapool_1", 1)
-        for (id in 0 until item1.size) {
+        val data =
+            DataPools().createData("configuration/datapool_1", 1, 3) as Array<MutableList<Int>>
+        for (id in 0 until data[0].size) {
             val result =
-                configurationUseCase.changeEnableButton(item1[id], item2[id], item3[id])
+                configurationUseCase.changeEnableButton(data[0][id], data[1][id], data[2][id])
             Assert.assertEquals(false, result)
         }
     }
 
     @Test
     fun `Caso 13`() {
-        createDataPool("datapool_2", 1)
-        for (id in 0 until item1.size) {
+        val data =
+            DataPools().createData("configuration/datapool_2", 1, 3) as Array<MutableList<Int>>
+        for (id in 0 until data[0].size) {
             val result =
-                configurationUseCase.changeEnableButton(item1[id], item2[id], item3[id])
+                configurationUseCase.changeEnableButton(data[0][id], data[1][id], data[2][id])
             Assert.assertEquals(true, result)
         }
     }
 
     @Test
-    fun `Caso 14`() : Unit = runBlocking {
+    fun `Caso 14`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = configurationUseCase.existsUser(faker.animal.name())
             Assert.assertEquals(0, result)
@@ -298,7 +210,7 @@ class ConfigurationUseCaseTest {
     }
 
     @Test
-    fun `Caso 15`() : Unit = runBlocking {
+    fun `Caso 15`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = configurationUseCase.existsUser("unitTesting@kalunga.com")
             Assert.assertEquals(1, result)
@@ -306,8 +218,9 @@ class ConfigurationUseCaseTest {
     }
 
     @Test
-    fun `Caso 16`() : Unit = runBlocking {
+    fun `Caso 16`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
+            val userInfo = Users().createRequest(CodeStatusUser.ENABLED_USER.code)
             val result = configurationUseCase.createUser(userInfo)
             Assert.assertEquals(0, result)
             userDataSourceRemote.deleteUser(userInfo.account)
@@ -315,22 +228,9 @@ class ConfigurationUseCaseTest {
     }
 
     @Test
-    fun `Caso 17`() : Unit = runBlocking {
+    fun `Caso 17`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
-            val userInfo = RequestUsers(
-                email,
-                UtilsSecurity().cipherData(faker.animal.name())!!,
-                CodeStatusUser.UNVALIDATED_USER.code,
-                CodeSessionState.STARTED.code,
-                CodeTypeUser.STANDART.code,
-                email,
-                faker.name.name(),
-                0,
-                UtilsSecurity().cipherData(faker.chiquito.expressions())!!,
-                UtilsSecurity().cipherData(faker.phoneNumber.cellPhone())!!,
-                faker.address.country(),
-                faker.address.city()
-            )
+            val userInfo = Users().createRequest(CodeStatusUser.UNVALIDATED_USER.code)
             val result = configurationUseCase.createUser(userInfo)
             Assert.assertEquals(3, result)
             userDataSourceRemote.deleteUser(userInfo.account)

@@ -39,7 +39,7 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 03`() {
-        emails = DataPools().createData("datapool_1", 0) as MutableList<String>
+        emails = DataPools().createData("signUp/datapool_1", 0, 1) as MutableList<String>
         for (id in 0 until emails.size) {
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(false, result)
@@ -48,7 +48,7 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 04`() {
-        emails = DataPools().createData("datapool_2", 0) as MutableList<String>
+        emails = DataPools().createData("signUp/datapool_2", 0, 1) as MutableList<String>
         for (id in 0 until emails.size) {
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(true, result)
@@ -110,7 +110,7 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 13`() {
-        val data = DataPools().createData("datapool_3", 1) as Array<MutableList<Int>>
+        val data = DataPools().createData("signUp/datapool_3", 1,4) as Array<MutableList<Int>>
         for (id in 0 until data[0].size) {
             val result = signUpUseCase.changeEnableButton(data[0][id], data[1][id], data[2][id], data[3][id])
             assertEquals(false, result)
@@ -119,7 +119,7 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 14`() {
-        val data = DataPools().createData("datapool_4", 1) as Array<MutableList<Int>>
+        val data = DataPools().createData("signUp/datapool_4", 1, 4) as Array<MutableList<Int>>
         for (id in 0 until data[0].size) {
             val result = signUpUseCase.changeEnableButton(data[0][id], data[1][id], data[2][id], data[3][id])
             assertEquals(true, result)

@@ -1,9 +1,13 @@
 package com.jhonnatan.kalunga.domain.useCases.utils
 
+import com.jhonnatan.kalunga.data.user.entities.RequestUsers
 import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.entities.UserRemote
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeSessionState
+import com.jhonnatan.kalunga.domain.models.enumeration.CodeStatusUser
 import com.jhonnatan.kalunga.domain.models.enumeration.CodeTypeUser
+import com.jhonnatan.kalunga.domain.models.utils.UtilsSecurity
 import io.github.serpro69.kfaker.Faker
 import java.util.ArrayList
 
@@ -55,6 +59,24 @@ class Users {
             "+57 311 2949556",
             "Colombia",
             "Bogotá"
+        )
+    }
+
+    fun createRequest(codeStatusUser: Int): RequestUsers {
+        val email = faker.internet.email()
+        return RequestUsers(
+            email,
+            UtilsSecurity().cipherData(faker.animal.name())!!,
+            codeStatusUser,
+            CodeSessionState.STARTED.code,
+            CodeTypeUser.STANDART.code,
+            email,
+            faker.name.name(),
+            0,
+            UtilsSecurity().cipherData(faker.chiquito.expressions())!!,
+            UtilsSecurity().cipherData(faker.phoneNumber.cellPhone())!!,
+            faker.address.country(),
+            faker.address.city()
         )
     }
 
