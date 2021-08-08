@@ -1,15 +1,10 @@
 package com.jhonnatan.kalunga.domain.useCases
 
+import com.jhonnatan.kalunga.domain.useCases.utils.DataPools
 import io.github.serpro69.kfaker.Faker
-import org.json.JSONArray
-import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
 
 /**
  * Project: kalunga
@@ -18,62 +13,12 @@ import java.io.InputStreamReader
  * More info:  https://venecambios-kalunga.com/
  * All rights reserved 2021.
  */
+
+@Suppress("UNCHECKED_CAST")
 class SignUpUseCaseTest {
     private lateinit var signUpUseCase: SignUpUseCase
     private val faker = Faker()
-    private val emails = mutableListOf<String>()
-    private val item1 = mutableListOf<Int>()
-    private val item2 = mutableListOf<Int>()
-    private val item3 = mutableListOf<Int>()
-    private val item4 = mutableListOf<Int>()
-
-    private fun createDataPool(dataPool: String, type: Int) {
-        val pathDataPool =
-            "src/test/java/com/jhonnatan/kalunga/domain/useCases/dataPools/signUp/$dataPool.txt"
-        val jsonString = getDataTXT(pathDataPool)
-        if (jsonString != null) {
-            try {
-                val dataPools = JSONArray(JSONObject(jsonString).optString("data_pool"))
-                if (type == 0) {
-                    generateData(dataPools)
-                } else if (type == 1) {
-                    generateMultipleData(dataPools)
-                }
-            } catch (ignore: Exception) {
-            }
-        }
-    }
-
-    private fun getDataTXT(path: String): String? {
-        val txtFile = File(path)
-        var aux: String? = null
-        try {
-            val bufferedReader = BufferedReader(InputStreamReader(FileInputStream(txtFile)))
-            aux = bufferedReader.readLine()
-            bufferedReader.close()
-        } catch (ignore: Exception) {
-        }
-        return aux
-    }
-
-    private fun generateData(dataPool: JSONArray) {
-        var data: JSONObject
-        for (id in 0 until dataPool.length()) {
-            data = dataPool.getJSONObject(id)
-            emails.add(data["email"].toString())
-        }
-    }
-
-    private fun generateMultipleData(dataPool: JSONArray) {
-        var data: JSONObject
-        for (id in 0 until dataPool.length()) {
-            data = dataPool.getJSONObject(id)
-            item1.add(data["item_1"] as Int)
-            item2.add(data["item_2"] as Int)
-            item3.add(data["item_3"] as Int)
-            item4.add(data["item_4"] as Int)
-        }
-    }
+    private var emails = mutableListOf<String>()
 
     @Before
     fun setup() {
@@ -94,7 +39,7 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 03`() {
-        createDataPool("datapool_1", 0)
+        emails = DataPools().createData("datapool_1", 0) as MutableList<String>
         for (id in 0 until emails.size) {
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(false, result)
@@ -103,7 +48,7 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 04`() {
-        createDataPool("datapool_2", 0)
+        emails = DataPools().createData("datapool_2", 0) as MutableList<String>
         for (id in 0 until emails.size) {
             val result = signUpUseCase.isValidEmail(emails[id])
             assertEquals(true, result)
@@ -165,24 +110,20 @@ class SignUpUseCaseTest {
 
     @Test
     fun `Caso 13`() {
-        createDataPool("datapool_3", 1)
-        for (id in 0 until item1.size) {
-            val result =
-                signUpUseCase.changeEnableButton(item1[id], item2[id], item3[id], item4[id])
+        val data = DataPools().createData("datapool_3", 1) as Array<MutableList<Int>>
+        for (id in 0 until data[0].size) {
+            val result = signUpUseCase.changeEnableButton(data[0][id], data[1][id], data[2][id], data[3][id])
             assertEquals(false, result)
         }
     }
 
     @Test
     fun `Caso 14`() {
-        createDataPool("datapool_4", 1)
-        for (id in 0 until item1.size) {
-            val result =
-                signUpUseCase.changeEnableButton(item1[id], item2[id], item3[id], item4[id])
+        val data = DataPools().createData("datapool_4", 1) as Array<MutableList<Int>>
+        for (id in 0 until data[0].size) {
+            val result = signUpUseCase.changeEnableButton(data[0][id], data[1][id], data[2][id], data[3][id])
             assertEquals(true, result)
         }
     }
-
-
 
 }

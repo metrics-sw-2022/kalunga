@@ -16,7 +16,6 @@ import com.jhonnatan.kalunga.data.user.datasource.UserDataSourceRemote
 import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.data.user.repository.UserRepository
 import com.jhonnatan.kalunga.data.version.datasource.VersionDataSourceLocal
-import com.jhonnatan.kalunga.data.version.entities.Version
 import com.jhonnatan.kalunga.data.version.repository.VersionRepository
 import com.jhonnatan.kalunga.domain.models.enumeration.CodePermissions
 import com.jhonnatan.kalunga.domain.useCases.utils.Users

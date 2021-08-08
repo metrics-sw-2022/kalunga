@@ -12,7 +12,6 @@ import com.jhonnatan.kalunga.data.user.entities.User
 import com.jhonnatan.kalunga.domain.models.entities.ResponseStartingUseCase
 import com.jhonnatan.kalunga.domain.models.enumeration.ResponseCodeServices
 import com.jhonnatan.kalunga.domain.useCases.utils.Users
-import io.github.serpro69.kfaker.Faker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
