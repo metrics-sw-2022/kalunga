@@ -55,6 +55,10 @@ class UserRepository(
         return userDataSourceRemote.deleteUser(account)
     }
 
+    override suspend fun getAllUsersLocal(): List<User> {
+        return userDataSourceLocal.getAllUsers()
+    }
+
     override suspend fun getUserByAccountLocal(account: String): List<User> {
         return userDataSourceLocal.getUserByAccount(account)
     }

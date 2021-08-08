@@ -67,7 +67,10 @@ class SplashScreenUseCase(
                 (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS)
     }
 
-    fun getUserExist(): Boolean? {
+    suspend fun getUserExist(): Boolean? {
+        val result = userRepository.getAllUsersLocal()
+        if (result.isEmpty())
+            return false
         return null
     }
 

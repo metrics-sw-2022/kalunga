@@ -13,6 +13,10 @@ import com.jhonnatan.kalunga.data.user.entities.User
 
 @Dao
 interface UserDAO {
+
+    @Query("SELECT * FROM User")
+    suspend fun getAllUsers(): List<User>
+
     @Query("SELECT * FROM User WHERE account = :account")
     suspend fun getUserByAccount(account: String): List<User>
 

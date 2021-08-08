@@ -25,6 +25,8 @@ interface UserRepositoryInterface {
 
     suspend fun deleteUserRemote(account: String): List<ResponseUsers>
 
+    suspend fun getAllUsersLocal(): List<User>
+
     suspend fun getUserByAccountLocal(account: String): List<User>
 
     suspend fun insertUserLocal(user: User)
@@ -34,4 +36,5 @@ interface UserRepositoryInterface {
     suspend fun deleteUserLocal(user: User)
 
     suspend fun clearUsersLocal()
+
 }

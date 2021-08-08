@@ -19,6 +19,8 @@ class UserDataSourceLocal private constructor(private val userDAO: UserDAO){
             INSTANCE ?: UserDataSourceLocal(userDAO)
     }
 
+    suspend fun getAllUsers(): List<User> = userDAO.getAllUsers()
+
     suspend fun getUserByAccount(account: String): List<User> = userDAO.getUserByAccount(account)
 
     suspend fun insertUser(user: User) = userDAO.insertUser(user)

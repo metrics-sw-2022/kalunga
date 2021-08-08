@@ -84,7 +84,9 @@ class SplashScreenViewModel(versionRepository: VersionRepository, userRepository
     }
 
     fun validateUserSession(): Boolean {
-        splashScreenUseCase.getUserExist()
+        viewModelScope.launch {
+            splashScreenUseCase.getUserExist()
+        }
         return false
     }
 }
