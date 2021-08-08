@@ -29,34 +29,26 @@ import java.io.InputStreamReader
 
 object Injection {
 
-    fun providerSplashScreenRepository(context: Context): VersionRepository {
+    fun providerVersionRepository(context: Context): VersionRepository {
         val database = KalungaDB.getInstance(context)
         val splashScreenDataSource = VersionDataSourceLocal.getInstance(database.versionDAO())
         return VersionRepository.getInstance(splashScreenDataSource)
     }
 
-    fun providerStartingScreenRepository(context: Context): UserRepository {
+    fun providerUserRepository(context: Context): UserRepository {
         val database = KalungaDB.getInstance(context)
         val userDataSourceRemote = UserDataSourceRemote()
         val userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
         return UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
     }
 
-    fun providerConfigurationUserRepository(context: Context) : UserRepository{
-        val database = KalungaDB.getInstance(context)
-        val userDataSourceRemote = UserDataSourceRemote()
-        val userDataSourceLocal = UserDataSourceLocal.getInstance(database.userDAO())
-        return UserRepository.getInstance(userDataSourceRemote,userDataSourceLocal)
-    }
-
-
-    fun providerConfigurationCitiesRepository(context: Context) : CitiesRepository{
+    fun providerCitiesRepository(context: Context) : CitiesRepository{
         val citiesJSON = CitiesJSON(context)
         val citiesDataSourceLocal = CitiesDataSourceLocal(citiesJSON)
         return CitiesRepository.getInstance(citiesDataSourceLocal)
     }
 
-    fun providerConfigurationTypeDocumentRepository(context: Context) : TypeDocumentRepository{
+    fun providerTypeDocumentRepository(context: Context) : TypeDocumentRepository{
         val typeDocumentJSON = TypeDocumentJSON(context)
         val typeDocumentDataSourceLocal = TypeDocumentDataSourceLocal(typeDocumentJSON)
         return TypeDocumentRepository.getInstance(typeDocumentDataSourceLocal)

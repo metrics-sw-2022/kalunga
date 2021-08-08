@@ -95,7 +95,7 @@ class StartingScreenViewModelFactory(private val userRepository: UserRepository)
         fun getInstance(context: Context): StartingScreenViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: StartingScreenViewModelFactory(
-                    Injection.providerStartingScreenRepository(context)
+                    Injection.providerUserRepository(context)
                 )
             }
     }

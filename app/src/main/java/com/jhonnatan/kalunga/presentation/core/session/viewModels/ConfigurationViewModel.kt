@@ -286,9 +286,9 @@ class ConfigurationViewModelFactory(
         fun getInstance(context: Context): ConfigurationViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ConfigurationViewModelFactory(
-                    Injection.providerConfigurationUserRepository(context),
-                    Injection.providerConfigurationCitiesRepository(context),
-                    Injection.providerConfigurationTypeDocumentRepository(context)
+                    Injection.providerUserRepository(context),
+                    Injection.providerCitiesRepository(context),
+                    Injection.providerTypeDocumentRepository(context)
                 )
             }
     }
