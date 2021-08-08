@@ -68,11 +68,7 @@ class SplashScreenUseCase(
     }
 
     suspend fun getUserExist(): Boolean {
-        val result = userRepository.getAllUsersLocal()
-        if (result.isEmpty())
-            return false
-        else
-            return true
+        return !userRepository.getAllUsersLocal().isEmpty()
     }
 
 }
