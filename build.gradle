@@ -34,7 +34,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$sonarqube_version"
         classpath "com.google.gms:google-services:$googleservices_version"
