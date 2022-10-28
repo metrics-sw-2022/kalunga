@@ -18,7 +18,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew jacocoTestReport
           
       - name: Validar resultado error
         if: ${{ failure() }}
