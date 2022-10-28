@@ -8,23 +8,30 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
 
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def fileFilter = ['**/AndroidManifest.xml', '**/strings.xml', '**/*.xml', '**/*.json']
     def mainSrc = "${project.projectDir}/src/main/java"
+    def kotlinTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debugUnitTest", excludes: fileFilter)
+    def kotlinTreeModels = fileTree(dir: "${project.projectDir}/src/main/java/com/<package_dir>/model", excludes: [])
 
     sourceDirectories.setFrom(files([mainSrc]))
-    classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ]))
+    classDirectories.setFrom(files([kotlinTree, kotlinTreeModels]))
+    executionData.setFrom(fileTree(dir: "$project.projectDir",
+            includes: ['**/*.exec', '**/*.ec']
+    ))
 }
 
 android {
@@ -124,6 +131,7 @@ dependencies {
     androidTestImplementation "androidx.room:room-testing:$room_version"
     androidTestImplementation "androidx.test:core:$test_core_version"
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
