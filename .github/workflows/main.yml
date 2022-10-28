@@ -19,6 +19,12 @@ jobs:
 
       - name: Run tests
         run: ./gradlew jacocoTestReport
+        
+      - name: Upload xml Jacoco test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jacocoTestReport.xml
+          path: app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml
           
       - name: Validar resultado error
         if: ${{ failure() }}
