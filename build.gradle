@@ -42,6 +42,18 @@ buildscript {
     }
 }
 
+plugins {
+  id "org.sonarqube" version "3.4.0.2513"
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "metrics-sw-2022_kalunga"
+    property "sonar.organization", "metrics-sw-2022"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
 allprojects {
     repositories {
         google()
@@ -55,14 +67,3 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-plugins {
-  id "org.sonarqube" version "3.4.0.2513"
-}
-
-sonarqube {
-  properties {
-    property "sonar.projectKey", "metrics-sw-2022_kalunga"
-    property "sonar.organization", "metrics-sw-2022"
-    property "sonar.host.url", "https://sonarcloud.io"
-  }
-}
