@@ -13,6 +13,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
     reports {
         xml.enabled = true
         html.enabled = true
+        xml.destination file("${buildDir}/reports/jacoco.xml")
     }
 
     def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
