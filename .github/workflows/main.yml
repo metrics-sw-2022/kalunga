@@ -7,8 +7,39 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit_test_report
+          path: app/build/reports/tests/testDebugUnitTest/
+          
+      - name: Validar resultado error
+        if: ${{ failure() }}
+        env:
+         MENSAJE_ERROR: No se puede realizar el merge porque FALLO una o más pruebas unitarias
+        run: echo "::set-output name=respuesta::${MENSAJE_ERROR}"
+        
+      - name: Validar resultado exitoso
+        if: ${{ success() }}
+        env:
+          MENSAJE_EXITO: El resultado de las pruebas unitarias fue exitoso
+        run: echo "::set-output name=respuesta::${MENSAJE_EXITO}"
             
   static-code-analysis:
+    needs: [unit-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
