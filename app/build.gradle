@@ -59,6 +59,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    
+    lintOptions {
+          abortOnError false
+    }
 
     buildFeatures {
         dataBinding true
