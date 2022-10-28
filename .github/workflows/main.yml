@@ -18,13 +18,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests
-        run: ./gradlew test
-
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: unit_test_report
-          path: app/build/reports/tests/testDebugUnitTest/
+        run: ./gradlew testDebugUnitTest
           
       - name: Validar resultado error
         if: ${{ failure() }}
