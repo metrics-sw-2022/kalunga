@@ -201,39 +201,4 @@ class ConfigurationUseCaseTest {
         }
     }
 
-    @Test
-    fun `Caso 14`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val result = configurationUseCase.existsUser(faker.animal.name())
-            Assert.assertEquals(0, result)
-        }
-    }
-
-    @Test
-    fun `Caso 15`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val result = configurationUseCase.existsUser("unitTesting@kalunga.com")
-            Assert.assertEquals(1, result)
-        }
-    }
-
-    @Test
-    fun `Caso 16`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val userInfo = Users().createRequest(CodeStatusUser.ENABLED_USER.code)
-            val result = configurationUseCase.createUser(userInfo)
-            Assert.assertEquals(0, result)
-            userDataSourceRemote.deleteUser(userInfo.account)
-        }
-    }
-
-    @Test
-    fun `Caso 17`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val userInfo = Users().createRequest(CodeStatusUser.UNVALIDATED_USER.code)
-            val result = configurationUseCase.createUser(userInfo)
-            Assert.assertEquals(3, result)
-            userDataSourceRemote.deleteUser(userInfo.account)
-        }
-    }
 }

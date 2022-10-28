@@ -64,36 +64,9 @@ class StartingScreenUseCaseTest {
         database.close()
     }
 
+
     @Test
     fun `Caso 01`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val result = startingScreenUseCase.getUserByAccountRemote("1")
-            assertEquals(ResponseStartingUseCase(false, null), result)
-        }
-    }
-
-    @Test
-    fun `Caso 02`(): Unit = runBlocking {
-        val user = Users().cloneServer()
-        launch(Dispatchers.Main) {
-            val result = startingScreenUseCase.getUserByAccountRemote(user.account)
-            assertEquals(ResponseStartingUseCase(true, listOf(user)), result)
-        }
-    }
-
-    @Test
-    fun `Caso 03`(): Unit = runBlocking {
-        launch(Dispatchers.Main) {
-            val result = startingScreenUseCase.getUserByAccountRemote("")
-            assertEquals(
-                ResponseStartingUseCase(null, ResponseCodeServices.SERVER_ERROR.value),
-                result
-            )
-        }
-    }
-
-    @Test
-    fun `Caso 04`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             val result = startingScreenUseCase.getUserByAccountLocal("123456")
             assertEquals(ResponseStartingUseCase(false, null), result)
@@ -101,7 +74,7 @@ class StartingScreenUseCaseTest {
     }
 
     @Test
-    fun `Caso 05`(): Unit = runBlocking {
+    fun `Caso 02`(): Unit = runBlocking {
         launch(Dispatchers.Main) {
             users = Users().create(2,userRepository)
             val result = startingScreenUseCase.getUserByAccountLocal(users[0].account)
